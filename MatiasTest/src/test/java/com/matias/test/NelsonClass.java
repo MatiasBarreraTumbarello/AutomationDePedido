@@ -2,6 +2,7 @@ package com.matias.test;
 
 import static org.junit.Assert.assertTrue;
 
+import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.concurrent.TimeUnit;
 
@@ -21,18 +22,6 @@ public class NelsonClass {
 	
 	
 	public void clickEntregaDePedido () {
-		//By btnEntrega = By.xpath("//button[@class='slds-button slds-button_neutral']");
-		
-		WebDriverWait ewait = new WebDriverWait(driver, 20);
-		
-		ewait.until(ExpectedConditions.invisibilityOfElementLocated(By.className("slds-spinner_container")));
-
-		ewait.until(ExpectedConditions.elementToBeClickable(By.xpath("//button[@class='slds-button slds-button_neutral']")));
-		
-		driver.findElement(By.xpath("//button[@class='slds-button slds-button_neutral']")).click();
-		
-		
-		
 		
 		
 	}
