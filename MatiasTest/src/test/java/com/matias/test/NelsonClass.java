@@ -8,29 +8,31 @@ import java.util.concurrent.TimeUnit;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.FluentWait;
 import org.openqa.selenium.support.ui.Wait;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 import com.google.common.base.Function;
 
 public class NelsonClass {
 
 	private WebDriver driver;
-	By btnEntrega = By.className("button[class='slds-button slds-button_neutral']");
+	
 	
 	public void clickEntregaDePedido () {
+		//By btnEntrega = By.xpath("//button[@class='slds-button slds-button_neutral']");
+		
+		WebDriverWait ewait = new WebDriverWait(driver, 20);
+		
+		ewait.until(ExpectedConditions.invisibilityOfElementLocated(By.className("slds-spinner_container")));
+
+		ewait.until(ExpectedConditions.elementToBeClickable(By.xpath("//button[@class='slds-button slds-button_neutral']")));
+		
+		driver.findElement(By.xpath("//button[@class='slds-button slds-button_neutral']")).click();
 		
 		
-		Wait<WebDriver> fwait = new FluentWait<WebDriver>(driver).withTimeout(30, TimeUnit.SECONDS).pollingEvery(2, TimeUnit.SECONDS).ignoring(NoSuchElementException.class);
 		
-		WebElement boton = fwait.until(new Function<WebDriver,WebElement>(){
-			
-			public WebElement apply(WebDriver driver) {
-				return driver.findElement(btnEntrega);
-			}
-		});		
-		
-		driver.findElement(btnEntrega).click();
 		
 		
 	}
