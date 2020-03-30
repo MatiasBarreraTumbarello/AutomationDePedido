@@ -37,6 +37,16 @@ public class AutomationTest {
 	@Test
 	public void testScript() throws InterruptedException {
 		
+		
+		
+		
+		//---------------------------ALTA DE SERVICIO
+		
+		
+		
+		
+		//seccion: Confirmacion y Resumen de compra
+		MatiasClass.confirmarServicio(driver);
 
 	}
 	
