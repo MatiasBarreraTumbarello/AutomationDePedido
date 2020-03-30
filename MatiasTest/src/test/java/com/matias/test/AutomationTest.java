@@ -37,8 +37,7 @@ public class AutomationTest {
 	@Test
 	public void testScript() throws InterruptedException {
 
-		NelsonClass nc = new NelsonClass();
-		nc.clickEntregaDePedido();
+		NelsonClass.clickEntregaDePedido(driver);
 
 		
 		
@@ -50,7 +49,7 @@ public class AutomationTest {
 		
 		
 		//seccion: Confirmacion y Resumen de compra
-		MatiasClass.confirmarServicio(driver);
+		//MatiasClass.confirmarServicio(driver);
 		
 
 	}

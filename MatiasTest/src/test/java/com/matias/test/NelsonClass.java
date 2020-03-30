@@ -2,6 +2,7 @@ package com.matias.test;
 
 import static org.junit.Assert.assertTrue;
 
+import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.concurrent.TimeUnit;
 
@@ -17,20 +18,13 @@ import com.google.common.base.Function;
 
 public class NelsonClass {
 
-	private WebDriver driver;
 	
 	
-	public void clickEntregaDePedido () {
+	public static void clickEntregaDePedido (WebDriver driver) throws InterruptedException{
 		//By btnEntrega = By.xpath("//button[@class='slds-button slds-button_neutral']");
-		
-		WebDriverWait ewait = new WebDriverWait(driver, 20);
-		
-		ewait.until(ExpectedConditions.invisibilityOfElementLocated(By.className("slds-spinner_container")));
-
-		ewait.until(ExpectedConditions.elementToBeClickable(By.xpath("//button[@class='slds-button slds-button_neutral']")));
-		
-		driver.findElement(By.xpath("//button[@class='slds-button slds-button_neutral']")).click();
-		
+		driver.manage().timeouts().pageLoadTimeout(40, TimeUnit.SECONDS);
+		driver.switchTo().frame("iFrameResizer0");
+		driver.findElement(By.xpath("/html/body/div[1]/div[1]/ng-include/div/div/section/div/button")).click();
 		
 		
 		
