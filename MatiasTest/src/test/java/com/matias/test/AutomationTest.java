@@ -27,7 +27,7 @@ public class AutomationTest {
 		driver = new ChromeDriver();
 		driver.manage().window().maximize();
 		driver.get("https://test1dom--sittest.my.salesforce.com/secur/frontdoor.jsp?sid=00D3K0000008jQa!ARwAQO3IUybIOAlMGx7m3CzC7EHenhDUBx.1ynlkpUN5czHxdrnRCrSWFZQS9NKCGno0lQBCA7CZtEMyAD6819dhlSFirf1T");
-		driver.get("https://test1dom--sittest.lightning.force.com/lightning/r/Order/8013K000000EAQwQAO/view");
+		driver.get("https://test1dom--sittest.lightning.force.com/lightning/r/Order/8013K000000EAVXQA4/view");
 		driver.manage().timeouts().pageLoadTimeout(40, TimeUnit.SECONDS);
 		
 		Thread.sleep(20000);
@@ -36,7 +36,8 @@ public class AutomationTest {
 	
 	@Test
 	public void testScript() throws InterruptedException {
-		
+		NelsonClass nc = new NelsonClass();
+		nc.clickEntregaDePedido();
 
 	}
 	
