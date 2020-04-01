@@ -32,24 +32,14 @@ public class RoynerClass {
 
 	public static void SeleccionDePlan(WebDriver driver) throws InterruptedException {
 		Thread.sleep(4000);
-		//driver.switchTo().defaultContent();
-		/*int size = driver.findElements(By.tagName("iframe")).size();
-		System.out.println(size);
-		for(int i=0; i<=size; i++){
-			//new WebDriverWait(driver, 20).until(ExpectedConditions.frameToBeAvailableAndSwitchToIt(i));
-			int total = driver.findElements(By.xpath("//div[@id='block_0']")).size();
-			if(total > 0) {
-				WebElement plan = driver.findElement(By.xpath("//div[@id='block_0']"));
-				plan.findElement(By.xpath("./..")).click();
-			}else {
-				driver.switchTo().defaultContent();
-			}
-		}*/
-		new WebDriverWait(driver, 20).until(ExpectedConditions.frameToBeAvailableAndSwitchToIt(By.id("iFrameResizer4")));
-		WebElement plan = driver.findElement(By.xpath("//div[contains(@id,'block_0')]"));
+		driver.switchTo().defaultContent();
+		WebElement frame = driver.findElement(By.id("iFrameResizer4"));
+		driver.switchTo().frame(frame);
+		WebElement plan = new WebDriverWait(driver, 40)
+		    	.until(ExpectedConditions.elementToBeClickable(By.xpath("//div[@id='block_0']")));
 		plan.findElement(By.xpath("./..")).click();
-		Thread.sleep(2000);
-		driver.findElement(By.xpath("//div[contains(@id,'ChooseAndAddProducts_nextBtn')]")).click();
+		new WebDriverWait(driver, 40).until(ExpectedConditions.invisibilityOfElementLocated(By.className("slds-spinner_container")));
+		driver.findElement(By.xpath("//div[@id='ChooseAndAddProducts_nextBtn']")).click();
 		Thread.sleep(2000);
 	}
 }
