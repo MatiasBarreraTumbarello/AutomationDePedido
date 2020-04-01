@@ -45,6 +45,10 @@ public class AutomationTest {
 		MatiasClass.confirmarServicio(driver);
 
 		NelsonClass.clickEntregaDePedido(driver);
+
+		NelsonClass.accid(driver);
+
+
 		
 	}
 	
