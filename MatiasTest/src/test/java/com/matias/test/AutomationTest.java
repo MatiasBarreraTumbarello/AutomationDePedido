@@ -42,7 +42,14 @@ public class AutomationTest {
 		RoynerClass.SeleccionDePlan(driver);
 		MatiasClass.confirmarServicio(driver);
 
+
 		//NelsonClass.clickEntregaDePedido(driver);
+
+		NelsonClass.clickEntregaDePedido(driver);
+
+		NelsonClass.accid(driver);
+
+
 		
 	}
 	
