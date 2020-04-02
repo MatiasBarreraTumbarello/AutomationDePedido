@@ -40,10 +40,9 @@ public class AutomationTest {
 		RoynerClass.IrACuenta(driver);
 		RoynerClass.AltaDeServicios(driver);
 		RoynerClass.SeleccionDePlan(driver);
-		
 		MatiasClass.confirmarServicio(driver);
 
-		NelsonClass.clickEntregaDePedido(driver);
+		//NelsonClass.clickEntregaDePedido(driver);
 		
 	}
 	
