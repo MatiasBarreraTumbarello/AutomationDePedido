@@ -26,7 +26,8 @@ public class NelsonClass {
 		ewait.until(ExpectedConditions.visibilityOfElementLocated(iFrame1));
 		
 		//driver.findElement(iFrame1).isDisplayed();
-		driver.switchTo().frame(0);
+		
+		driver.switchTo().frame("iFrameResizer0");
 		driver.findElement(By.xpath("/html/body/div[1]/div[1]/ng-include/div/div/section/div/button")).click();
 		
 		
