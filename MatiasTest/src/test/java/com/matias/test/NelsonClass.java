@@ -31,32 +31,72 @@ public class NelsonClass {
 		ewait.until(ExpectedConditions.visibilityOfElementLocated(iFrame1));
 		
 		//driver.findElement(iFrame1).isDisplayed();
-		driver.switchTo().frame("iFrameResizer0");
+		driver.switchTo().frame(0);
 		driver.findElement(By.xpath("/html/body/div[1]/div[1]/ng-include/div/div/section/div/button")).click();
+		
+		
 		driver.switchTo().defaultContent();
-		
-		
 		
 		
 	}
 	
 	public static void accid (WebDriver driver) throws InterruptedException{
 		//8952140061736667340F
-		By entradaUno = By.xpath("/html/body/span/div/span/div/ng-view/div/div/bptree/child[5]/div/section/form/div[1]/div/child[2]/div/ng-form/div/div[1]/input");
+		WebDriverWait ewait = new WebDriverWait(driver, 30);
+		
+		ewait.until(ExpectedConditions.invisibilityOfElementLocated(By.className("slds-spinner_container")));
+		
+		By entradaUno = By.xpath("//input[@class='slds-input ng-valid-mask ng-invalid ng-invalid-required ng-empty ng-dirty ng-valid-parse ng-touched']");
 		By entradaDos = By.xpath("/html/body/span/div/span/div/ng-view/div/div/bptree/child[5]/div/section/form/div[1]/div/child[2]/div/ng-form/div/div[1]/input");
 		By btnValidar = By.xpath("//div[@id='ValidarICCID']/p");
-		By iFrame2 = By.id("iFrameResizer3");
+		By btnGuardar = By.xpath("//div[@id='DeliverySimCard_nextBtn']/p");
+		By iFrame1 = By.tagName("iframe");
 		
-		WebDriverWait ewait = new WebDriverWait(driver, 30);
-		driver.switchTo().frame("iFrameResizer3");
+		driver.manage().timeouts().pageLoadTimeout(40, TimeUnit.SECONDS);
+		//ewait.until(ExpectedConditions.visibilityOfElementLocated(iFrame1));
 		
-		ewait.until(ExpectedConditions.visibilityOfElementLocated(entradaUno));
+			List<WebElement> iframeElements = driver.findElements(By.tagName("iframe"));
+			System.out.println("The total number of iframes are " + iframeElements.size()); 
+		
+		 
+			driver.switchTo().frame("iFrameResizer1");
+			
+			driver.findElement(entradaUno).sendKeys("8952140061736667340F");
+			driver.findElement(entradaDos).sendKeys("8952140061736667340F");
+			driver.findElement(btnValidar).click();
+			
+			
+			
+			
+	/*	 try {
+			 if(iframeElements.size() > 0) {
+				 
+				 driver.switchTo().frame(0);
+				 driver.findElement(entradaUno).sendKeys("8952140061736667340F");
+					driver.findElement(entradaDos).sendKeys("8952140061736667340F");
+					driver.findElement(btnValidar).click();
+			 }else {
+				 driver.findElement(entradaUno).sendKeys("8952140061736667340F");
+					driver.findElement(entradaDos).sendKeys("8952140061736667340F");
+					driver.findElement(btnValidar).click();
+			 }
+			
+			
+			
+			driver.switchTo().defaultContent();
+			
+		} catch (Exception e) {
+			System.out.print("No entro al frame");
+		} */
+		
+		
+		
+		//ewait.until(ExpectedConditions.visibilityOfElementLocated(iFrame2));
 		//driver.findElement(entradaUno).click();
 		
-		driver.findElement(entradaUno).sendKeys("8952140061736667340F");
-		driver.findElement(entradaDos).sendKeys("8952140061736667340F");
-		driver.findElement(btnValidar).click();
-		driver.switchTo().defaultContent();
+		
+		//driver.findElement(btnGuardar).click();
+		//driver.switchTo().defaultContent();
 		
 	}
 	
