@@ -17,14 +17,9 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import com.google.common.base.Function;
 
 public class NelsonClass {
-
-	
-	
-
 	
 
 	public static void clickEntregaDePedido (WebDriver driver) throws InterruptedException{
-		//By btnEntrega = By.xpath("//button[@class='slds-button slds-button_neutral']");
 		By iFrame1 = By.id("iFrameResizer0");
 		//driver.manage().timeouts().pageLoadTimeout(40, TimeUnit.SECONDS);
 		WebDriverWait ewait = new WebDriverWait(driver, 30);
@@ -34,30 +29,30 @@ public class NelsonClass {
 		driver.switchTo().frame("iFrameResizer0");
 		driver.findElement(By.xpath("/html/body/div[1]/div[1]/ng-include/div/div/section/div/button")).click();
 		driver.switchTo().defaultContent();
-		
-		
-		
-		
+		Thread.sleep(5000);
 	}
 	
-	public static void accid (WebDriver driver) throws InterruptedException{
+	public static void accid (WebDriver driver) {
 		//8952140061736667340F
-		By entradaUno = By.xpath("/html/body/span/div/span/div/ng-view/div/div/bptree/child[5]/div/section/form/div[1]/div/child[2]/div/ng-form/div/div[1]/input");
-		By entradaDos = By.xpath("/html/body/span/div/span/div/ng-view/div/div/bptree/child[5]/div/section/form/div[1]/div/child[2]/div/ng-form/div/div[1]/input");
-		By btnValidar = By.xpath("//div[@id='ValidarICCID']/p");
-		By iFrame2 = By.id("iFrameResizer3");
-		
+		driver.switchTo().frame("iFrameResizer1");//*[@id="iFrameResizer1"]
 		WebDriverWait ewait = new WebDriverWait(driver, 30);
-		driver.switchTo().frame("iFrameResizer3");
+		ewait.until(ExpectedConditions.invisibilityOfElementLocated(By.className("slds-spinner_container")));
 		
-		ewait.until(ExpectedConditions.visibilityOfElementLocated(entradaUno));
-		//driver.findElement(entradaUno).click();
+		driver.findElement(By.xpath("//input[@id=\'ICCID\']")).sendKeys("8952140061733523614F");
+		driver.findElement(By.xpath("//input[@id='ICCIDVal']")).sendKeys("8952140061733523614F");
+		driver.findElement(By.xpath("//div[@id='ValidarICCID']/p")).click();
+
 		
-		driver.findElement(entradaUno).sendKeys("8952140061736667340F");
-		driver.findElement(entradaDos).sendKeys("8952140061736667340F");
-		driver.findElement(btnValidar).click();
-		driver.switchTo().defaultContent();
-		
+		//Las siguientes lineas nos permiten encontrar el iframe que contiene un xpath definido
+		/*int size = driver.findElements(By.tagName("iFrame")).size();
+		System.out.println("Hay "+size+" iframes en esta seccion");
+		for (int i= 0; i <= size; i++) { //devuelve 1 si encuentra el xpath en cualquier iframe de la lista
+			driver.switchTo().frame(i);
+			int total = driver.findElements(By.xpath("//input[@id=\'ICCID\']")).size();
+			System.out.println(total);
+			driver.switchTo().defaultContent();
+		}*/
+	
 	}
 	
 }
