@@ -26,8 +26,8 @@ public class AutomationTest {
 		System.setProperty("webdriver.chrome.driver", "./src/test/resources/chromedriver/chromedriver.exe");
 		driver = new ChromeDriver();
 		driver.manage().window().maximize();
-		driver.get("https://test1dom--sittest.my.salesforce.com/secur/frontdoor.jsp?sid=00D3K0000008jQa!ARwAQDp3YriNSZpPXheBpPlA.n7jF9kAmVcC_UKQObRe9rvyDT8Igm5EkRkXvg6g.p0VfuiMfro.wj_P6Lgrfz12QkHgMvbN");
-		driver.get("https://test1dom--sittest.lightning.force.com/lightning/r/Order/8013K000000EAVXQA4/view");
+		driver.get("https://test1dom--sittest.my.salesforce.com/secur/frontdoor.jsp?sid=00D3K0000008jQa!ARwAQFbE1UAXI_q3mN0M4ev7w9NML2UQXOQIIlndykweqgxQeijRUyrzcQbg5FYno7xSXkdd65Jk5L5H_oItOC5KGECZc86o");
+		driver.get("https://test1dom--sittest.lightning.force.com/lightning/r/Order/8013K000000EBx3QAG/view");
 
 		driver.manage().timeouts().pageLoadTimeout(40, TimeUnit.SECONDS);
 		

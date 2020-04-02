@@ -45,17 +45,20 @@ public class NelsonClass {
 		By entradaUno = By.xpath("/html/body/span/div/span/div/ng-view/div/div/bptree/child[5]/div/section/form/div[1]/div/child[2]/div/ng-form/div/div[1]/input");
 		By entradaDos = By.xpath("/html/body/span/div/span/div/ng-view/div/div/bptree/child[5]/div/section/form/div[1]/div/child[2]/div/ng-form/div/div[1]/input");
 		By btnValidar = By.xpath("//div[@id='ValidarICCID']/p");
-		By iFrame2 = By.id("iFrameResizer3");
+		Thread.sleep(4000);
+		driver.switchTo().defaultContent();
+		WebElement frame = driver.findElement(By.id("iFrameResizer1"));
+		driver.switchTo().frame(frame);
 		
 		WebDriverWait ewait = new WebDriverWait(driver, 30);
-		driver.switchTo().frame("iFrameResizer3");
+		//driver.switchTo().frame(iFrame2);
 		
 		ewait.until(ExpectedConditions.visibilityOfElementLocated(entradaUno));
 		//driver.findElement(entradaUno).click();
 		
-		driver.findElement(entradaUno).sendKeys("8952140061736667340F");
-		driver.findElement(entradaDos).sendKeys("8952140061736667340F");
-		driver.findElement(btnValidar).click();
+		driver.findElement(By.id("ICCID")).sendKeys("8952140061736667340F");
+		driver.findElement(By.id("ICCIDVal")).sendKeys("8952140061736667340F");
+		driver.findElement(By.id("ValidarICCID")).click();
 		driver.switchTo().defaultContent();
 		
 	}
