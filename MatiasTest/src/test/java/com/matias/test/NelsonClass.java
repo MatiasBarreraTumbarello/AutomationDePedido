@@ -37,9 +37,26 @@ public class NelsonClass {
 	}
 	
 	public static void accid (WebDriver driver) {
-
+		//8952140061736667340F
+		driver.switchTo().frame("iFrameResizer1");//*[@id="iFrameResizer1"]
+		WebDriverWait ewait = new WebDriverWait(driver, 30);
+		ewait.until(ExpectedConditions.invisibilityOfElementLocated(By.className("slds-spinner_container")));
+		
+		driver.findElement(By.xpath("//input[@id=\'ICCID\']")).sendKeys("8952140061733523614F");
+		driver.findElement(By.xpath("//input[@id='ICCIDVal']")).sendKeys("8952140061733523614F");
+		driver.findElement(By.xpath("//div[@id='ValidarICCID']/p")).click();
+		try {
+			Thread.sleep(2000);
+			//GUARDAR!!!! solo descomentar si se esta seguro que se quiere generar el Pedido.
+		//	driver.findElement(By.xpath("//p[@class='ng-binding'  and contains(text(),'Guardar')]")).click();
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+	
+		
 	
 
 	}
-	
 }
