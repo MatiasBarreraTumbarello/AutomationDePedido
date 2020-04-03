@@ -40,7 +40,9 @@ public class AutomationTest {
 	public void testScript() throws InterruptedException {
 		//RoynerClass.IrACuenta(driver);
 		//RoynerClass.AltaDeServicios(driver);
-	    //RoynerClass.SeleccionDePlan(driver);
+
+		//RoynerClass.SeleccionDePlan(driver);
+
 		
 		//MatiasClass.confirmarServicio(driver);
 
