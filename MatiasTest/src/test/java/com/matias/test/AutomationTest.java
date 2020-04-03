@@ -28,7 +28,7 @@ public class AutomationTest {
 		driver.manage().window().maximize();
 		driver.get("https://test1dom--sittest.my.salesforce.com/secur/frontdoor.jsp?sid=00D3K0000008jQa!ARwAQPX5xUJDSOGYSBWQfYvSVSmDtMPRxXRsh5Fbt.7xMDnmtMXDAuByQooU1S7rhN7mi9wd.R7c2flVkFt.cN18aY5z620t");
 
-		driver.get("https://test1dom--sittest.lightning.force.com/lightning/r/Order/8013K000000EBx3QAG/view");
+		driver.get("https://test1dom--sittest.lightning.force.com/lightning/r/Account/0013K000005YuoUQAS/view?ws=%2Flightning%2Fr%2FOrder%2F8013K000000EC0MQAW%2Fview");
 
 		driver.manage().timeouts().pageLoadTimeout(40, TimeUnit.SECONDS);
 		
@@ -39,10 +39,10 @@ public class AutomationTest {
 	@Test
 	public void testScript() throws InterruptedException {
 		//RoynerClass.IrACuenta(driver);
-		//RoynerClass.AltaDeServicios(driver);
-	//	RoynerClass.SeleccionDePlan(driver);
+		RoynerClass.AltaDeServicios(driver);
+		RoynerClass.SeleccionDePlan(driver);
 		
-		//MatiasClass.confirmarServicio(driver);
+		MatiasClass.confirmarServicio(driver);
 
 		NelsonClass.clickEntregaDePedido(driver);
 
