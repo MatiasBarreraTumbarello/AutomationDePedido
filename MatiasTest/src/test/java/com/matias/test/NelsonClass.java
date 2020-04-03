@@ -39,7 +39,13 @@ public class NelsonClass {
 	
 	public static void accid (WebDriver driver) {
 		//8952140061736667340F
-		driver.switchTo().frame("iFrameResizer1");//*[@id="iFrameResizer1"]
+
+		
+		List<WebElement> cantIFrames = driver.findElements(By.xpath("//iFrame"));
+		int size = cantIFrames.size();
+		driver.switchTo().frame(size - 1);
+		
+//		driver.switchTo().frame("iFrameResizer1");//*[@id="iFrameResizer1"]
 		WebDriverWait ewait = new WebDriverWait(driver, 30);
 		ewait.until(ExpectedConditions.invisibilityOfElementLocated(By.className("slds-spinner_container")));
 		
