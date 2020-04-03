@@ -38,16 +38,11 @@ public class AutomationTest {
 	
 	@Test
 	public void testScript() throws InterruptedException {
-		//RoynerClass.IrACuenta(driver);
-		RoynerClass.AltaDeServicios(driver);
-		RoynerClass.SeleccionDePlan(driver);
-		
-		MatiasClass.confirmarServicio(driver);
+
+		RoynerMatiasClass.llamadosDeMetodos(driver);
 
 		NelsonClass.clickEntregaDePedido(driver);
-
 		NelsonClass.accid(driver);
-
 
 		
 	}

@@ -55,9 +55,6 @@ public class NelsonClass {
 			e.printStackTrace();
 		}
 		
-	
-		
-	
 
 	}
 }
