@@ -1,4 +1,4 @@
-package com.matias.test;
+package com.automation.izzi;
 
 import java.util.concurrent.TimeUnit;
 import org.junit.Before;
