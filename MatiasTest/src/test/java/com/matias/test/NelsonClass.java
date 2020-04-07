@@ -1,20 +1,12 @@
 package com.matias.test;
 
-import static org.junit.Assert.assertTrue;
 
 import java.util.List;
-import java.util.NoSuchElementException;
-import java.util.concurrent.TimeUnit;
-
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.FluentWait;
-import org.openqa.selenium.support.ui.Wait;
 import org.openqa.selenium.support.ui.WebDriverWait;
-
-import com.google.common.base.Function;
 
 public class NelsonClass {
 	
@@ -45,8 +37,7 @@ public class NelsonClass {
 		int size = cantIFrames.size();
 		driver.switchTo().frame(size - 1);
 		
-
-		driver.switchTo().frame("iFrameResizer1");//*[@id="iFrameResizer1"]
+//		driver.switchTo().frame("iFrameResizer1");//*[@id="iFrameResizer1"]
 		WebDriverWait ewait = new WebDriverWait(driver, 30);
 		ewait.until(ExpectedConditions.invisibilityOfElementLocated(By.className("slds-spinner_container")));
 		

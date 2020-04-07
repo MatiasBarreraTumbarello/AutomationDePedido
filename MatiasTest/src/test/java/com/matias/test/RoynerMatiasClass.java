@@ -50,8 +50,6 @@ public static void confirmarServicio(WebDriver driver) throws InterruptedExcepti
 	wait.until(ExpectedConditions.elementToBeClickable(By.id("RadioConfirmation")));
 	List<WebElement> opcion = driver.findElements(By.id("RadioConfirmation"));
 
-
-
 	//En caso de seleccionar la opcion de NO, descomentar la siguiente linea, por defecto se selecciona SI
 	//opcion.get(1).findElement(By.xpath("../.")).click();
 

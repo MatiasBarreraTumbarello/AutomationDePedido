@@ -32,7 +32,7 @@ public class FranciscoClass {
 		actions.moveToElement(boton).click().build().perform();
 		
 		//driver.findElement(By.xpath("//button[contains(@class,'neutral')][3])")). click();
-		
+		driver.switchTo().defaultContent();
 
 		}
 		
