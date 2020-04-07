@@ -31,20 +31,34 @@ public class FranciscoClass {
 		
 		WebDriverWait wait = new WebDriverWait(driver, 40);
 		wait.until(ExpectedConditions.invisibilityOfElementLocated(By.className("slds-spinner_container")));
-		WebElement iFrame = driver.findElement(By.id("iFrameResizer1"));
+		List<WebElement> iFrame = driver.findElements(By.tagName("iframe"));
+		WebElement boton;
 		//int tamanio = iFrame.size();
 		//System.out.println(tamanio);
+		for (int i = 0; i <= iFrame.size(); i ++) {
+
+			driver.switchTo().frame(i);
+			System.out.println("El Iframe esta activo? " + iFrame.get(i).isEnabled());
+			wait.until(ExpectedConditions.elementToBeClickable(By.xpath("/html/body/div[1]/div[1]/ng-include/div/div/section/div[3]")));
+			boton = driver.findElement(By.xpath("/html/body/div[1]/div[1]/ng-include/div/div/section/div[3]"));
+			System.out.println("El boton esta activo? " + boton.isEnabled());
 		
-		driver.switchTo().frame(iFrame);
-		wait.until(ExpectedConditions.elementToBeClickable(By.xpath("/html/body/div[1]/div[1]/ng-include/div/div/section/div[3]")));
-		WebElement boton = driver.findElement(By.xpath("/html/body/div[1]/div[1]/ng-include/div/div/section/div[3]"));
+			driver.switchTo().defaultContent();
+		}
 		
-		Actions actions = new Actions(driver);
-		actions.moveToElement(boton).click().build().perform();
+	/*	for (int i = 0; i <= iFrame.size(); i ++) {
+			driver.switchTo().frame(i);
+			if (iFrame.contains(boton)) {
+				wait.until(ExpectedConditions.elementToBeClickable(By.xpath("/html/body/div[1]/div[1]/ng-include/div/div/section/div[3]")));
+				Actions actions = new Actions(driver);
+				actions.moveToElement(boton).click().build().perform();
+		}*/
+
+		//	driver.switchTo().defaultContent();
 //		Actions action = new Actions (driver);
 //		action.moveToElement(iFrame.get(1)).
-		
+		}
 		
 	}
 
-}
+//}
