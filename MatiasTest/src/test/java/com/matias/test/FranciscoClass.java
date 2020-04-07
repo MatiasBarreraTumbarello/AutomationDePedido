@@ -17,48 +17,25 @@ public class FranciscoClass {
 	
 	public static void portabilidad (WebDriver driver) throws InterruptedException {
 		
-/*		Thread.sleep(2000);
 		
-		WebDriverWait ewait = new WebDriverWait(driver, 30);
+		WebDriverWait wait = new WebDriverWait(driver, 30);
 		
-		ewait.until(ExpectedConditions.invisibilityOfElementLocated(By.className("slds-spinner_container")));
+		wait.until(ExpectedConditions.invisibilityOfElementLocated(By.className("slds-spinner_container")));
 		List<WebElement> cantIFrames = driver.findElements(By.tagName("iFrame"));
 		int size = cantIFrames.size();
-		driver.switchTo().frame(size - 2);
+		driver.switchTo().frame(size - 1);
 		
+		wait.until(ExpectedConditions.elementToBeClickable(By.xpath("/html/body/div[1]/div[1]/ng-include/div/div/section/div[3]/button")));
+		WebElement boton = driver.findElement(By.xpath("/html/body/div[1]/div[1]/ng-include/div/div/section/div[3]/button"));
 		
-		driver.findElement(By.xpath("//button[contains(@class,'neutral')][3])")). click();*/
+		Actions actions = new Actions(driver);
+		actions.moveToElement(boton).click().build().perform();
 		
-		WebDriverWait wait = new WebDriverWait(driver, 40);
-		wait.until(ExpectedConditions.invisibilityOfElementLocated(By.className("slds-spinner_container")));
-		List<WebElement> iFrame = driver.findElements(By.tagName("iframe"));
-		WebElement boton;
-		//int tamanio = iFrame.size();
-		//System.out.println(tamanio);
-		for (int i = 0; i <= iFrame.size(); i ++) {
+		//driver.findElement(By.xpath("//button[contains(@class,'neutral')][3])")). click();
+		
 
-			driver.switchTo().frame(i);
-			System.out.println("El Iframe esta activo? " + iFrame.get(i).isEnabled());
-			wait.until(ExpectedConditions.elementToBeClickable(By.xpath("/html/body/div[1]/div[1]/ng-include/div/div/section/div[3]")));
-			boton = driver.findElement(By.xpath("/html/body/div[1]/div[1]/ng-include/div/div/section/div[3]"));
-			System.out.println("El boton esta activo? " + boton.isEnabled());
-		
-			driver.switchTo().defaultContent();
-		}
-		
-	/*	for (int i = 0; i <= iFrame.size(); i ++) {
-			driver.switchTo().frame(i);
-			if (iFrame.contains(boton)) {
-				wait.until(ExpectedConditions.elementToBeClickable(By.xpath("/html/body/div[1]/div[1]/ng-include/div/div/section/div[3]")));
-				Actions actions = new Actions(driver);
-				actions.moveToElement(boton).click().build().perform();
-		}*/
-
-		//	driver.switchTo().defaultContent();
-//		Actions action = new Actions (driver);
-//		action.moveToElement(iFrame.get(1)).
 		}
 		
 	}
 
-//}
+
