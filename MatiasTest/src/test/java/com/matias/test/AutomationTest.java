@@ -32,8 +32,6 @@ public class AutomationTest {
 	@Test
 	public void testScript() throws InterruptedException {
 
-		//RoynerMatiasClass.llamadosDeMetodos(driver);
-
 		FranciscoClass.portabilidad(driver);
 		
 	}
