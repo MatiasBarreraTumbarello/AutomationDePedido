@@ -1,16 +1,42 @@
 package com.matias.test;
 
-
 import java.util.List;
+import java.util.concurrent.TimeUnit;
+import org.junit.Before;
+import org.junit.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-public class NelsonClass {
+public class ProcesoEntregarPedidos {
 	
+	private WebDriver driver;
+	
+	
+	@Before
+	public void setUp() throws InterruptedException {
+		
+		System.setProperty("webdriver.chrome.driver", "./src/test/resources/chromedriver/chromedriver.exe");
+		driver = new ChromeDriver();
+		driver.manage().window().maximize();
+		driver.get("https://test1dom--sittest.my.salesforce.com/secur/frontdoor.jsp?sid=00D3K0000008jQa!ARwAQOZdtFPVElvPBnQq4TB.5xkdEErwSlw3bOWrfigUGlkaYb.x2Hm8vOssDItMm.EGIv5wtIJt3rUcLvxCARyz6GLqzpjD");
+		Thread.sleep(20000);
+		driver.get("https://test1dom--sittest.lightning.force.com/lightning/r/Order/8013K000000EBx3QAG/view");
 
+		driver.manage().timeouts().pageLoadTimeout(40, TimeUnit.SECONDS);
+		
+		Thread.sleep(20000);
+	}
+	
+	@Test
+	public void testScript() throws InterruptedException {
+		clickEntregaDePedido(driver);
+		accid(driver);
+	}
+	
 	public static void clickEntregaDePedido (WebDriver driver) throws InterruptedException{
 		By iFrame1 = By.id("iFrameResizer0");
 		//driver.manage().timeouts().pageLoadTimeout(40, TimeUnit.SECONDS);
@@ -37,7 +63,7 @@ public class NelsonClass {
 		int size = cantIFrames.size();
 		driver.switchTo().frame(size - 1);
 		
-//		driver.switchTo().frame("iFrameResizer1");//*[@id="iFrameResizer1"]
+		// driver.switchTo().frame("iFrameResizer1");//*[@id="iFrameResizer1"]
 		WebDriverWait ewait = new WebDriverWait(driver, 30);
 		ewait.until(ExpectedConditions.invisibilityOfElementLocated(By.className("slds-spinner_container")));
 		
@@ -53,7 +79,5 @@ public class NelsonClass {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
-
 	}
 }

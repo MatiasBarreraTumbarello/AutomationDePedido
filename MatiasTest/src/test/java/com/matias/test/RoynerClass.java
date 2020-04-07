@@ -10,12 +10,12 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class RoynerClass {
-	public static void IrACuenta(WebDriver driver) throws InterruptedException {
+/*	public static void IrACuenta(WebDriver driver) throws InterruptedException {
 		WebElement link = new WebDriverWait(driver, 40)
 	    	.until(ExpectedConditions.elementToBeClickable(By.partialLinkText("REGRESION NUEVAS PRUE")));
 		link.click();
 		Thread.sleep(2000);
-	}
+	}*/
 	
 	public static void AltaDeServicios(WebDriver driver) throws InterruptedException {
 		Thread.sleep(2000);
