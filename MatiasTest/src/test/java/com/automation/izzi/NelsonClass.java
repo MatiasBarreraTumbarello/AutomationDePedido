@@ -56,4 +56,20 @@ public class NelsonClass {
 		
 
 	}
+	
+	public static void PortabilidadSeleccionDeLinea(WebDriver driver) {
+
+		List<WebElement> cantIFrames = driver.findElements(By.xpath("//iFrame"));
+		int size = cantIFrames.size();
+		driver.switchTo().frame(size - 1);
+		
+		WebDriverWait ewait = new WebDriverWait(driver, 30);
+		ewait.until(ExpectedConditions.invisibilityOfElementLocated(By.className("slds-spinner_container")));
+		
+		List<WebElement> radioButtons =driver.findElements(By.xpath("//span[@class=\"slds-radio--faux\"]"));
+		radioButtons.get(3).click();
+		driver.findElement(By.id("StepShowActiveLines_nextBtn")).click();
+		
+		
+	}
 }
