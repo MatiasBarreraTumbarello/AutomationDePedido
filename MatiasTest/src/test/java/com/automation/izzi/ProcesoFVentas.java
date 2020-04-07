@@ -1,4 +1,4 @@
-package com.matias.test;
+package com.automation.izzi;
 
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -18,6 +18,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 public class ProcesoFVentas {
 	
 	private WebDriver driver;
+	public int tiempo= 4000;
 	
 	
 	@Before
