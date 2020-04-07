@@ -18,6 +18,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 public class ProcesoFVentas {
 	
 	private WebDriver driver;
+	public int tiempo= 4000;
 	
 	
 	@Before
