@@ -1,4 +1,4 @@
-package com.matias.test;
+package com.automation.izzi;
 
 
 import java.util.List;
@@ -32,10 +32,23 @@ public class FranciscoClass {
 		actions.moveToElement(boton).click().build().perform();
 		
 		//driver.findElement(By.xpath("//button[contains(@class,'neutral')][3])")). click();
-		driver.switchTo().defaultContent();
-
-		}
+		
+		/*WebDriverWait wait = new WebDriverWait(driver, 40);
+		wait.until(ExpectedConditions.invisibilityOfElementLocated(By.className("slds-spinner_container")));
+		WebElement iFrame = driver.findElement(By.id("iFrameResizer1"));
+		//int tamanio = iFrame.size();
+		//System.out.println(tamanio);
+		
+		driver.switchTo().frame(iFrame);
+		wait.until(ExpectedConditions.elementToBeClickable(By.xpath("/html/body/div[1]/div[1]/ng-include/div/div/section/div[3]")));
+		WebElement boton = driver.findElement(By.xpath("/html/body/div[1]/div[1]/ng-include/div/div/section/div[3]"));
+		
+		Actions actions = new Actions(driver);
+		actions.moveToElement(boton).click().build().perform();*/
+//		Actions action = new Actions (driver);
+//		action.moveToElement(iFrame.get(1)).
+		
 		
 	}
 
-
+}

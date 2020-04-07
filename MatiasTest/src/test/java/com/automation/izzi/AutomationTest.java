@@ -1,4 +1,4 @@
-package com.matias.test;
+package com.automation.izzi;
 
 import java.util.concurrent.TimeUnit;
 import org.junit.Before;
@@ -32,10 +32,8 @@ public class AutomationTest {
 	@Test
 	public void testScript() throws InterruptedException {
 
-		//RoynerMatiasClass.llamadosDeMetodos(driver);
-
 		FranciscoClass.portabilidad(driver);
-		MatiasClass.codigoNIP(driver);
+		
 	}
 	
 	

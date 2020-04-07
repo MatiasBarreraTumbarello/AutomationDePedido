@@ -1,11 +1,7 @@
-package com.matias.test;
-
-import static org.junit.Assert.assertTrue;
+package com.automation.izzi;
 
 import java.util.List;
-import java.util.NoSuchElementException;
 import java.util.concurrent.TimeUnit;
-
 import org.junit.Before;
 import org.junit.Test;
 import org.openqa.selenium.By;
@@ -13,14 +9,11 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.FluentWait;
-import org.openqa.selenium.support.ui.Wait;
 import org.openqa.selenium.support.ui.WebDriverWait;
-import com.google.common.base.Function;
 
-public class EntregarPedidos {
+public class ProcesoEntregarPedidos {
 	
-private WebDriver driver;
+	private WebDriver driver;
 	
 	
 	@Before
@@ -29,7 +22,6 @@ private WebDriver driver;
 		System.setProperty("webdriver.chrome.driver", "./src/test/resources/chromedriver/chromedriver.exe");
 		driver = new ChromeDriver();
 		driver.manage().window().maximize();
-
 		driver.get("https://test1dom--sittest.my.salesforce.com/secur/frontdoor.jsp?sid=00D3K0000008jQa!ARwAQOZdtFPVElvPBnQq4TB.5xkdEErwSlw3bOWrfigUGlkaYb.x2Hm8vOssDItMm.EGIv5wtIJt3rUcLvxCARyz6GLqzpjD");
 		Thread.sleep(20000);
 		driver.get("https://test1dom--sittest.lightning.force.com/lightning/r/Order/8013K000000EBx3QAG/view");
@@ -37,12 +29,15 @@ private WebDriver driver;
 		driver.manage().timeouts().pageLoadTimeout(40, TimeUnit.SECONDS);
 		
 		Thread.sleep(20000);
-		
-
-}
+	}
 	
 	@Test
 	public void testScript() throws InterruptedException {
+		clickEntregaDePedido(driver);
+		accid(driver);
+	}
+	
+	public static void clickEntregaDePedido (WebDriver driver) throws InterruptedException{
 		By iFrame1 = By.id("iFrameResizer0");
 		//driver.manage().timeouts().pageLoadTimeout(40, TimeUnit.SECONDS);
 		WebDriverWait ewait = new WebDriverWait(driver, 30);
@@ -57,11 +52,18 @@ private WebDriver driver;
 		driver.switchTo().defaultContent();
 
 		Thread.sleep(5000);
-		
-}
-	public static void accid (WebDriver driver){
+
+	}
+	
+	public static void accid (WebDriver driver) {
 		//8952140061736667340F
-		driver.switchTo().frame("iFrameResizer1");//*[@id="iFrameResizer1"]
+
+		
+		List<WebElement> cantIFrames = driver.findElements(By.xpath("//iFrame"));
+		int size = cantIFrames.size();
+		driver.switchTo().frame(size - 1);
+		
+		// driver.switchTo().frame("iFrameResizer1");//*[@id="iFrameResizer1"]
 		WebDriverWait ewait = new WebDriverWait(driver, 30);
 		ewait.until(ExpectedConditions.invisibilityOfElementLocated(By.className("slds-spinner_container")));
 		
@@ -76,7 +78,6 @@ private WebDriver driver;
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-	
-}
-}
+		}
+	}
 }
