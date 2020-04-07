@@ -1,20 +1,12 @@
 package com.matias.test;
 
-import static org.junit.Assert.assertTrue;
 
 import java.util.List;
-import java.util.NoSuchElementException;
-import java.util.concurrent.TimeUnit;
-
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.FluentWait;
-import org.openqa.selenium.support.ui.Wait;
 import org.openqa.selenium.support.ui.WebDriverWait;
-
-import com.google.common.base.Function;
 
 public class NelsonClass {
 	
@@ -40,9 +32,13 @@ public class NelsonClass {
 	public static void accid (WebDriver driver) {
 		//8952140061736667340F
 
-		driver.switchTo().frame("iFrameResizer1");//*[@id="iFrameResizer1"]
+		
+		List<WebElement> cantIFrames = driver.findElements(By.xpath("//iFrame"));
+		int size = cantIFrames.size();
+		driver.switchTo().frame(size - 1);
+		
+//		driver.switchTo().frame("iFrameResizer1");//*[@id="iFrameResizer1"]
 		WebDriverWait ewait = new WebDriverWait(driver, 30);
-
 		ewait.until(ExpectedConditions.invisibilityOfElementLocated(By.className("slds-spinner_container")));
 		
 		driver.findElement(By.xpath("//input[@id=\'ICCID\']")).sendKeys("8952140061733523614F");
@@ -50,15 +46,14 @@ public class NelsonClass {
 		driver.findElement(By.xpath("//div[@id='ValidarICCID']/p")).click();
 		try {
 			Thread.sleep(2000);
-			//GUARDAR!!!! solo descomentar si se esta seguro que se quiere generar el Pedido.
+			
+		//GUARDAR!!!! solo descomentar si se esta seguro que se quiere generar/guardar el Pedido.
 		//	driver.findElement(By.xpath("//p[@class='ng-binding'  and contains(text(),'Guardar')]")).click();
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-	
 		
-	
 
 	}
 }
