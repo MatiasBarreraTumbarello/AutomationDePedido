@@ -36,27 +36,33 @@ public class MatiasClass{
 	public static void codigoNIP(WebDriver driver) throws InterruptedException{
 		WebDriverWait  wait = new WebDriverWait (driver, 40);
 		wait.until(ExpectedConditions.invisibilityOfElementLocated(By.className("slds-spinner_container")));
-		List<WebElement> cantIFrames = driver.findElements(By.tagName("iFrame"));
-		int size = cantIFrames.size();
-		//driver.switchTo().frame(size - 1);
-		wait.until(ExpectedConditions.frameToBeAvailableAndSwitchToIt(size - 1));
+		
+		WebElement frame = new WebDriverWait(driver, 40)
+				.until(ExpectedConditions.elementToBeClickable(By.id("iFrameResizer3")));
+		frame.click();
+		driver.switchTo().frame(frame);
+		
+		//wait.until(ExpectedConditions.frameToBeAvailableAndSwitchToIt(frame));
 		Thread.sleep(2000);
 		
 		//Descomentar cualquiera de las dos siguientes lineas, de acuerdo a la respuesta que desea colocar
 		
 		//Esta opcion afirma que el cliente cuenta con un nro NIP
-		WebElement myDynamicElement = 
-				(new WebDriverWait(driver, 10)).until(ExpectedConditions.presenceOfElementLocated(By.id("RadioNIP")));
-		wait.until(ExpectedConditions.invisibilityOfElementLocated(By.xpath("//input[@id='RadioNIP']")));
-		driver.findElement(By.xpath("//input[@id='RadioNIP' and @value='Si']")).click();
+		new WebDriverWait(driver, 40)
+			.until(ExpectedConditions.elementToBeClickable(By.id("RadioNIP")));
+		List<WebElement> opt = driver.findElements(By.xpath("//*[@id=\'RadioNIP\']"));
+		Thread.sleep(1000);
+		opt.get(0).findElement(By.xpath("./..")).click();
 		
 		//Esta opcion niega que el cliente cuenta con un nro NIP
 		//driver.findElement(By.xpath("//input[@id='RadioNIP' and @value='No']")).click();
 		
-		Thread.sleep(2000);
+		Thread.sleep(1000);
 		driver.findElement(By.xpath("//input[@id='NIP']")).sendKeys("4631");
+		Thread.sleep(1000);
 		
-		
+		driver.findElement(By.id("StepNumeroNip_nextBtn")).click();
+		Thread.sleep(2000);
 	}
 	
 }

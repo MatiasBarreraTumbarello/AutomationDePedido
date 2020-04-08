@@ -19,7 +19,7 @@ public class AutomationTest {
 		driver = new ChromeDriver();
 		driver.manage().window().maximize();
 
-		driver.get("https://test1dom--sittest.my.salesforce.com/secur/frontdoor.jsp?sid=00D3K0000008jQa!ARwAQAkZimZFoW91SqVre0eLSivQc4qRDpfYplG2E.4LnJotp2lkx7oTzDZb2txh1qxfjSh0x91qS8mqSc1WWA_MSbTPg6G5");
+		driver.get("https://test1dom--sittest.my.salesforce.com/secur/frontdoor.jsp?sid=00D3K0000008jQa!ARwAQJOz_Arp8wkl4HUYNx5csyUoyHfWKZGLmc3l9aeHCP2nV65wNzxGEEZ5UqcNcCa.gRQCcxuuZAelw3a7BtMnp1gaFHgV");
 
 		driver.get("https://test1dom--sittest.lightning.force.com/lightning/r/Account/0013K000005YuoUQAS/view");
 
@@ -33,6 +33,8 @@ public class AutomationTest {
 	public void testScript() throws InterruptedException {
 
 		FranciscoClass.portabilidad(driver);
+		
+		MatiasClass.codigoNIP(driver);
 		
 		RoynerClass.NumeroAPortar(driver);
 		
