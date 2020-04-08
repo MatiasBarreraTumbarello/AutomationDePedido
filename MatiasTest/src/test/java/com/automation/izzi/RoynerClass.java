@@ -7,6 +7,7 @@ import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class RoynerClass {
@@ -40,6 +41,18 @@ public class RoynerClass {
 		plan.findElement(By.xpath("./..")).click();
 		new WebDriverWait(driver, 40).until(ExpectedConditions.invisibilityOfElementLocated(By.className("slds-spinner_container")));
 		driver.findElement(By.xpath("//div[@id='ChooseAndAddProducts_nextBtn']")).click();
+		Thread.sleep(2000);
+	}
+	
+	public static void NumeroAPortar(WebDriver driver) throws InterruptedException {
+		WebElement company = new WebDriverWait(driver, 40)
+		    	.until(ExpectedConditions.elementToBeClickable(By.id("SelectCompany")));
+		Select picklist = new Select(company);
+		picklist.selectByIndex(2);
+		Thread.sleep(1000);
+		driver.findElement(By.id("PortabilityNumber")).sendKeys("1112131415");
+		Thread.sleep(1000);
+		driver.findElement(By.id("StepPortabilityNumber_nextBtn")).click();
 		Thread.sleep(2000);
 	}
 }
