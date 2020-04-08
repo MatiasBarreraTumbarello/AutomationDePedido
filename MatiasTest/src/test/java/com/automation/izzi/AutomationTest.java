@@ -36,6 +36,8 @@ public class AutomationTest {
 		
 		MatiasClass.codigoNIP(driver);
 		
+		NelsonClass.PortabilidadSeleccionDeLinea(driver);
+		
 		RoynerClass.NumeroAPortar(driver);
 		
 	}
