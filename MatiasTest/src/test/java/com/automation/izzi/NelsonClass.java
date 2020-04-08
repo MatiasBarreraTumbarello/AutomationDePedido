@@ -57,7 +57,7 @@ public class NelsonClass {
 
 	}
 	
-	public static void PortabilidadSeleccionDeLinea(WebDriver driver) {
+	public static void PortabilidadSeleccionDeLinea(WebDriver driver) throws InterruptedException{
 
 	
 		
@@ -66,6 +66,7 @@ public class NelsonClass {
 		
 		List<WebElement> radioButtons =driver.findElements(By.xpath("//span[@class=\"slds-radio--faux\"]"));
 		radioButtons.get(0).click();
+		Thread.sleep(1000);
 		driver.findElement(By.id("StepShowActiveLines_nextBtn")).click();
 		
 		
