@@ -23,7 +23,7 @@ public class ProcesoEntregarPedidos {
 		driver = new ChromeDriver();
 		driver.manage().window().maximize();
 		driver.get("https://test1dom--sittest.my.salesforce.com/secur/frontdoor.jsp?sid=00D3K0000008jQa!ARwAQJOz_Arp8wkl4HUYNx5csyUoyHfWKZGLmc3l9aeHCP2nV65wNzxGEEZ5UqcNcCa.gRQCcxuuZAelw3a7BtMnp1gaFHgV");
-		Thread.sleep(20000);
+		Thread.sleep(10000);
 		driver.get("https://test1dom--sittest.lightning.force.com/lightning/r/Order/8013K000000EEjrQAG/view");
 
 		driver.manage().timeouts().pageLoadTimeout(40, TimeUnit.SECONDS);
