@@ -36,5 +36,7 @@ public class ProcesoPortabilidad {
 		MatiasClass.codigoNIP(driver);
 		
 		NelsonClass.PortabilidadSeleccionDeLinea(driver);
+		
+		RoynerClass.NumeroAPortar(driver);
 	}
 }

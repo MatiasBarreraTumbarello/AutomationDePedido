@@ -57,6 +57,7 @@ public class NelsonClass {
 
 	}
 	
+	//Pertenece al proceso de portabilidad.
 	public static void PortabilidadSeleccionDeLinea(WebDriver driver) {
 
 	
