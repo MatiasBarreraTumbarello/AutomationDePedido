@@ -27,7 +27,7 @@ public class ProcesoFVentas {
 		System.setProperty("webdriver.chrome.driver", "./src/test/resources/chromedriver/chromedriver.exe");
 		driver = new ChromeDriver();
 		driver.manage().window().maximize();
-		driver.get("https://test1dom--sittest.my.salesforce.com/secur/frontdoor.jsp?sid=00D3K0000008jQa!ARwAQFbE1UAXI_q3mN0M4ev7w9NML2UQXOQIIlndykweqgxQeijRUyrzcQbg5FYno7xSXkdd65Jk5L5H_oItOC5KGECZc86o");
+		driver.get("https://test1dom--sittest.my.salesforce.com/secur/frontdoor.jsp?sid=00D3K0000008jQa!ARwAQJOz_Arp8wkl4HUYNx5csyUoyHfWKZGLmc3l9aeHCP2nV65wNzxGEEZ5UqcNcCa.gRQCcxuuZAelw3a7BtMnp1gaFHgV");
 		//driver.manage().deleteAllCookies();
 		driver.manage().timeouts().pageLoadTimeout(40, TimeUnit.SECONDS);
 	
@@ -71,14 +71,14 @@ public class ProcesoFVentas {
 		
 
 		//------------------------------------PLANES-----------------------
-		/*Aca se puede comentar o descomentar seg�n sea necesario probar*/
+		/*Aca se puede comentar o descomentar segun sea necesario probar*/
 		//Nelson
 		planesActualizado(driver);
 		Thread.sleep(4000);
 		
 		//-----------------------Seccion: Dispositivos
 		
-		dispositivos(driver, 1);
+		dispositivos(driver, 0);
 		
 		// Solo funciona al seleccionar Compra de Equipo
 		//RoynerClass.seleccionDeDispositivo(driver);
@@ -86,7 +86,7 @@ public class ProcesoFVentas {
 		
 		//----------- Check: No estoy interesado en estos equipos.
 		
-		desinteresEquipo(driver);
+		//desinteresEquipo(driver);
 		
 		
 		//-----------------------Seccion: Validacion de Dispositivos
@@ -97,7 +97,7 @@ public class ProcesoFVentas {
 		/* Para esta seccion es necesario comentar uno de las 2 lineas de codigos siguientes (IMEI o Dispositivos)*/
 		
 		//MatiasClass.validacionImei(driver);
-		//MatiasClass.validacionDispositivo(driver);
+		/*MatiasClass.*/validacionDispositivo(driver);
 		
 		
 		
