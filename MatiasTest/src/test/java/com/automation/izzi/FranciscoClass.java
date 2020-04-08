@@ -31,6 +31,8 @@ public class FranciscoClass {
 		Actions actions = new Actions(driver);
 		actions.moveToElement(boton).click().build().perform();
 		
+		driver.switchTo().defaultContent();
+		
 		//driver.findElement(By.xpath("//button[contains(@class,'neutral')][3])")). click();
 		
 		/*WebDriverWait wait = new WebDriverWait(driver, 40);
