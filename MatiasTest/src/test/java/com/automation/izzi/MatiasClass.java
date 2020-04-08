@@ -38,29 +38,34 @@ public class MatiasClass{
 		
 		WebDriverWait  wait = new WebDriverWait (driver, 40);
 		wait.until(ExpectedConditions.invisibilityOfElementLocated(By.className("slds-spinner_container")));
-		List<WebElement> cantIFrames = driver.findElements(By.tagName("iFrame"));
-		int size = cantIFrames.size();
-		driver.switchTo().frame("iFrameResizer3");
-		//wait.until(ExpectedConditions.frameToBeAvailableAndSwitchToIt(size - 1));
+		
+		WebElement frame = new WebDriverWait(driver, 40)
+				.until(ExpectedConditions.elementToBeClickable(By.id("iFrameResizer3")));
+		frame.click();
+		driver.switchTo().frame(frame);
+		
+		//wait.until(ExpectedConditions.frameToBeAvailableAndSwitchToIt(frame));
 		Thread.sleep(2000);
 		
 		//Descomentar cualquiera de las dos siguientes lineas, de acuerdo a la respuesta que desea colocar
 		
 		//Esta opcion afirma que el cliente cuenta con un nro NIP
-		//WebElement myDynamicElement = 
-		//		(new WebDriverWait(driver, 10)).until(ExpectedConditions.presenceOfElementLocated(By.id("RadioNIP")));
-		wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//form[@id='a2c3K0000000hGOQAY-4']")));
-		List<WebElement> boton = driver.findElements(By.xpath("/html/body/span/div/span/div/ng-view/div/div/bptree/child[4]/div/section/form/div[1]/div/child[1]/div/ng-form/div/div[1]"));
-		Thread.sleep(2000);
-		boton.get(0).findElement(By.xpath("./..")).click();
+		new WebDriverWait(driver, 40)
+			.until(ExpectedConditions.elementToBeClickable(By.id("RadioNIP")));
+		List<WebElement> opt = driver.findElements(By.xpath("//*[@id=\'RadioNIP\']"));
+		Thread.sleep(1000);
+		opt.get(0).findElement(By.xpath("./..")).click();
+
 		
 		//Esta opcion niega que el cliente cuenta con un nro NIP
 		//driver.findElement(By.xpath("//input[@id='RadioNIP' and @value='No']")).click();
 		
-		Thread.sleep(2000);
+		Thread.sleep(1000);
 		driver.findElement(By.xpath("//input[@id='NIP']")).sendKeys("4631");
+		Thread.sleep(1000);
 		
-		
+		driver.findElement(By.id("StepNumeroNip_nextBtn")).click();
+		Thread.sleep(2000);
 	}
 	
 }
