@@ -68,4 +68,10 @@ public class MatiasClass{
 		Thread.sleep(2000);
 	}
 	
+	
+	public static void pasoDocumentacion (WebDriver driver) {
+		WebDriverWait wait = new WebDriverWait (driver, 40);
+		wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//div[@id=\\'Documentation_nextBtn\\']")));
+		driver.findElement(By.xpath("//div[@id=\'Documentation_nextBtn\']")).click();
+	}
 }
