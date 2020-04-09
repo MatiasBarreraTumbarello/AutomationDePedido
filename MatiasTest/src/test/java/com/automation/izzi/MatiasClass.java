@@ -61,7 +61,7 @@ public class MatiasClass{
 		//driver.findElement(By.xpath("//input[@id='RadioNIP' and @value='No']")).click();
 		
 		Thread.sleep(1000);
-		driver.findElement(By.xpath("//input[@id='NIP']")).sendKeys("4631");
+		driver.findElement(By.xpath("//input[@id='NIP']")).sendKeys("3545");
 		Thread.sleep(1000);
 		
 		driver.findElement(By.id("StepNumeroNip_nextBtn")).click();

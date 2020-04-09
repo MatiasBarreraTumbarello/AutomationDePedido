@@ -40,6 +40,6 @@ public class ProcesoPortabilidad {
 		RoynerClass.NumeroAPortar(driver);
 		
 		//La siguiente linea realiza la portabildiad del nro por lo que no se va a poder volver a realizar la portabilidad
-		//MatiasClass.pasoDocumentacion(driver);
+		MatiasClass.pasoDocumentacion(driver);
 	}
 }
