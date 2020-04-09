@@ -63,7 +63,7 @@ public class NelsonClass {
 		WebDriverWait ewait = new WebDriverWait(driver, 30);
 		ewait.until(ExpectedConditions.invisibilityOfElementLocated(By.className("slds-spinner_container")));
 		
-		List<WebElement> radioButtons =driver.findElements(By.xpath("//span[@class=\"slds-radio--faux\"]"));
+		List<WebElement> radioButtons =driver.findElements(By.xpath("//span[@class=\'slds-radio--faux\']"));
 		radioButtons.get(0).click();
 		driver.findElement(By.id("StepShowActiveLines_nextBtn")).click();
 		
