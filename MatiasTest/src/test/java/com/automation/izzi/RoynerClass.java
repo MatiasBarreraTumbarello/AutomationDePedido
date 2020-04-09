@@ -45,13 +45,17 @@ public class RoynerClass {
 	}
 	
 	public static void NumeroAPortar(WebDriver driver) throws InterruptedException {
-		WebElement company = new WebDriverWait(driver, 40)
-		    	.until(ExpectedConditions.elementToBeClickable(By.id("SelectCompany")));
-		Select picklist = new Select(company);
+		new WebDriverWait(driver, 40)
+			.until(ExpectedConditions.invisibilityOfElementLocated(By.className("slds-spinner_container")));
+		Select picklist = new Select(driver.findElement(By.id("SelectCompany")));
 		picklist.selectByIndex(2);
 		Thread.sleep(1000);
-		driver.findElement(By.id("PortabilityNumber")).sendKeys("1112131415");
+		driver.findElement(By.id("PortabilityNumber")).sendKeys("1112131416");
 		Thread.sleep(1000);
+		driver.findElement(By.id("IPValidateMSISDN")).click();
+		Thread.sleep(1000);
+		new WebDriverWait(driver, 40)
+			.until(ExpectedConditions.invisibilityOfElementLocated(By.className("slds-spinner_container")));
 		driver.findElement(By.id("StepPortabilityNumber_nextBtn")).click();
 		Thread.sleep(2000);
 	}
