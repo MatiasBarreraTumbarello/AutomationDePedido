@@ -34,6 +34,8 @@ public class MatiasClass{
 	
 	//Este metodo se utiliza en el primer paso del flujo de portabilidad
 	public static void codigoNIP(WebDriver driver) throws InterruptedException{
+		//*[@id="RadioNIP|0"]/div/div[1]/label[1]
+		
 		WebDriverWait  wait = new WebDriverWait (driver, 40);
 		wait.until(ExpectedConditions.invisibilityOfElementLocated(By.className("slds-spinner_container")));
 		
@@ -53,16 +55,23 @@ public class MatiasClass{
 		List<WebElement> opt = driver.findElements(By.xpath("//*[@id=\'RadioNIP\']"));
 		Thread.sleep(1000);
 		opt.get(0).findElement(By.xpath("./..")).click();
+
 		
 		//Esta opcion niega que el cliente cuenta con un nro NIP
 		//driver.findElement(By.xpath("//input[@id='RadioNIP' and @value='No']")).click();
 		
 		Thread.sleep(1000);
-		driver.findElement(By.xpath("//input[@id='NIP']")).sendKeys("2123");
+		driver.findElement(By.xpath("//input[@id='NIP']")).sendKeys("3545");
 		Thread.sleep(1000);
 		
 		driver.findElement(By.id("StepNumeroNip_nextBtn")).click();
 		Thread.sleep(2000);
 	}
 	
+	
+	public static void pasoDocumentacion (WebDriver driver) {
+		WebDriverWait wait = new WebDriverWait (driver, 40);
+		wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//div[@id=\\'Documentation_nextBtn\\']")));
+		driver.findElement(By.xpath("//div[@id=\'Documentation_nextBtn\']")).click();
+	}
 }

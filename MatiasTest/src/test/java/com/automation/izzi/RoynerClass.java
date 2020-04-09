@@ -56,6 +56,7 @@ public class RoynerClass {
 		Thread.sleep(1000);
 		new WebDriverWait(driver, 40)
 			.until(ExpectedConditions.invisibilityOfElementLocated(By.className("slds-spinner_container")));
+		Thread.sleep(1000);
 		driver.findElement(By.id("StepPortabilityNumber_nextBtn")).click();
 		Thread.sleep(5000);
 		
