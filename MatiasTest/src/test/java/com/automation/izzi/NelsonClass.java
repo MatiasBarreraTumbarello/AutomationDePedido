@@ -59,8 +59,6 @@ public class NelsonClass {
 	
 	//Pertenece al proceso de portabilidad.
 	public static void PortabilidadSeleccionDeLinea(WebDriver driver) {
-
-	
 		
 		WebDriverWait ewait = new WebDriverWait(driver, 30);
 		ewait.until(ExpectedConditions.invisibilityOfElementLocated(By.className("slds-spinner_container")));
