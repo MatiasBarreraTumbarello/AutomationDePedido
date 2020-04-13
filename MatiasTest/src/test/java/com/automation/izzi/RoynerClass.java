@@ -50,13 +50,15 @@ public class RoynerClass {
 		Select picklist = new Select(driver.findElement(By.id("SelectCompany")));
 		picklist.selectByIndex(2);
 		Thread.sleep(1000);
-		driver.findElement(By.id("PortabilityNumber")).sendKeys("1112131416");
+		driver.findElement(By.id("PortabilityNumber")).sendKeys("1112131448");
 		Thread.sleep(1000);
 		driver.findElement(By.id("IPValidateMSISDN")).click();
 		Thread.sleep(1000);
 		new WebDriverWait(driver, 40)
 			.until(ExpectedConditions.invisibilityOfElementLocated(By.className("slds-spinner_container")));
+		Thread.sleep(1000);
 		driver.findElement(By.id("StepPortabilityNumber_nextBtn")).click();
-		Thread.sleep(2000);
+		Thread.sleep(5000);
+		
 	}
 }
