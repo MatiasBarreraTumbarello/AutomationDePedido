@@ -61,7 +61,7 @@ public class MatiasClass{
 		//driver.findElement(By.xpath("//input[@id='RadioNIP' and @value='No']")).click();
 		
 		Thread.sleep(1000);
-		driver.findElement(By.xpath("//input[@id='NIP']")).sendKeys("3545");
+		driver.findElement(By.xpath("//input[@id='NIP']")).sendKeys("9158");
 		Thread.sleep(1000);
 		
 		driver.findElement(By.id("StepNumeroNip_nextBtn")).click();
@@ -71,7 +71,19 @@ public class MatiasClass{
 	
 	public static void pasoDocumentacion (WebDriver driver) {
 		WebDriverWait wait = new WebDriverWait (driver, 40);
-		wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//div[@id=\\'Documentation_nextBtn\\']")));
-		driver.findElement(By.xpath("//div[@id=\'Documentation_nextBtn\']")).click();
+		
+		driver.switchTo().defaultContent();
+		
+		wait.until(ExpectedConditions.invisibilityOfElementLocated(By.className("slds-spinner_container")));
+		
+		List<WebElement> iframe = driver.findElements(By.xpath("//iframe"));
+		int dimension = iframe.size();
+		iframe.get(dimension-1).click();
+		driver.switchTo().frame(dimension-1);
+		
+		wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//div[@id='Documentation_nextBtn']")));//*[@id="Documentation_nextBtn"]
+		driver.findElement(By.xpath("//div[@id='Documentation_nextBtn']")).click();
+		
+		driver.switchTo().defaultContent();
 	}
 }
