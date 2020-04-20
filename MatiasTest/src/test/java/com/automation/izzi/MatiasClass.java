@@ -113,12 +113,17 @@ public class MatiasClass{
 	public static void seleccioneSim (WebDriver driver) throws InterruptedException{
 		WebDriverWait wait = new WebDriverWait (driver, 40);
 		wait.until(ExpectedConditions.invisibilityOfElementLocated(By.className("slds-spinner_container")));
+		
 		List<WebElement> frames = driver.findElements(By.xpath("//iframe"));
 		int tamanio = frames.size() - 1;
 		wait.until(ExpectedConditions.elementToBeClickable(frames.get(tamanio)));
+		frames.get(tamanio).click();
 		driver.switchTo().frame(tamanio);
+		
+		Thread.sleep(2000);
 		wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id='ChooseSim']/div/ng-include/div/div[2]/ul/li/div")));
 		driver.findElement(By.xpath("//*[@id='ChooseSim']/div/ng-include/div/div[2]/ul/li/div")).click();
+		
 /*		driver.findElement(By.xpath("//ng-form[@id='ChooseSim']/div/ng-include/div/div[2]/ul/li/div")).click();
 		wait.until(ExpectedConditions.invisibilityOfElementLocated(By.className("slds-spinner_container")));
 		driver.findElement(By.xpath("//div[@id='Step1_nextBtn']")).click();*/
