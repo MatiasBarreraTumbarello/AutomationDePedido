@@ -3,6 +3,7 @@ package com.automation.izzi;
 import java.util.List;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -85,5 +86,41 @@ public class MatiasClass{
 		driver.findElement(By.xpath("//div[@id='Documentation_nextBtn']")).click();
 		
 		driver.switchTo().defaultContent();
+	}
+	
+	public static void equiposCompatibles (WebDriver driver) {
+		WebDriverWait wait = new WebDriverWait (driver, 40);
+		
+		wait.until(ExpectedConditions.elementToBeClickable(By.id("RadioBuyDevices|0")));
+		
+		List<WebElement> radioButton = driver.findElements(By.id("RadioBuyDevices|0"));
+		
+		radioButton.get(1).findElement(By.xpath("./..")).click();
+	}
+	
+	public static void cambioDeSim (WebDriver driver) throws InterruptedException{
+		Thread.sleep(2000);
+		WebElement frame = driver.findElement(By.id("iFrameResizer2"));
+		JavascriptExecutor executor = (JavascriptExecutor)driver;
+		executor.executeScript("arguments[0].style.display = 'block'; arguments[0].style.zIndex = '999999';", frame);
+		driver.switchTo().frame(frame);
+		Thread.sleep(2000);
+		List<WebElement> links = driver.findElements(By.linkText("Cambio de SIM"));
+		executor.executeScript("arguments[0].click();", links.get(0));
+		driver.switchTo().defaultContent();
+	}
+	
+	public static void seleccioneSim (WebDriver driver) throws InterruptedException{
+		WebDriverWait wait = new WebDriverWait (driver, 40);
+		wait.until(ExpectedConditions.invisibilityOfElementLocated(By.className("slds-spinner_container")));
+		List<WebElement> frames = driver.findElements(By.xpath("//iframe"));
+		int tamanio = frames.size() - 1;
+		wait.until(ExpectedConditions.elementToBeClickable(frames.get(tamanio)));
+		driver.switchTo().frame(tamanio);
+		wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//li[@class='slds-col izzi-col slds-size--2-of-12 ng-scope']")));
+		driver.findElement(By.xpath("//li[@class='slds-col izzi-col slds-size--2-of-12 ng-scope']")).click();
+/*		driver.findElement(By.xpath("//ng-form[@id='ChooseSim']/div/ng-include/div/div[2]/ul/li/div")).click();
+		wait.until(ExpectedConditions.invisibilityOfElementLocated(By.className("slds-spinner_container")));
+		driver.findElement(By.xpath("//div[@id='Step1_nextBtn']")).click();*/
 	}
 }
