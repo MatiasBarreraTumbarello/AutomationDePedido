@@ -116,19 +116,17 @@ public class MatiasClass{
 		List<WebElement> links = driver.findElements(By.linkText("Cambio de SIM"));
 		executor.executeScript("arguments[0].click();", links.get(0));
 		driver.switchTo().defaultContent();
-	}
-	
-	public static void seleccioneSim (WebDriver driver) throws InterruptedException{
+		//Paso 2
 		WebDriverWait wait = new WebDriverWait (driver, 40);
 		wait.until(ExpectedConditions.invisibilityOfElementLocated(By.className("slds-spinner_container")));
 		List<WebElement> frames = driver.findElements(By.xpath("//iframe"));
 		int tamanio = frames.size() - 1;
 		wait.until(ExpectedConditions.elementToBeClickable(frames.get(tamanio)));
 		driver.switchTo().frame(tamanio);
-		wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id='ChooseSim']/div/ng-include/div/div[2]/ul/li/div")));
-		driver.findElement(By.xpath("//*[@id='ChooseSim']/div/ng-include/div/div[2]/ul/li/div")).click();
-/*		driver.findElement(By.xpath("//ng-form[@id='ChooseSim']/div/ng-include/div/div[2]/ul/li/div")).click();
-		wait.until(ExpectedConditions.invisibilityOfElementLocated(By.className("slds-spinner_container")));
-		driver.findElement(By.xpath("//div[@id='Step1_nextBtn']")).click();*/
+		Thread.sleep(2000);
+		wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//*[@id=\"ChooseSim\"]/div/ng-include/div/div[2]/ul/li")));
+		driver.findElement(By.xpath("//*[@id=\"ChooseSim\"]/div/ng-include/div/div[2]/ul/li")).click();
 	}
+	
+
 }
