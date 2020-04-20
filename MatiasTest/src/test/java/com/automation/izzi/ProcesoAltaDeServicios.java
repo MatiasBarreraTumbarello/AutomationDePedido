@@ -30,9 +30,9 @@ public class ProcesoAltaDeServicios {
 		driver = new ChromeDriver();
 		driver.manage().window().maximize();
 
-		driver.get(" https://test1dom--sittest.my.salesforce.com/secur/frontdoor.jsp?sid=00D3K0000008jQa!ARwAQCL4JlpszKvafhfjWfG.6aiPQCeOr0OOBz_u3K.K0Gb.yT0vhHeks09Pb1qumPGEdH8G2NeZDMZS18087xDzzM9pp8Dm");
+		driver.get("https://test1dom--sittest.my.salesforce.com/secur/frontdoor.jsp?sid=00D3K0000008jQa!ARwAQKqOWdozya.BG9zeiOTFpX38eIXZWd_iojFro6bTekpA5h6O34rZj43kyxrxWjMLUP3mluXgRjWu6EX9QpeNPsef.wgL");
 
-		driver.get("https://test1dom--sittest.lightning.force.com/lightning/r/Account/0013K000005YuoUQAS/view");
+		driver.get("https://test1dom--sittest.lightning.force.com/lightning/r/Account/001c000002JvBrCAAV/view");
 
 		driver.manage().timeouts().pageLoadTimeout(40, TimeUnit.SECONDS);
 		
