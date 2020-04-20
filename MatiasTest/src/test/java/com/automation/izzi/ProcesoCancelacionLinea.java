@@ -49,17 +49,21 @@ private WebDriver driver;
 		executor.executeScript("arguments[0].click();", boton);
 		
 		driver.switchTo().defaultContent();
-		
+		linea(driver);
 	}
 	
 	public void linea(WebDriver driver)throws InterruptedException {
-		WebDriverWait ewait = new WebDriverWait(driver, 30);
+		/*WebDriverWait ewait = new WebDriverWait(driver, 30);
 		ewait.until(ExpectedConditions.invisibilityOfElementLocated(By.className("slds-spinner_container")));
+		Thread.sleep(1000);
+		List<WebElement> radioButton =driver.findElements(By.xpath("//span[@class='slds-radio lineRadio']"));
+		radioButton.get(1).findElement(By.xpath("./..")).click();*/
 		
-		List<WebElement> radioButton =driver.findElements(By.xpath("//input[@id=\"radio-button-label-line-0\"]/span[1]"));
-		radioButton.get(1).click();
-		
+		new WebDriverWait(driver, 30)
+		.until(ExpectedConditions.elementToBeClickable(By.id("slds-radio_faux")));
+	List<WebElement> opt = driver.findElements(By.xpath("//span[@class='slds-radio_faux']"));
 		Thread.sleep(5000);
-		
+		opt.get(0).findElement(By.xpath("./..")).click();
+		Thread.sleep(1000);
 }
 }
