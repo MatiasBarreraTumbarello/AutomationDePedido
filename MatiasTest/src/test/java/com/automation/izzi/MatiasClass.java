@@ -62,7 +62,15 @@ public class MatiasClass{
 		//driver.findElement(By.xpath("//input[@id='RadioNIP' and @value='No']")).click();
 		
 		Thread.sleep(1000);
+
+
+		driver.findElement(By.xpath("//input[@id='NIP']")).sendKeys("4632");
+
+	//	driver.findElement(By.xpath("//input[@id='NIP']")).sendKeys("9158");
+
+
 		driver.findElement(By.xpath("//input[@id='NIP']")).sendKeys("9168");
+
 		Thread.sleep(1000);
 		
 		driver.findElement(By.id("StepNumeroNip_nextBtn")).click();
@@ -108,9 +116,7 @@ public class MatiasClass{
 		List<WebElement> links = driver.findElements(By.linkText("Cambio de SIM"));
 		executor.executeScript("arguments[0].click();", links.get(0));
 		driver.switchTo().defaultContent();
-	}
-	
-	public static void seleccioneSim (WebDriver driver) throws InterruptedException{
+		//Paso 2
 		WebDriverWait wait = new WebDriverWait (driver, 40);
 		wait.until(ExpectedConditions.invisibilityOfElementLocated(By.className("slds-spinner_container")));
 		
@@ -119,6 +125,7 @@ public class MatiasClass{
 		wait.until(ExpectedConditions.elementToBeClickable(frames.get(tamanio)));
 		frames.get(tamanio).click();
 		driver.switchTo().frame(tamanio);
+<<<<<<< HEAD
 		
 		Thread.sleep(2000);
 		wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id='ChooseSim']/div/ng-include/div/div[2]/ul/li/div")));
@@ -127,5 +134,12 @@ public class MatiasClass{
 /*		driver.findElement(By.xpath("//ng-form[@id='ChooseSim']/div/ng-include/div/div[2]/ul/li/div")).click();
 		wait.until(ExpectedConditions.invisibilityOfElementLocated(By.className("slds-spinner_container")));
 		driver.findElement(By.xpath("//div[@id='Step1_nextBtn']")).click();*/
+=======
+		Thread.sleep(2000);
+		wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//*[@id=\"ChooseSim\"]/div/ng-include/div/div[2]/ul/li")));
+		driver.findElement(By.xpath("//*[@id=\"ChooseSim\"]/div/ng-include/div/div[2]/ul/li")).click();
+>>>>>>> branch 'master' of https://github.com/MatiasBarreraTumbarello/AutomationDePedido.git
 	}
+	
+
 }

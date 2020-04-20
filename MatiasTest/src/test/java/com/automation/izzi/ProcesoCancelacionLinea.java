@@ -49,6 +49,7 @@ private WebDriver driver;
 		executor.executeScript("arguments[0].click();", boton);
 		
 		driver.switchTo().defaultContent();
+		linea(driver);
 		
 	}
 	
@@ -56,10 +57,27 @@ private WebDriver driver;
 		WebDriverWait ewait = new WebDriverWait(driver, 30);
 		ewait.until(ExpectedConditions.invisibilityOfElementLocated(By.className("slds-spinner_container")));
 		
-		List<WebElement> radioButton =driver.findElements(By.xpath("//input[@id=\"radio-button-label-line-0\"]/span[1]"));
-		radioButton.get(1).click();
+		WebElement frame = new WebDriverWait(driver, 40)
+				.until(ExpectedConditions.elementToBeClickable(By.id("iFrameResizer3")));
+		frame.click();
+		driver.switchTo().frame(frame);
+		
+		ewait.until(ExpectedConditions.elementToBeClickable(By.name("Line-options")));
+		List<WebElement> radioButton = driver.findElements(By.name("Line-options"));
+		Thread.sleep(1000);
+		JavascriptExecutor executor = (JavascriptExecutor)driver;
+		executor.executeScript("arguments[0].click();", radioButton.get(1));
+		//radioButton.get(0).findElement(By.xpath("./..")).click();
 		
 		Thread.sleep(5000);
 		
+		driver.findElement(By.id("SelectLines_nextBtn")).click();
+		Thread.sleep(3000);
+		
+		driver.findElement(By.id("stepConfirmationCancelLinea_nextBtn")).click();
+		Thread.sleep(2000);
+		
+		driver.findElement(By.xpath("//button[@class= 'slds-button slds-button_brand ng-binding']")).click();
+		Thread.sleep(2000);
 }
 }
