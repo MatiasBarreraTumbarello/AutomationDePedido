@@ -117,8 +117,8 @@ public class MatiasClass{
 		int tamanio = frames.size() - 1;
 		wait.until(ExpectedConditions.elementToBeClickable(frames.get(tamanio)));
 		driver.switchTo().frame(tamanio);
-		wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//li[@class='slds-col izzi-col slds-size--2-of-12 ng-scope']")));
-		driver.findElement(By.xpath("//li[@class='slds-col izzi-col slds-size--2-of-12 ng-scope']")).click();
+		wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id='ChooseSim']/div/ng-include/div/div[2]/ul/li/div")));
+		driver.findElement(By.xpath("//*[@id='ChooseSim']/div/ng-include/div/div[2]/ul/li/div")).click();
 /*		driver.findElement(By.xpath("//ng-form[@id='ChooseSim']/div/ng-include/div/div[2]/ul/li/div")).click();
 		wait.until(ExpectedConditions.invisibilityOfElementLocated(By.className("slds-spinner_container")));
 		driver.findElement(By.xpath("//div[@id='Step1_nextBtn']")).click();*/
