@@ -50,20 +50,34 @@ private WebDriver driver;
 		
 		driver.switchTo().defaultContent();
 		linea(driver);
+		
 	}
 	
 	public void linea(WebDriver driver)throws InterruptedException {
-		/*WebDriverWait ewait = new WebDriverWait(driver, 30);
+		WebDriverWait ewait = new WebDriverWait(driver, 30);
 		ewait.until(ExpectedConditions.invisibilityOfElementLocated(By.className("slds-spinner_container")));
-		Thread.sleep(1000);
-		List<WebElement> radioButton =driver.findElements(By.xpath("//span[@class='slds-radio lineRadio']"));
-		radioButton.get(1).findElement(By.xpath("./..")).click();*/
 		
-		new WebDriverWait(driver, 30)
-		.until(ExpectedConditions.elementToBeClickable(By.id("slds-radio_faux")));
-	List<WebElement> opt = driver.findElements(By.xpath("//span[@class='slds-radio_faux']"));
-		Thread.sleep(5000);
-		opt.get(0).findElement(By.xpath("./..")).click();
+		WebElement frame = new WebDriverWait(driver, 40)
+				.until(ExpectedConditions.elementToBeClickable(By.id("iFrameResizer3")));
+		frame.click();
+		driver.switchTo().frame(frame);
+		
+		ewait.until(ExpectedConditions.elementToBeClickable(By.name("Line-options")));
+		List<WebElement> radioButton = driver.findElements(By.name("Line-options"));
 		Thread.sleep(1000);
+		JavascriptExecutor executor = (JavascriptExecutor)driver;
+		executor.executeScript("arguments[0].click();", radioButton.get(1));
+		//radioButton.get(0).findElement(By.xpath("./..")).click();
+		
+		Thread.sleep(5000);
+		
+		driver.findElement(By.id("SelectLines_nextBtn")).click();
+		Thread.sleep(3000);
+		
+		driver.findElement(By.id("stepConfirmationCancelLinea_nextBtn")).click();
+		Thread.sleep(2000);
+		
+		driver.findElement(By.xpath("//button[@class= 'slds-button slds-button_brand ng-binding']")).click();
+		Thread.sleep(2000);
 }
 }
