@@ -66,10 +66,18 @@ private WebDriver driver;
 		List<WebElement> radioButton = driver.findElements(By.name("Line-options"));
 		Thread.sleep(1000);
 		JavascriptExecutor executor = (JavascriptExecutor)driver;
-		executor.executeScript("arguments[0].click();", radioButton.get(0));
+		executor.executeScript("arguments[0].click();", radioButton.get(1));
 		//radioButton.get(0).findElement(By.xpath("./..")).click();
 		
 		Thread.sleep(5000);
 		
+		driver.findElement(By.id("SelectLines_nextBtn")).click();
+		Thread.sleep(3000);
+		
+		driver.findElement(By.id("stepConfirmationCancelLinea_nextBtn")).click();
+		Thread.sleep(2000);
+		
+		driver.findElement(By.xpath("//button[@class= 'slds-button slds-button_brand ng-binding']")).click();
+		Thread.sleep(2000);
 }
 }
