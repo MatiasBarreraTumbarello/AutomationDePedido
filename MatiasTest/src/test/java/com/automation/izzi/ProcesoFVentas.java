@@ -27,7 +27,8 @@ public class ProcesoFVentas {
 		System.setProperty("webdriver.chrome.driver", "./src/test/resources/chromedriver/chromedriver.exe");
 		driver = new ChromeDriver();
 		driver.manage().window().maximize();
-		driver.get("https://test1dom--sittest.my.salesforce.com/secur/frontdoor.jsp?sid=00D3K0000008jQa!ARwAQJOz_Arp8wkl4HUYNx5csyUoyHfWKZGLmc3l9aeHCP2nV65wNzxGEEZ5UqcNcCa.gRQCcxuuZAelw3a7BtMnp1gaFHgV");
+		driver.get("https://test1dom--sittest.my.salesforce.com/secur/frontdoor.jsp?sid=00D3K0000008jQa!ARwAQPy_r3UP1WkVZPGR_3_oPxxIqZj52rlc08KTAAHqS1.kat7J8VS2iycQmfajWWaIisXnq7eQCX0J9VCX.ybGAVU6a5Az");
+
 		//driver.manage().deleteAllCookies();
 		driver.manage().timeouts().pageLoadTimeout(40, TimeUnit.SECONDS);
 	
@@ -243,9 +244,8 @@ public class ProcesoFVentas {
 		}
 	}
 	
-	public static void validacionImei(WebDriver driver) {
-	{
-		try {
+	public static void validacionImei(WebDriver driver) throws InterruptedException {
+
 			int tiempo= 5000;
 			new WebDriverWait(driver, 40)
 			        .until(ExpectedConditions.elementToBeClickable(By.id("RadioSelectMethod")));
@@ -259,13 +259,10 @@ public class ProcesoFVentas {
 			Thread.sleep(tiempo);
 			driver.findElement(By.xpath("//div[@id='StepApprovedDevice_nextBtn']")).click();
 			Thread.sleep(tiempo);
-				} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			}
-		}	
+			
 		
 	}
+	
 		
 	//Este metodo se utiliza una vez elegido la opcion "Trae tu equipo a IZZI" en la seccion: Dispositivo
 	//Solo puede elegir entre la validacion por IMEI o validacion por disposiivo
