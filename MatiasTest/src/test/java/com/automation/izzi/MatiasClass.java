@@ -6,6 +6,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
@@ -116,29 +117,26 @@ public class MatiasClass{
 		List<WebElement> links = driver.findElements(By.linkText("Cambio de SIM"));
 		executor.executeScript("arguments[0].click();", links.get(0));
 		driver.switchTo().defaultContent();
-		//Paso 2
-		WebDriverWait wait = new WebDriverWait (driver, 40);
+	}
+		
+	public static void selecionSim (WebDriver driver) throws InterruptedException {
+		
+		WebDriverWait wait = new WebDriverWait(driver, 30);
+		
 		wait.until(ExpectedConditions.invisibilityOfElementLocated(By.className("slds-spinner_container")));
 		
-		List<WebElement> frames = driver.findElements(By.xpath("//iframe"));
-		int tamanio = frames.size() - 1;
-		wait.until(ExpectedConditions.elementToBeClickable(frames.get(tamanio)));
-		frames.get(tamanio).click();
-		driver.switchTo().frame(tamanio);
-<<<<<<< HEAD
-		
+		WebElement frame = driver.findElement(By.id("iFrameResizer1"));
+		/*JavascriptExecutor executor = (JavascriptExecutor)driver;
+		executor.executeScript("arguments[0].style.display = 'block'; arguments[0].style.zIndex = '999999';", frame);
+		driver.switchTo().frame(frame);
 		Thread.sleep(2000);
-		wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id='ChooseSim']/div/ng-include/div/div[2]/ul/li/div")));
-		driver.findElement(By.xpath("//*[@id='ChooseSim']/div/ng-include/div/div[2]/ul/li/div")).click();
+		List<WebElement> boton = driver.findElements(By.tagName("img"));
+		executor.executeScript("arguments[0].click();", boton);*/
+		Actions mov = new Actions (driver);
+		mov.moveByOffset(100, -100);
 		
-/*		driver.findElement(By.xpath("//ng-form[@id='ChooseSim']/div/ng-include/div/div[2]/ul/li/div")).click();
-		wait.until(ExpectedConditions.invisibilityOfElementLocated(By.className("slds-spinner_container")));
-		driver.findElement(By.xpath("//div[@id='Step1_nextBtn']")).click();*/
-=======
-		Thread.sleep(2000);
-		wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//*[@id=\"ChooseSim\"]/div/ng-include/div/div[2]/ul/li")));
-		driver.findElement(By.xpath("//*[@id=\"ChooseSim\"]/div/ng-include/div/div[2]/ul/li")).click();
->>>>>>> branch 'master' of https://github.com/MatiasBarreraTumbarello/AutomationDePedido.git
+		
+		driver.switchTo().defaultContent();	
 	}
 	
 
