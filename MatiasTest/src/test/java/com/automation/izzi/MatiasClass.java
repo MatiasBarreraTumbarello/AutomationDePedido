@@ -126,6 +126,9 @@ public class MatiasClass{
 		Thread.sleep(2000);
 		WebElement opcion = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//*[@id=\"ChooseSim\"]/div/ng-include/div/div[2]/ul/li")));
 		opcion.click();
+		driver.findElement(By.xpath("//*[@id=\'Step1_nextBtn\']")).click();
+		//Paso3
+		
 	}
 	
 
