@@ -124,19 +124,16 @@ public class MatiasClass{
 		WebDriverWait wait = new WebDriverWait(driver, 30);
 		
 		wait.until(ExpectedConditions.invisibilityOfElementLocated(By.className("slds-spinner_container")));
-		
-		WebElement frame = driver.findElement(By.id("iFrameResizer1"));
-		/*JavascriptExecutor executor = (JavascriptExecutor)driver;
-		executor.executeScript("arguments[0].style.display = 'block'; arguments[0].style.zIndex = '999999';", frame);
-		driver.switchTo().frame(frame);
+
+
+		WebElement iframe = wait.until(ExpectedConditions.elementToBeClickable(By.id("iFrameResizer3")));
+		iframe.click();
+		driver.switchTo().frame(iframe);
+
 		Thread.sleep(2000);
-		List<WebElement> boton = driver.findElements(By.tagName("img"));
-		executor.executeScript("arguments[0].click();", boton);*/
-		Actions mov = new Actions (driver);
-		mov.moveByOffset(100, -100);
-		
-		
-		driver.switchTo().defaultContent();	
+
+		WebElement opcion = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//*[@id=\"ChooseSim\"]/div/ng-include/div/div[2]/ul/li")));
+		opcion.click();
 	}
 	
 
