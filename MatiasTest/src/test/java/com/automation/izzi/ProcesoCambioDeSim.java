@@ -33,7 +33,7 @@ public class ProcesoCambioDeSim {
 	public void testScript() throws InterruptedException {
 	
 		MatiasClass.cambioDeSim(driver);
-		MatiasClass.seleccioneSim(driver);
+		
 	}
 
 }
