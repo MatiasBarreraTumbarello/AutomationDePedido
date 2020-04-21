@@ -119,13 +119,13 @@ public class MatiasClass{
 		//Paso 2
 		WebDriverWait wait = new WebDriverWait (driver, 40);
 		wait.until(ExpectedConditions.invisibilityOfElementLocated(By.className("slds-spinner_container")));
-		List<WebElement> frames = driver.findElements(By.xpath("//iframe"));
-		int tamanio = frames.size() - 1;
-		wait.until(ExpectedConditions.elementToBeClickable(frames.get(tamanio)));
-		driver.switchTo().frame(tamanio);
+
+		WebElement iframe = wait.until(ExpectedConditions.elementToBeClickable(By.id("iFrameResizer3")));
+		iframe.click();
+		driver.switchTo().frame(iframe);
 		Thread.sleep(2000);
-		wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//*[@id=\"ChooseSim\"]/div/ng-include/div/div[2]/ul/li")));
-		driver.findElement(By.xpath("//*[@id=\"ChooseSim\"]/div/ng-include/div/div[2]/ul/li")).click();
+		WebElement opcion = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//*[@id=\"ChooseSim\"]/div/ng-include/div/div[2]/ul/li")));
+		opcion.click();
 	}
 	
 

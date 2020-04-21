@@ -19,7 +19,7 @@ public class ProcesoCambioDeSim {
 		driver = new ChromeDriver();
 		driver.manage().window().maximize();
 
-		driver.get("https://test1dom--sittest.my.salesforce.com/secur/frontdoor.jsp?sid=00D3K0000008jQa!ARwAQBVfkMth.4rmDYSVQh8fTRP2DFn.P_dufeTxawAJEt93vuuJSeyfluWd5G51mNdu2sD1au99YrXo3Pr.TSoLM5KuxH1m");
+		driver.get("https://test1dom--sittest.my.salesforce.com/secur/frontdoor.jsp?sid=00D3K0000008jQa!ARwAQGBdI3GM6xpbj3g1o5HzF9Qj5wNe0fr2Jo7CYrb9s_rbUqN.aRuqd0rOT8FzO3JQmzNroxfUxlpgufquzKVw_1nmV3rU");
 
 		driver.get("https://test1dom--sittest.lightning.force.com/lightning/r/Account/001c000002JvBrCAAV/view");
 
