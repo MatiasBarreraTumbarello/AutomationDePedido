@@ -119,13 +119,29 @@ public class MatiasClass{
 		//Paso 2
 		WebDriverWait wait = new WebDriverWait (driver, 40);
 		wait.until(ExpectedConditions.invisibilityOfElementLocated(By.className("slds-spinner_container")));
-		List<WebElement> frames = driver.findElements(By.xpath("//iframe"));
-		int tamanio = frames.size() - 1;
-		wait.until(ExpectedConditions.elementToBeClickable(frames.get(tamanio)));
-		driver.switchTo().frame(tamanio);
+
+		WebElement iframe = wait.until(ExpectedConditions.elementToBeClickable(By.id("iFrameResizer3")));
+		iframe.click();
+		driver.switchTo().frame(iframe);
 		Thread.sleep(2000);
-		wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//*[@id=\"ChooseSim\"]/div/ng-include/div/div[2]/ul/li")));
-		driver.findElement(By.xpath("//*[@id=\"ChooseSim\"]/div/ng-include/div/div[2]/ul/li")).click();
+		WebElement opcion = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//*[@id=\"ChooseSim\"]/div/ng-include/div/div[2]/ul/li")));
+		opcion.click();
+		driver.findElement(By.xpath("//*[@id=\'Step1_nextBtn\']")).click();
+		//Paso3
+		WebDriverWait wait2 = new WebDriverWait (driver, 40);
+		wait2.until(ExpectedConditions.invisibilityOfElementLocated(By.className("slds-spinner_container")));
+		
+		driver.findElement(By.xpath("//*[@id=\'newIMSI\']")).sendKeys("123456789101113");
+		Thread.sleep(2000);
+		driver.findElement(By.xpath("//input[@id=\'newICCID\']")).sendKeys("12345678910111213143");
+		driver.findElement(By.xpath("//*[@id=\'Step2_nextBtn\']")).click();
+		//Paso4
+		WebDriverWait wait3 = new WebDriverWait (driver, 40);
+		wait3.until(ExpectedConditions.invisibilityOfElementLocated(By.className("slds-spinner_container")));
+		
+		Thread.sleep(2000);
+		driver.findElement(By.xpath("//*[@id=\'doneAction-137\']/div/div/div[3]/div/button")).click();
+		
 	}
 	
 
