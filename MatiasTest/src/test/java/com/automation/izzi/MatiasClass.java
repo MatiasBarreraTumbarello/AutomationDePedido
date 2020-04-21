@@ -131,10 +131,17 @@ public class MatiasClass{
 		WebDriverWait wait2 = new WebDriverWait (driver, 40);
 		wait2.until(ExpectedConditions.invisibilityOfElementLocated(By.className("slds-spinner_container")));
 		
-		driver.findElement(By.xpath("//*[@id=\'newIMSI\']")).sendKeys("123456789");
+		driver.findElement(By.xpath("//*[@id=\'newIMSI\']")).sendKeys("123456789101113");
 		Thread.sleep(2000);
-		driver.findElement(By.xpath("//input[@id=\'newICCID\']")).sendKeys("123456789");
-		//driver.findElement(By.xpath("//*[@id=\'Step2_nextBtn\']")).click();
+		driver.findElement(By.xpath("//input[@id=\'newICCID\']")).sendKeys("12345678910111213143");
+		driver.findElement(By.xpath("//*[@id=\'Step2_nextBtn\']")).click();
+		//Paso4
+		WebDriverWait wait3 = new WebDriverWait (driver, 40);
+		wait3.until(ExpectedConditions.invisibilityOfElementLocated(By.className("slds-spinner_container")));
+		
+		Thread.sleep(2000);
+		driver.findElement(By.xpath("//*[@id=\'doneAction-137\']/div/div/div[3]/div/button")).click();
+		
 	}
 	
 
