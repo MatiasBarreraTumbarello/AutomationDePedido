@@ -96,6 +96,7 @@ private WebDriver driver;
 		
 		List<WebElement> casos = driver.findElements(By.xpath("//span[@class = 'slds-radio_faux']"));
 		casos.get(0).click();
+		Thread.sleep(2000);
 		
 		driver.findElement(By.xpath("//div[@id='Casos_nextBtn']")).click();
 		Thread.sleep(2000);
