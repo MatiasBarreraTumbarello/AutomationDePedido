@@ -50,7 +50,9 @@ private WebDriver driver;
 		
 		driver.switchTo().defaultContent();
 		
-		CrearModificarCaso(1);
+		CrearModificarCaso(0);
+		descripcion();
+		
 	}
 	
 	public void CrearModificarCaso(int index) throws InterruptedException {
@@ -121,6 +123,6 @@ private WebDriver driver;
 		driver.findElement(By.xpath("//*[@id=\'Descripcion_nextBtn\']")).click();
 		
 		new WebDriverWait (driver, 40).until(ExpectedConditions.invisibilityOfElementLocated(By.className("slds-spinner_container")));
-		driver.findElement(By.xpath("//*[@id=\'doneAction-256\']/div/div/div[3]/div/button")).click();
+		driver.findElement(By.xpath("//button[@class='slds-button slds-button_brand ng-binding']")).click();
 	}
 }
