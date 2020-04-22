@@ -50,7 +50,9 @@ private WebDriver driver;
 		
 		driver.switchTo().defaultContent();
 		
-		CrearModificarCaso(1);
+		CrearModificarCaso(0);
+		descripcion();
+		
 	}
 	
 	public void CrearModificarCaso(int index) throws InterruptedException {
@@ -109,4 +111,22 @@ private WebDriver driver;
 	}
 	
 	
+
+
+	//Una vez que entramos a Crear caso. esto llenaria la descripcion del mismo y finaliza el proceso.
+	void descripcion () throws InterruptedException {
+		new WebDriverWait (driver, 40).until(ExpectedConditions.invisibilityOfElementLocated(By.className("slds-spinner_container")));
+		
+		driver.findElement(By.xpath("//*[@id=\'TextAreaAsunto\']")).sendKeys("hola");
+		Thread.sleep(1000);
+		driver.findElement(By.xpath("//*[@id=\'TextAreaDescripcion\']")).sendKeys("hola");
+		Thread.sleep(1000);
+		driver.findElement(By.xpath("//*[@id=\'TextAreaComentarios\']")).sendKeys("hola");
+		Thread.sleep(1000);
+		driver.findElement(By.xpath("//*[@id=\'Descripcion_nextBtn\']")).click();
+		
+		new WebDriverWait (driver, 40).until(ExpectedConditions.invisibilityOfElementLocated(By.className("slds-spinner_container")));
+		driver.findElement(By.xpath("//button[@class='slds-button slds-button_brand ng-binding']")).click();
+	}
+
 }
