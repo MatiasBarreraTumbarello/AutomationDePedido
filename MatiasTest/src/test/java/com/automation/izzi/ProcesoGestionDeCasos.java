@@ -90,12 +90,13 @@ private WebDriver driver;
 	}
 	
 	void Modificar() throws InterruptedException {
-		
+		Thread.sleep(3000);
 		new WebDriverWait (driver, 40).until(ExpectedConditions.invisibilityOfElementLocated(By.className("slds-spinner_container")));
 		new WebDriverWait (driver, 40).until(ExpectedConditions.elementToBeClickable(By.id("CaseSelect")));
 		
 		List<WebElement> casos = driver.findElements(By.xpath("//span[@class = 'slds-radio_faux']"));
 		casos.get(0).click();
+		Thread.sleep(2000);
 		
 		driver.findElement(By.xpath("//div[@id='Casos_nextBtn']")).click();
 		Thread.sleep(2000);
@@ -106,4 +107,6 @@ private WebDriver driver;
 		picklist.selectByIndex(1);
 		Thread.sleep(1000);
 	}
+	
+	
 }
