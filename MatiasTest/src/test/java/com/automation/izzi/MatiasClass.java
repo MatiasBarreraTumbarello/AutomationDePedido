@@ -6,6 +6,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
@@ -116,14 +117,21 @@ public class MatiasClass{
 		List<WebElement> links = driver.findElements(By.linkText("Cambio de SIM"));
 		executor.executeScript("arguments[0].click();", links.get(0));
 		driver.switchTo().defaultContent();
-		//Paso 2
-		WebDriverWait wait = new WebDriverWait (driver, 40);
+	}
+		
+	public static void selecionSim (WebDriver driver) throws InterruptedException {
+		
+		WebDriverWait wait = new WebDriverWait(driver, 30);
+		
 		wait.until(ExpectedConditions.invisibilityOfElementLocated(By.className("slds-spinner_container")));
+
 
 		WebElement iframe = wait.until(ExpectedConditions.elementToBeClickable(By.id("iFrameResizer3")));
 		iframe.click();
 		driver.switchTo().frame(iframe);
+
 		Thread.sleep(2000);
+
 		WebElement opcion = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//*[@id=\"ChooseSim\"]/div/ng-include/div/div[2]/ul/li")));
 		opcion.click();
 		driver.findElement(By.xpath("//*[@id=\'Step1_nextBtn\']")).click();
