@@ -50,8 +50,8 @@ private WebDriver driver;
 		
 		driver.switchTo().defaultContent();
 		
-		CrearModificarCaso(0);
-		descripcion();
+		CrearModificarCaso(1);
+		//descripcion();
 		
 	}
 	
@@ -77,7 +77,9 @@ private WebDriver driver;
 			Crear();
 		else
 			Modificar();
+		
 	}
+
 	
 	public void Crear() throws InterruptedException {
 		new WebDriverWait(driver, 40)
@@ -102,6 +104,8 @@ private WebDriver driver;
 		
 		driver.findElement(By.xpath("//div[@id='Casos_nextBtn']")).click();
 		Thread.sleep(2000);
+		
+		Edicion();
 	}
 
 	void SelectPicklist(String id) throws InterruptedException {
@@ -114,7 +118,8 @@ private WebDriver driver;
 
 
 	//Una vez que entramos a Crear caso. esto llenaria la descripcion del mismo y finaliza el proceso.
-	void descripcion () throws InterruptedException {
+	
+	/*void descripcion () throws InterruptedException {
 		new WebDriverWait (driver, 40).until(ExpectedConditions.invisibilityOfElementLocated(By.className("slds-spinner_container")));
 		
 		driver.findElement(By.xpath("//*[@id=\'TextAreaAsunto\']")).sendKeys("hola");
@@ -128,5 +133,21 @@ private WebDriver driver;
 		new WebDriverWait (driver, 40).until(ExpectedConditions.invisibilityOfElementLocated(By.className("slds-spinner_container")));
 		driver.findElement(By.xpath("//button[@class='slds-button slds-button_brand ng-binding']")).click();
 	}
-
+*/
+	
+	void Edicion() throws InterruptedException{
+		
+		Select picklist = new Select(driver.findElement(By.id("SelectEstado")));
+		picklist.selectByIndex(1);
+		Thread.sleep(1000);
+		
+		driver.findElement(By.xpath("//*[@id=\'TextAreaComentarios2\']")).sendKeys("Hi");
+		Thread.sleep(3000);
+		
+		driver.findElement(By.xpath("//div[@id='Edicion_nextBtn']")). click();
+		Thread.sleep(3000);
+		
+		new WebDriverWait (driver, 40).until(ExpectedConditions.invisibilityOfElementLocated(By.className("slds-spinner_container")));
+		driver.findElement(By.xpath("//button[@class='sslds-button slds-button_brand ng-binding']")).click();
+	}
 }
