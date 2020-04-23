@@ -24,8 +24,7 @@ public class ProcesoCambioDeServicio {
 		driver = new ChromeDriver();
 		driver.manage().window().maximize();
 
-		driver.get(
-				"https://test1dom--sittest.my.salesforce.com/secur/frontdoor.jsp?sid=00D3K0000008jQa!ARwAQD2yaP0ytv0YuFtsIiCPaxcMnjQ2iuO2TD1vqjRelc0BQiZzaEdA0WgN8_WlOtuN8nt8kuZnNVU4DslEDCNp.xNZoIxF");
+		driver.get("https://test1dom--sittest.my.salesforce.com/secur/frontdoor.jsp?sid=00D3K0000008jQa!ARwAQD2yaP0ytv0YuFtsIiCPaxcMnjQ2iuO2TD1vqjRelc0BQiZzaEdA0WgN8_WlOtuN8nt8kuZnNVU4DslEDCNp.xNZoIxF");
 
 		driver.get("https://test1dom--sittest.lightning.force.com/lightning/r/Account/001c000002JvBrCAAV/view");
 
@@ -60,12 +59,12 @@ public class ProcesoCambioDeServicio {
 		WebDriverWait wait = new WebDriverWait(driver, 30);
 		wait.until(ExpectedConditions.invisibilityOfElementLocated(By.className("slds-spinner_container")));
 
-		List<WebElement> frames = driver.findElements(By.xpath("//iframe"));
-		int size = frames.size();
-		driver.switchTo().frame(size - 1);
+		WebElement frame = wait.until(ExpectedConditions.elementToBeClickable(By.id("iFrameResizer3")));
+		driver.switchTo().frame(frame);
 		// frames.get(size-1).click();
 		Thread.sleep(2000);
-		driver.findElement(By.xpath("//*[@id=\'block_01tc0000007pvuhAAA\']")).click();
+		WebElement opt = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id=\'block_01tc0000007pvuhAAA\']")));
+		opt.click();
 		// Paso 2 Click a siguiente--------------------------------------------------------------------------
 		wait.until(ExpectedConditions.invisibilityOfElementLocated(By.className("slds-spinner_container")));
 		WebElement siguiente = wait.until(ExpectedConditions.elementToBeClickable(By.id("Planes_nextBtn")));
