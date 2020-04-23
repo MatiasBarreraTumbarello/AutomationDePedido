@@ -46,7 +46,12 @@ public class ProcesoDeAutogestion {
 	}
 	@Test
 	
-	public void a () throws InterruptedException {
+	public void IniciarContratacion () throws InterruptedException {
+		driver.switchTo().frame(0);
+		new WebDriverWait (driver, 20)
+		.until(ExpectedConditions.invisibilityOfElementLocated(By.className("slds-spinner_container")));
+		driver.findElement (By.xpath ("// button [@ class ='slds-button slds-button_brand btnCommunity']")). click ();
+		
 		
 	}
 }
