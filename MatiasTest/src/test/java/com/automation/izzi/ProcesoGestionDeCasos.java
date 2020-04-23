@@ -25,7 +25,7 @@ private WebDriver driver;
 		driver = new ChromeDriver();
 		driver.manage().window().maximize();
 
-		driver.get("https://test1dom--sittest.my.salesforce.com/secur/frontdoor.jsp?sid=00D3K0000008jQa!ARwAQBf1VsgJ9TcQuAhxbO8imePgS8j_99EKgjmLkFOB29wb0X87OXHdrSDf.MLX_vukgM72Gc1vmSdw7vRDUn5TsDbsZQKO");
+		driver.get(" https://test1dom--sittest.my.salesforce.com/secur/frontdoor.jsp?sid=00D3K0000008jQa!ARwAQDbCiCxeNyVmRccDWKWw.jYKVm5YidLDwL9DYJSL23MN8mvEC5H6bK8CriiZt29xY05MZP4oupt4qDAkHu17ZlNCk_yh");
 
 		driver.get("https://test1dom--sittest.lightning.force.com/lightning/r/Account/001c000002JvBrCAAV/view");
 
@@ -135,6 +135,7 @@ private WebDriver driver;
 	}
 */
 	
+	//Esto es en "Modificar caso", para su edición y finalización.
 	void Edicion() throws InterruptedException{
 		
 		Select picklist = new Select(driver.findElement(By.id("SelectEstado")));
@@ -142,12 +143,13 @@ private WebDriver driver;
 		Thread.sleep(1000);
 		
 		driver.findElement(By.xpath("//*[@id=\'TextAreaComentarios2\']")).sendKeys("Hi");
-		Thread.sleep(3000);
+		Thread.sleep(1000);
 		
 		driver.findElement(By.xpath("//div[@id='Edicion_nextBtn']")). click();
-		Thread.sleep(3000);
+		Thread.sleep(5000);
 		
 		new WebDriverWait (driver, 40).until(ExpectedConditions.invisibilityOfElementLocated(By.className("slds-spinner_container")));
 		driver.findElement(By.xpath("//button[@class='sslds-button slds-button_brand ng-binding']")).click();
+		Thread.sleep(1000);
 	}
 }
