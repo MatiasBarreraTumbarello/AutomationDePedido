@@ -59,24 +59,20 @@ public class ProcesoCambioDeServicio {
 		// Paso 1 Seleccion del Nuevo plan-------------------------------------------------------------------
 		WebDriverWait wait = new WebDriverWait(driver, 30);
 		wait.until(ExpectedConditions.invisibilityOfElementLocated(By.className("slds-spinner_container")));
-
 		List<WebElement> frames = driver.findElements(By.xpath("//iframe"));
 		int size = frames.size();
 		driver.switchTo().frame(size - 1);
-		// frames.get(size-1).click();
 		Thread.sleep(2000);
-		driver.findElement(By.xpath("//*[@id=\'block_01tc0000007pvuhAAA\']")).click();
+		driver.findElement(By.xpath("//div[@id=\'block_01tc0000007pvuhAAA\']")).click();
+		
 		// Paso 2 Click a siguiente--------------------------------------------------------------------------
 		wait.until(ExpectedConditions.invisibilityOfElementLocated(By.className("slds-spinner_container")));
 		WebElement siguiente = wait.until(ExpectedConditions.elementToBeClickable(By.id("Planes_nextBtn")));
 		while (siguiente.isEnabled() && siguiente.isDisplayed()) {
 		Thread.sleep(1000);
 		siguiente.click();
-		// Paso3 Click Finalizar-----------------------------------------------------------------------------
-		WebDriverWait wait3 = new WebDriverWait(driver, 40);
-		wait3.until(ExpectedConditions.invisibilityOfElementLocated(By.className("slds-spinner_container")));
-		Thread.sleep(2000);
-		driver.findElement(By.xpath("//*[@id=\'doneAction-137\']/div/div/div[3]/div/button")).click();
+		// Paso3 Click Confirmar-----------------------------------------------------------------------------
+
 		}
 	}
 
