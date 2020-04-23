@@ -56,24 +56,29 @@ public class ProcesoCambioDeServicio {
 	}
 
 	public void seleccionDePlan(WebDriver driver) throws InterruptedException {
-		// Paso 1 Seleccion del Nuevo plan-------------------------------------------------------------------
+		
 		WebDriverWait wait = new WebDriverWait(driver, 30);
 		wait.until(ExpectedConditions.invisibilityOfElementLocated(By.className("slds-spinner_container")));
-		List<WebElement> frames = driver.findElements(By.xpath("//iframe"));
-		int size = frames.size();
-		driver.switchTo().frame(size - 1);
+		WebElement frame = wait.until(ExpectedConditions.elementToBeClickable(By.id("iFrameResizer3")));
+		driver.switchTo().frame(frame);
+		// frames.get(size-1).click();
 		Thread.sleep(2000);
-		driver.findElement(By.xpath("//div[@id=\'block_01tc0000007pvuhAAA\']")).click();
-		
-		// Paso 2 Click a siguiente--------------------------------------------------------------------------
+		WebElement opt = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id=\'block_01tc0000007pvuhAAA\']")));
+		opt.click();
+		//siguiente
 		wait.until(ExpectedConditions.invisibilityOfElementLocated(By.className("slds-spinner_container")));
 		WebElement siguiente = wait.until(ExpectedConditions.elementToBeClickable(By.id("Planes_nextBtn")));
-		while (siguiente.isEnabled() && siguiente.isDisplayed()) {
-		Thread.sleep(1000);
 		siguiente.click();
-		// Paso3 Click Confirmar-----------------------------------------------------------------------------
-
-		}
+		
+		wait.until(ExpectedConditions.invisibilityOfElementLocated(By.className("slds-spinner_container")));
+		WebElement siguiente2 = wait.until(ExpectedConditions.elementToBeClickable(By.id("Confirmacion_nextBtn")));
+		siguiente2.click();
+		
+		wait.until(ExpectedConditions.invisibilityOfElementLocated(By.className("slds-spinner_container")));
+		WebElement finalizar = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id='doneAction-217']/div/div/div[3]/div/button")));
+		finalizar.click();
+		
+		
 	}
 
 }
