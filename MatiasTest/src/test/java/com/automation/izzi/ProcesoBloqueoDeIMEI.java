@@ -26,7 +26,7 @@ private WebDriver driver;
 		driver = new ChromeDriver();
 		driver.manage().window().maximize();
 
-		driver.get("https://test1dom--sittest.my.salesforce.com/secur/frontdoor.jsp?sid=00D3K0000008jQa!ARwAQD2yaP0ytv0YuFtsIiCPaxcMnjQ2iuO2TD1vqjRelc0BQiZzaEdA0WgN8_WlOtuN8nt8kuZnNVU4DslEDCNp.xNZoIxF");
+		driver.get("https://test1dom--sittest.my.salesforce.com/secur/frontdoor.jsp?sid=00D3K0000008jQa!ARwAQGS.hRPmq7BfqeveksXxEzx.qax3NtTkzOYWbURn6tfZ9Mfv15zXiVD2cm2ItKbhRbyZysjgRLVbnZh8fNknPCyL2d33");
 
 		driver.get("https://test1dom--sittest.lightning.force.com/lightning/r/Account/001c000002JvBrCAAV/view");
 
@@ -67,7 +67,6 @@ private WebDriver driver;
 	.until(ExpectedConditions.elementToBeClickable(By.id("CheckIMEIRadio")));
 		Thread.sleep(3000);
 		
-		
 		List<WebElement> opt = driver.findElements(By.xpath("//*[@id=\'CheckIMEIRadio\']"));
 		Thread.sleep(2000);
 		opt.get(0).findElement(By.xpath("./..")).click();
@@ -79,7 +78,39 @@ private WebDriver driver;
 		driver.findElement(By.xpath("//*[@id='RAValidationImei']")).click();
 		Thread.sleep(2000);
 	
+		WebDriverWait wait = new WebDriverWait(driver, 30);
+		wait.until(ExpectedConditions.invisibilityOfElementLocated(By.className("slds-spinner_container")));
+		WebElement siguiente = wait.until(ExpectedConditions.elementToBeClickable(By.id("StepLockImei_nextBtn")));
+		siguiente.click();
+		Thread.sleep(1000);
+	
+		Confirmacion();
+	}
+	
+	public void Confirmacion() throws InterruptedException {
+		
+		WebDriverWait wait = new WebDriverWait(driver, 40);
+		wait.until(ExpectedConditions.invisibilityOfElementLocated(By.className("slds-spinner_container")));
+		
+		wait.until(ExpectedConditions.elementToBeClickable(By.id("radioConfirmation")));
+		Thread.sleep(3000);
+		
+		List<WebElement> opt = driver.findElements(By.xpath("//*[@id=\'radioConfirmation\']"));
+		Thread.sleep(2000);
+		opt.get(0).findElement(By.xpath("./..")).click();
+		Thread.sleep(2000);
+		
+		wait.until(ExpectedConditions.invisibilityOfElementLocated(By.className("slds-spinner_container")));
+		WebElement siguiente = wait.until(ExpectedConditions.elementToBeClickable(By.id("Confirmation_nextBtn")));
+		siguiente.click();
+		Thread.sleep(2000);
+		
+		wait.until(ExpectedConditions.invisibilityOfElementLocated(By.className("slds-spinner_container")));
+		WebElement finalizar = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id=\"doneAction-241\"]/div/div/div[3]/div/button")));
+		finalizar.click();
+		
 		
 	}
 	}
+	
 
