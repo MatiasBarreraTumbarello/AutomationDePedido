@@ -53,10 +53,10 @@ private WebDriver driver;
 		executor.executeScript("arguments[0].click();", boton);
 		
 		driver.switchTo().defaultContent();
-		IMEI();
+		IMEI(0);
 }
 	
-	public void IMEI() throws InterruptedException {
+	public void IMEI(int index) throws InterruptedException {
 		
 		WebElement frame = new WebDriverWait(driver, 40)
 				.until(ExpectedConditions.elementToBeClickable(By.id("iFrameResizer3")));
@@ -69,7 +69,8 @@ private WebDriver driver;
 		
 		List<WebElement> opt = driver.findElements(By.xpath("//*[@id=\'CheckIMEIRadio\']"));
 		Thread.sleep(2000);
-		opt.get(0).findElement(By.xpath("./..")).click();
+		if (index == 0) { //¿El cliente posee IMEI? --> SI
+		opt.get(index).findElement(By.xpath("./..")).click();
 		Thread.sleep(2000);
 		
 		driver.findElement(By.xpath("//*[@id=\'NumberImei\']")).sendKeys("442267859858533");
@@ -77,6 +78,19 @@ private WebDriver driver;
 		
 		driver.findElement(By.xpath("//*[@id='RAValidationImei']")).click();
 		Thread.sleep(2000);
+		
+		}
+		
+		else { //¿El cliente posee IMEI? --> NO
+			opt.get(index).findElement(By.xpath("./..")).click(); //Selecciona la opción NO
+			new WebDriverWait (driver, 20)
+				.until(ExpectedConditions.elementToBeClickable(By.xpath("//span[@class='slds-radio--faux']")));
+			
+			List<WebElement> lineas = driver.findElements(By.xpath("//span[@class='slds-radio--faux']")); //Hacemos List con todas las lineas que aparecen
+			lineas.get(0).click(); //Seleccionamos linea
+			Thread.sleep(2000);
+			}
+			
 	
 		WebDriverWait wait = new WebDriverWait(driver, 30);
 		wait.until(ExpectedConditions.invisibilityOfElementLocated(By.className("slds-spinner_container")));
@@ -109,8 +123,15 @@ private WebDriver driver;
 		WebElement finalizar = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id=\"doneAction-241\"]/div/div/div[3]/div/button")));
 		finalizar.click();
 		
+
+		} 
+		
 		
 	}
-	}
+
 	
+		
+
+
+
 
