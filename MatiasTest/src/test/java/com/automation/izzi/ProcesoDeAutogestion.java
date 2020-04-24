@@ -33,14 +33,14 @@ public class ProcesoDeAutogestion {
 		driver.get("https://sittest-izzimx.cs125.force.com/portal");
 		driver.findElement ( By.id ("username")). sendKeys ("lsalas_community@yopmail.com.sittest");
 		driver.findElement ( By.id ("password")). sendKeys ("izzi12345");
-		
 		driver.findElement (By.xpath ("// input [@ class = 'button r4 wide primary']")). click ();
 		Thread.sleep(5000);
-
 		driver.manage().timeouts().pageLoadTimeout(40, TimeUnit.SECONDS);
 		Thread.sleep(20000);
-		
 	}
+		
+
+		
 	
 	@Test
 	public void IniciarContratacion () throws InterruptedException {
@@ -89,7 +89,7 @@ public class ProcesoDeAutogestion {
 		
 		Thread.sleep(3000);
 	}
-	
+	//------------------------------------------------METODOS---------------------------------------------------------
 	public static void SeleccionDelPlan(WebDriver driver) throws InterruptedException{
 		WebDriverWait wait = new WebDriverWait(driver, 40);
 		wait.until(ExpectedConditions.elementToBeClickable(By.id("iFrameResizer1")));
