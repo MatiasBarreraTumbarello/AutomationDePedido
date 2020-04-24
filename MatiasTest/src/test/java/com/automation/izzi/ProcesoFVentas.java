@@ -34,6 +34,7 @@ public class ProcesoFVentas {
 	}
 		//************************LEER*****************************************************************
 		// En eclipse para ir al desarrollo del metodo debo hacer CTRL + Click al llamamiento del mismo.
+		// En algunos casos hay metodos que estan comentados, en caso de querer cambiar las elecciones solo basta con descomentar uno y comentar el otro.
 	
 	@Test
 	public void testScript() throws InterruptedException {
@@ -58,8 +59,8 @@ public class ProcesoFVentas {
 		//-----------------------Seccion: Dispositivos---------------------
 		dispositivos(driver, 0);
 		// Solo funciona al seleccionar Compra de Equipo
-		//RoynerClass.seleccionDeDispositivo(driver);
-		//----------- Check: No estoy interesado en estos equipos.
+		//seleccionDeDispositivo(driver);
+		//----------- Check: No estoy interesado en estos equipos.--------
 		//desinteresEquipo(driver);
 	
 		//-----------------------Seccion: Validacion de Dispositivos------
