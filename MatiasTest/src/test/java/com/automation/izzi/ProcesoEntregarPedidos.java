@@ -22,9 +22,9 @@ public class ProcesoEntregarPedidos {
 		System.setProperty("webdriver.chrome.driver", "./src/test/resources/chromedriver/chromedriver.exe");
 		driver = new ChromeDriver();
 		driver.manage().window().maximize();
-		driver.get(" https://test1dom--sittest.my.salesforce.com/secur/frontdoor.jsp?sid=00D3K0000008jQa!ARwAQKqOWdozya.BG9zeiOTFpX38eIXZWd_iojFro6bTekpA5h6O34rZj43kyxrxWjMLUP3mluXgRjWu6EX9QpeNPsef.wgL");
+		driver.get("https://test1dom--sittest.my.salesforce.com/secur/frontdoor.jsp?sid=00D3K0000008jQa!ARwAQGS.hRPmq7BfqeveksXxEzx.qax3NtTkzOYWbURn6tfZ9Mfv15zXiVD2cm2ItKbhRbyZysjgRLVbnZh8fNknPCyL2d33");
 		Thread.sleep(10000);
-		driver.get("https://test1dom--sittest.lightning.force.com/lightning/r/Order/8013K000000EEjrQAG/view");
+		driver.get("https://test1dom--sittest.lightning.force.com/lightning/r/Order/8013K000000Eg6KQAS/view");
 
 		driver.manage().timeouts().pageLoadTimeout(40, TimeUnit.SECONDS);
 		
@@ -67,8 +67,8 @@ public class ProcesoEntregarPedidos {
 		WebDriverWait ewait = new WebDriverWait(driver, 30);
 		ewait.until(ExpectedConditions.invisibilityOfElementLocated(By.className("slds-spinner_container")));
 		
-		driver.findElement(By.xpath("//input[@id=\'ICCID\']")).sendKeys("8952140061733523614F");
-		driver.findElement(By.xpath("//input[@id='ICCIDVal']")).sendKeys("8952140061733523614F");
+		driver.findElement(By.xpath("//input[@id=\'ICCID\']")).sendKeys("8952140061741671430F");
+		driver.findElement(By.xpath("//input[@id='ICCIDVal']")).sendKeys("8952140061741671430F");
 		driver.findElement(By.xpath("//div[@id='ValidarICCID']/p")).click();
 		try {
 			Thread.sleep(2000);
