@@ -26,7 +26,7 @@ private WebDriver driver;
 		driver = new ChromeDriver();
 		driver.manage().window().maximize();
 
-		driver.get("https://test1dom--sittest.my.salesforce.com/secur/frontdoor.jsp?sid=00D3K0000008jQa!ARwAQD2yaP0ytv0YuFtsIiCPaxcMnjQ2iuO2TD1vqjRelc0BQiZzaEdA0WgN8_WlOtuN8nt8kuZnNVU4DslEDCNp.xNZoIxF");
+		driver.get("https://test1dom--sittest.my.salesforce.com/secur/frontdoor.jsp?sid=00D3K0000008jQa!ARwAQGS.hRPmq7BfqeveksXxEzx.qax3NtTkzOYWbURn6tfZ9Mfv15zXiVD2cm2ItKbhRbyZysjgRLVbnZh8fNknPCyL2d33");
 
 		driver.get("https://test1dom--sittest.lightning.force.com/lightning/r/Account/001c000002JvBrCAAV/view");
 
@@ -53,10 +53,10 @@ private WebDriver driver;
 		executor.executeScript("arguments[0].click();", boton);
 		
 		driver.switchTo().defaultContent();
-		IMEI();
+		IMEI(0);
 }
 	
-	public void IMEI() throws InterruptedException {
+	public void IMEI(int index) throws InterruptedException {
 		
 		WebElement frame = new WebDriverWait(driver, 40)
 				.until(ExpectedConditions.elementToBeClickable(By.id("iFrameResizer3")));
@@ -70,7 +70,8 @@ private WebDriver driver;
 		
 		List<WebElement> opt = driver.findElements(By.xpath("//*[@id=\'CheckIMEIRadio\']"));
 		Thread.sleep(2000);
-		opt.get(0).findElement(By.xpath("./..")).click();
+		if (index == 0) { //¿El cliente posee IMEI? --> SI
+		opt.get(index).findElement(By.xpath("./..")).click();
 		Thread.sleep(2000);
 		
 		driver.findElement(By.xpath("//*[@id=\'NumberImei\']")).sendKeys("442267859858533");
@@ -78,8 +79,22 @@ private WebDriver driver;
 		
 		driver.findElement(By.xpath("//*[@id='RAValidationImei']")).click();
 		Thread.sleep(2000);
-	
+		} else { //¿El cliente posee IMEI? --> NO
+		opt.get(index).findElement(By.xpath("./..")).click(); //Selecciona la opción NO
+		new WebDriverWait (driver, 20)
+			.until(ExpectedConditions.elementToBeClickable(By.xpath("//span[@class='slds-radio--faux']")));
+		
+		List<WebElement> lineas = driver.findElements(By.xpath("//span[@class='slds-radio--faux']")); //Hacemos List con todas las lineas que aparecen
+		lineas.get(0).click(); //Seleccionamos linea
+		Thread.sleep(2000);
+		}
+		
+		driver.findElement(By.xpath("//div[@id='StepLockImei_nextBtn']")).click();
+		Thread.sleep(2000);
 		
 	}
-	}
+	
+		
+}
+
 
