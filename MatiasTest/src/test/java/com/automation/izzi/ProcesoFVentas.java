@@ -27,22 +27,12 @@ public class ProcesoFVentas {
 		System.setProperty("webdriver.chrome.driver", "./src/test/resources/chromedriver/chromedriver.exe");
 		driver = new ChromeDriver();
 		driver.manage().window().maximize();
-
 		driver.get("https://test1dom--sittest.my.salesforce.com/secur/frontdoor.jsp?sid=00D3K0000008jQa!ARwAQKqOWdozya.BG9zeiOTFpX38eIXZWd_iojFro6bTekpA5h6O34rZj43kyxrxWjMLUP3mluXgRjWu6EX9QpeNPsef.wgL");
-
 		driver.get("https://test1dom--sittest.my.salesforce.com/secur/frontdoor.jsp?sid=00D3K0000008jQa!ARwAQPy_r3UP1WkVZPGR_3_oPxxIqZj52rlc08KTAAHqS1.kat7J8VS2iycQmfajWWaIisXnq7eQCX0J9VCX.ybGAVU6a5Az");
-
-
-		//driver.manage().deleteAllCookies();
 		driver.manage().timeouts().pageLoadTimeout(40, TimeUnit.SECONDS);
-	
-		//new WebDriverWait(driver, 40).until(ExpectedConditions.frameToBeAvailableAndSwitchToIt(By.tagName("iframe")));
-
-		//driver.manage().timeouts().implicitlyWait(40, TimeUnit.SECONDS);
-		
 		Thread.sleep(20000);
-		
 	}
+		
 	
 	@Test
 	public void testScript() throws InterruptedException {
@@ -52,48 +42,26 @@ public class ProcesoFVentas {
 		driver.switchTo().frame(0);
 		Select picklist = new Select(driver.findElement(By.id("selectAccountOrTlfn")));
 		picklist.selectByIndex(2);
-		
 		driver.findElement(By.xpath("//input[@id='seibelUser']")).sendKeys("19964717");
-
-		//Boton: Buscar Cliente
-		
-		WebElement res = new WebDriverWait(driver, 40)
-		        .until(ExpectedConditions.elementToBeClickable(By.xpath("//div[@id='IP_validClient']")));
-
+		//Boton: Buscar Cliente------------------------------------------------
+		WebElement res = new WebDriverWait(driver, 40).until(ExpectedConditions.elementToBeClickable(By.xpath("//div[@id='IP_validClient']")));
 		driver.findElement(By.id(res.getAttribute("id"))).click();
-		
-		new WebDriverWait(driver, 40)
-		        .until(ExpectedConditions.elementToBeClickable(By.id("RadioUpdateDatosSeibel")));
-
-
-
+		new WebDriverWait(driver, 40).until(ExpectedConditions.elementToBeClickable(By.id("RadioUpdateDatosSeibel")));
 		// Cambiar indice a 1 para seleccionar opcion "si"
-		actualizarCliente(driver, 0);
-
-		// Para la seleccion de actualizacion utilizar indices: 1 = "si", 0 = "no"
-		//actualizarCliente(driver, 1);
+		actualizarCliente(driver, 0);// Para la seleccion de actualizacion utilizar indices: 1 = "si", 0 = "no"
 		//driver.quit();
-		
 
 		//------------------------------------PLANES-----------------------
-		/*Aca se puede comentar o descomentar segun sea necesario probar*/
-		//Nelson
 		planesActualizado(driver);
 		Thread.sleep(4000);
 		
 		//-----------------------Seccion: Dispositivos
-		
 		dispositivos(driver, 0);
-		
 		// Solo funciona al seleccionar Compra de Equipo
 		//RoynerClass.seleccionDeDispositivo(driver);
-		
-		
 		//----------- Check: No estoy interesado en estos equipos.
-		
 		//desinteresEquipo(driver);
-		
-		
+	
 		//-----------------------Seccion: Validacion de Dispositivos
 		
 		/* Para usar los metodos de MatiasClass es necesario cambiar el valor de 1 a 0 del llamamiento RoynerClass.dispositivos()
