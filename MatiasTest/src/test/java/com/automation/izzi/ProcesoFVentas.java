@@ -6,6 +6,9 @@ import java.util.concurrent.TimeUnit;
 import org.junit.Before;
 import org.junit.Test;
 import org.openqa.selenium.By;
+
+import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.By.ByTagName;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -27,8 +30,7 @@ public class ProcesoFVentas {
 		driver.manage().window().maximize();
 
 		driver.get("https://test1dom--sittest.my.salesforce.com/secur/frontdoor.jsp?sid=00D3K0000008jQa!ARwAQDdj8asTz1XGXVwAu86sw.3ler60B5mPt.c2almIkcwDdHZwdyj1hGUHRgLTIiyMAG6ZbyWlm55k680HiqIhl3zHQTNY");
-		//driver.get("https://test1dom--sittest.lightning.force.com/lightning/n/Nueva_Venta");
-		
+		driver.get("https://test1dom--sittest.lightning.force.com/lightning/n/Nueva_Venta");
 		driver.manage().timeouts().pageLoadTimeout(40, TimeUnit.SECONDS);
 		Thread.sleep(20000);
 		
@@ -59,10 +61,6 @@ public class ProcesoFVentas {
 		
 		//-----------------------Seccion: Dispositivos---------------------
 		dispositivos(driver, 0);
-		// Solo funciona al seleccionar Compra de Equipo
-		//seleccionDeDispositivo(driver);
-		//----------- Check: No estoy interesado en estos equipos.--------
-		//desinteresEquipo(driver);
 	
 		//-----------------------Seccion: Validacion de Dispositivos------
 		
@@ -72,7 +70,7 @@ public class ProcesoFVentas {
 		/* Para esta seccion es necesario comentar uno de las 2 lineas de codigos siguientes (IMEI o Dispositivos)*/
 		
 		//validacionImei(driver);
-		validacionDispositivo(driver);
+		validacionDispositivo(driver, 1);
 		
 		//----------------------Portabilidad------------------------------
 		//Nelson
@@ -112,12 +110,18 @@ public class ProcesoFVentas {
 		Thread.sleep(2000);
 		driver.findElement(By.id("StepDevicesSelect_nextBtn")).click();
 		Thread.sleep(5000);
+		if (index == 1) {
+			// Solo funciona al seleccionar Compra de Equipo
+			seleccionDeDispositivo(driver);
+			//----------- Check: No estoy interesado en estos equipos.--------
+			//desinteresEquipo(driver);
+		}
 	}
 	
 	//--------------------------------------------------------------------------------------------------------------------------
 		//Este metodo se utiliza una vez elegido la opcion "Trae tu equipo a IZZI" en la seccion: Dispositivo
 		//Solo puede elegir entre la validacion por IMEI o validacion por disposiivo
-		public static void validacionDispositivo(WebDriver driver) {
+		public static void validacionDispositivo(WebDriver driver, int index) {
 			try {
 				int tiempo= 5000;
 				WebDriverWait wait = new WebDriverWait(driver, 40);
@@ -126,18 +130,34 @@ public class ProcesoFVentas {
 				List<WebElement> mdv = driver.findElements(By.id("RadioSelectMethod"));
 				Thread.sleep(tiempo);
 				mdv.get(1).findElement(By.xpath("./..")).click();
-
 				Thread.sleep(tiempo);
-				driver.findElement(By.xpath("//select[@id=\'SelectBrand\']")).click();
-				//Thread.sleep(3000);
-				driver.findElement(By.xpath("//option[@label='BITTIUM']")).click();
-				//Thread.sleep(3000);
-				driver.findElement(By.xpath("//select[@id=\'SelectModel\']")).click();
-				//Thread.sleep(3000);
-				driver.findElement(By.xpath("//option[@label='Tough Mobile']")).click();
-				//Thread.sleep(tiempo);
+
+				boolean seleccionarDispositivo = false;
+				
+				if (index == 1) {
+					WebElement check = driver.findElement(By.xpath("//input[@id=\'CheckCompatibility\']"));
+					JavascriptExecutor executor = (JavascriptExecutor)driver;
+					executor.executeScript("arguments[0].style.display = 'block'; arguments[0].style.zIndex = '999999'; arguments[0].click()", check);
+					
+					seleccionarDispositivo = true;
+				}else {
+
+					driver.findElement(By.xpath("//select[@id=\'SelectBrand\']")).click();
+					//Thread.sleep(3000);
+					driver.findElement(By.xpath("//option[@label='BITTIUM']")).click();
+					//Thread.sleep(3000);
+					driver.findElement(By.xpath("//select[@id=\'SelectModel\']")).click();
+					//Thread.sleep(3000);
+					driver.findElement(By.xpath("//option[@label='Tough Mobile']")).click();
+					//Thread.sleep(tiempo);
+				}
+				
 				driver.findElement(By.xpath("//div[@id='StepApprovedDevice_nextBtn']")).click();
 				Thread.sleep(tiempo);
+				
+				if (seleccionarDispositivo) {
+					seleccionDeDispositivo(driver);
+				}
 				
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
@@ -174,11 +194,13 @@ public class ProcesoFVentas {
 			//List<WebElement> opt = driver.findElements(By.id("RadioProfileNoVentas"));
 			driver.findElement(By.id("RadioProfileNoVentas")).findElement(By.xpath("./..")).click();
 			Thread.sleep(2000);
+			driver.findElement(By.xpath("//*[@id=\'RadioRetiroOtraSucursal|0\']/div/div[1]/label[2]/span[1]")).click();
+			Thread.sleep(2000);
 			driver.findElement(By.id("StepSaleProcessDevice_nextBtn")).click();
 			Thread.sleep(5000);
 		}
 		//--------------------------------------------------------------------------------------------------------------------------
-		//Este metodo es el paso final de la gestion de compra, donde se muestra el resumente y pasa a la siguiente pestaña de finalizar compra
+		//Este metodo es el paso final de la gestion de compra, donde se muestra el resumente y pasa a la siguiente pestaï¿½a de finalizar compra
 		public static void resumenDeCompra(WebDriver driver) {
 			try {
 				int tiempo= 5000;
@@ -271,12 +293,27 @@ public class ProcesoFVentas {
 			Thread.sleep(tiempo);
 			mdv.get(0).findElement(By.xpath("./..")).click();
 			Thread.sleep(tiempo);
-			driver.findElement(By.xpath("//input[@id=\'NumberIMEI\']")).sendKeys("355576090532169");
+			//driver.findElement(By.xpath("//input[@id=\'NumberIMEI\']")).sendKeys("355576090532169"); // Válido
+			driver.findElement(By.xpath("//input[@id=\'NumberIMEI\']")).sendKeys("000000000000000");
 			//Thread.sleep(5000);
 			driver.findElement(By.xpath("//div[@id=\'IPAValidateIMEI\']/p")).click();
 			Thread.sleep(tiempo);
+			
+			WebDriverWait wait = new WebDriverWait(driver, 40);
+			wait.until(ExpectedConditions.invisibilityOfElementLocated(By.className("slds-spinner_container")));
+			
+			List<WebElement> buy = driver.findElements(By.id("RadioBuyDevices"));
+			boolean seleccionarDispositivo = false;
+			if (buy.get(0).isEnabled() && buy.get(0).isDisplayed()) {
+				seleccionarDispositivo = true;
+			}
+			
 			driver.findElement(By.xpath("//div[@id='StepApprovedDevice_nextBtn']")).click();
 			Thread.sleep(tiempo);
+			
+			if (seleccionarDispositivo) {
+				seleccionDeDispositivo(driver);
+			}
 			
 		
 	}
