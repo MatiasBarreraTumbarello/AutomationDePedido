@@ -193,6 +193,8 @@ public class ProcesoFVentas {
 			//List<WebElement> opt = driver.findElements(By.id("RadioProfileNoVentas"));
 			driver.findElement(By.id("RadioProfileNoVentas")).findElement(By.xpath("./..")).click();
 			Thread.sleep(2000);
+			driver.findElement(By.xpath("//*[@id=\'RadioRetiroOtraSucursal|0\']/div/div[1]/label[2]/span[1]")).click();
+			Thread.sleep(2000);
 			driver.findElement(By.id("StepSaleProcessDevice_nextBtn")).click();
 			Thread.sleep(5000);
 		}
