@@ -24,9 +24,9 @@ public class ProcesoEntregarPedidos {
 		System.setProperty("webdriver.chrome.driver", "./src/test/resources/chromedriver/chromedriver.exe");
 		driver = new ChromeDriver();
 		driver.manage().window().maximize();
-		driver.get("https://test1dom--sittest.my.salesforce.com/secur/frontdoor.jsp?sid=00D3K0000008jQa!ARwAQGS.hRPmq7BfqeveksXxEzx.qax3NtTkzOYWbURn6tfZ9Mfv15zXiVD2cm2ItKbhRbyZysjgRLVbnZh8fNknPCyL2d33");
+		driver.get("https://test1dom--sittest.my.salesforce.com/secur/frontdoor.jsp?sid=00D3K0000008jQa!ARwAQDdj8asTz1XGXVwAu86sw.3ler60B5mPt.c2almIkcwDdHZwdyj1hGUHRgLTIiyMAG6ZbyWlm55k680HiqIhl3zHQTNY");
 		Thread.sleep(10000);
-		driver.get("https://test1dom--sittest.lightning.force.com/lightning/r/Order/8013K000000Eg6KQAS/view");
+		driver.get("https://test1dom--sittest.lightning.force.com/lightning/r/Order/8013K000000EgRXQA0/view");
 
 		driver.manage().timeouts().pageLoadTimeout(40, TimeUnit.SECONDS);
 		
@@ -68,12 +68,12 @@ public class ProcesoEntregarPedidos {
 		driver.findElement(By.xpath("//input[@id=\'ICCID\']")).sendKeys("8952140061733523614F");
 		driver.findElement(By.xpath("//input[@id='ICCIDVal']")).sendKeys("8952140061733523614F");
 
-		driver.findElement(By.xpath("//div[@id='ValidarICCID']/p")).click();
+		driver.findElement(By.xpath("//div[@id='WrapperValidarICCID']/p")).click();
 		try {
 			Thread.sleep(2000);
 			
 		//-----GUARDAR!!!!---- solo descomentar si se esta seguro que se quiere generar/guardar el Pedido.
-		//	driver.findElement(By.xpath("//p[@class='ng-binding'  and contains(text(),'Guardar')]")).click();
+		driver.findElement(By.xpath("//*[@class='slds-button slds-button_brand ng-binding')]")).click();
 		} catch (InterruptedException e) {
 			
 			e.printStackTrace();
