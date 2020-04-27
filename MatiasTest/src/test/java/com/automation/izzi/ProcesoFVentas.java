@@ -27,7 +27,7 @@ public class ProcesoFVentas {
 		System.setProperty("webdriver.chrome.driver", "./src/test/resources/chromedriver/chromedriver.exe");
 		driver = new ChromeDriver();
 		driver.manage().window().maximize();
-		driver.get("https://test1dom--sittest.my.salesforce.com/secur/frontdoor.jsp?sid=00D3K0000008jQa!ARwAQGS.hRPmq7BfqeveksXxEzx.qax3NtTkzOYWbURn6tfZ9Mfv15zXiVD2cm2ItKbhRbyZysjgRLVbnZh8fNknPCyL2d33");
+		driver.get("https://test1dom--sittest.my.salesforce.com/secur/frontdoor.jsp?sid=00D3K0000008jQa!ARwAQDdj8asTz1XGXVwAu86sw.3ler60B5mPt.c2almIkcwDdHZwdyj1hGUHRgLTIiyMAG6ZbyWlm55k680HiqIhl3zHQTNY");
 		driver.get("https://test1dom--sittest.lightning.force.com/lightning/n/Nueva_Venta");
 		driver.manage().timeouts().pageLoadTimeout(40, TimeUnit.SECONDS);
 		Thread.sleep(20000);
@@ -59,10 +59,6 @@ public class ProcesoFVentas {
 		
 		//-----------------------Seccion: Dispositivos---------------------
 		dispositivos(driver, 0);
-		// Solo funciona al seleccionar Compra de Equipo
-		//seleccionDeDispositivo(driver);
-		//----------- Check: No estoy interesado en estos equipos.--------
-		//desinteresEquipo(driver);
 	
 		//-----------------------Seccion: Validacion de Dispositivos------
 		
@@ -71,8 +67,8 @@ public class ProcesoFVentas {
 		 
 		/* Para esta seccion es necesario comentar uno de las 2 lineas de codigos siguientes (IMEI o Dispositivos)*/
 		
-		//validacionImei(driver);
-		validacionDispositivo(driver);
+		validacionImei(driver);
+		//validacionDispositivo(driver);
 		
 		//----------------------Portabilidad------------------------------
 		//Nelson
@@ -112,6 +108,12 @@ public class ProcesoFVentas {
 		Thread.sleep(2000);
 		driver.findElement(By.id("StepDevicesSelect_nextBtn")).click();
 		Thread.sleep(5000);
+		if (index == 1) {
+			// Solo funciona al seleccionar Compra de Equipo
+			seleccionDeDispositivo(driver);
+			//----------- Check: No estoy interesado en estos equipos.--------
+			//desinteresEquipo(driver);
+		}
 	}
 	
 	//--------------------------------------------------------------------------------------------------------------------------
@@ -271,12 +273,27 @@ public class ProcesoFVentas {
 			Thread.sleep(tiempo);
 			mdv.get(0).findElement(By.xpath("./..")).click();
 			Thread.sleep(tiempo);
-			driver.findElement(By.xpath("//input[@id=\'NumberIMEI\']")).sendKeys("355576090532169");
+			//driver.findElement(By.xpath("//input[@id=\'NumberIMEI\']")).sendKeys("355576090532169"); // Válido
+			driver.findElement(By.xpath("//input[@id=\'NumberIMEI\']")).sendKeys("000000000000000");
 			//Thread.sleep(5000);
 			driver.findElement(By.xpath("//div[@id=\'IPAValidateIMEI\']/p")).click();
 			Thread.sleep(tiempo);
+			
+			WebDriverWait wait = new WebDriverWait(driver, 40);
+			wait.until(ExpectedConditions.invisibilityOfElementLocated(By.className("slds-spinner_container")));
+			
+			List<WebElement> buy = driver.findElements(By.id("RadioBuyDevices"));
+			boolean seleccionarDispositivo = false;
+			if (buy.get(0).isEnabled() && buy.get(0).isDisplayed()) {
+				seleccionarDispositivo = true;
+			}
+			
 			driver.findElement(By.xpath("//div[@id='StepApprovedDevice_nextBtn']")).click();
 			Thread.sleep(tiempo);
+			
+			if (seleccionarDispositivo) {
+				seleccionDeDispositivo(driver);
+			}
 			
 		
 	}
