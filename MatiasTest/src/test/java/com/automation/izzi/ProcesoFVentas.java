@@ -180,7 +180,7 @@ public class ProcesoFVentas {
 			Thread.sleep(5000);
 		}
 		//--------------------------------------------------------------------------------------------------------------------------
-		//Este metodo es el paso final de la gestion de compra, donde se muestra el resumente y pasa a la siguiente pestaña de finalizar compra
+		//Este metodo es el paso final de la gestion de compra, donde se muestra el resumente y pasa a la siguiente pestaï¿½a de finalizar compra
 		public static void resumenDeCompra(WebDriver driver) {
 			try {
 				int tiempo= 5000;
