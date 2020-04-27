@@ -254,8 +254,10 @@ boolean seleccionarDispositivo = false;
 		//Thread.sleep(5000);
 		driver.findElement(By.xpath("//div[@id=\'IPAValidateIMEI\']/p")).click();
 		Thread.sleep(tiempo);
-		driver.findElement(By.xpath("//div[@id='StepApprovedDevice_nextBtn']")).click();
-		Thread.sleep(tiempo);
+		WebDriverWait wait = new WebDriverWait(driver, 40);
+		wait.until(ExpectedConditions.invisibilityOfElementLocated(By.className("slds-spinner_container")));
+		driver.findElement(By.xpath("//*[@id='StepApprovedDevice_nextBtn']")).click();
+		Thread.sleep(tiempo);//*[@id='StepApprovedDevice_nextBtn']
 		seleccionDeDispositivo(driver);
 	}
 		//---------------------------------------------------------------------------------
