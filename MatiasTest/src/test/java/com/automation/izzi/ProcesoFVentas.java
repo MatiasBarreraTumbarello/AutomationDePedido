@@ -27,14 +27,11 @@ public class ProcesoFVentas {
 		System.setProperty("webdriver.chrome.driver", "./src/test/resources/chromedriver/chromedriver.exe");
 		driver = new ChromeDriver();
 		driver.manage().window().maximize();
-
-
-		driver.get("https://test1dom--sittest.my.salesforce.com/secur/frontdoor.jsp?sid=00D3K0000008jQa!ARwAQGS.hRPmq7BfqeveksXxEzx.qax3NtTkzOYWbURn6tfZ9Mfv15zXiVD2cm2ItKbhRbyZysjgRLVbnZh8fNknPCyL2d33");
-
-		//driver.manage().deleteAllCookies();
-
+		driver.get("https://test1dom--sittest.my.salesforce.com/secur/frontdoor.jsp?sid=00D3K0000008jQa!ARwAQDdj8asTz1XGXVwAu86sw.3ler60B5mPt.c2almIkcwDdHZwdyj1hGUHRgLTIiyMAG6ZbyWlm55k680HiqIhl3zHQTNY");
+		driver.get("https://test1dom--sittest.lightning.force.com/lightning/n/Nueva_Venta");
 		driver.manage().timeouts().pageLoadTimeout(40, TimeUnit.SECONDS);
 		Thread.sleep(20000);
+		
 	}
 		//************************LEER*****************************************************************
 		// En eclipse para ir al desarrollo del metodo debo hacer CTRL + Click al llamamiento del mismo.
@@ -62,8 +59,10 @@ public class ProcesoFVentas {
 		
 		//-----------------------Seccion: Dispositivos---------------------
 		dispositivos(driver, 0);
+		
 		// Solo funciona al seleccionar Compra de Equipo
 		//seleccionDeDispositivo(driver);
+		
 		//----------- Check: No estoy interesado en estos equipos.--------
 		//desinteresEquipo(driver);
 	
@@ -74,8 +73,8 @@ public class ProcesoFVentas {
 		 
 		/* Para esta seccion es necesario comentar uno de las 2 lineas de codigos siguientes (IMEI o Dispositivos)*/
 		
-		//validacionImei(driver);
-		validacionDispositivo(driver);
+		validacionImei(driver);
+		//validacionDispositivo(driver);
 		
 		//----------------------Portabilidad------------------------------
 		//Nelson
@@ -181,7 +180,7 @@ public class ProcesoFVentas {
 			Thread.sleep(5000);
 		}
 		//--------------------------------------------------------------------------------------------------------------------------
-		//Este metodo es el paso final de la gestion de compra, donde se muestra el resumente y pasa a la siguiente pestaña de finalizar compra
+		//Este metodo es el paso final de la gestion de compra, donde se muestra el resumente y pasa a la siguiente pestaï¿½a de finalizar compra
 		public static void resumenDeCompra(WebDriver driver) {
 			try {
 				int tiempo= 5000;
@@ -299,7 +298,11 @@ public class ProcesoFVentas {
 		
 	}
 	
-
+	/*@After
+	public void tearDown() {
+		driver.quit();
+	}*/
+	
 	
 	
 	
