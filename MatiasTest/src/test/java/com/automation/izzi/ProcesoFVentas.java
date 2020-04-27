@@ -7,6 +7,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.By.ByTagName;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -67,8 +68,8 @@ public class ProcesoFVentas {
 		 
 		/* Para esta seccion es necesario comentar uno de las 2 lineas de codigos siguientes (IMEI o Dispositivos)*/
 		
-		validacionImei(driver);
-		//validacionDispositivo(driver);
+		//validacionImei(driver);
+		validacionDispositivo(driver, 1);
 		
 		//----------------------Portabilidad------------------------------
 		//Nelson
@@ -119,7 +120,7 @@ public class ProcesoFVentas {
 	//--------------------------------------------------------------------------------------------------------------------------
 		//Este metodo se utiliza una vez elegido la opcion "Trae tu equipo a IZZI" en la seccion: Dispositivo
 		//Solo puede elegir entre la validacion por IMEI o validacion por disposiivo
-		public static void validacionDispositivo(WebDriver driver) {
+		public static void validacionDispositivo(WebDriver driver, int index) {
 			try {
 				int tiempo= 5000;
 				WebDriverWait wait = new WebDriverWait(driver, 40);
@@ -128,18 +129,34 @@ public class ProcesoFVentas {
 				List<WebElement> mdv = driver.findElements(By.id("RadioSelectMethod"));
 				Thread.sleep(tiempo);
 				mdv.get(1).findElement(By.xpath("./..")).click();
-
 				Thread.sleep(tiempo);
-				driver.findElement(By.xpath("//select[@id=\'SelectBrand\']")).click();
-				//Thread.sleep(3000);
-				driver.findElement(By.xpath("//option[@label='BITTIUM']")).click();
-				//Thread.sleep(3000);
-				driver.findElement(By.xpath("//select[@id=\'SelectModel\']")).click();
-				//Thread.sleep(3000);
-				driver.findElement(By.xpath("//option[@label='Tough Mobile']")).click();
-				//Thread.sleep(tiempo);
+
+				boolean seleccionarDispositivo = false;
+				
+				if (index == 1) {
+					WebElement check = driver.findElement(By.xpath("//input[@id=\'CheckCompatibility\']"));
+					JavascriptExecutor executor = (JavascriptExecutor)driver;
+					executor.executeScript("arguments[0].style.display = 'block'; arguments[0].style.zIndex = '999999'; arguments[0].click()", check);
+					
+					seleccionarDispositivo = true;
+				}else {
+
+					driver.findElement(By.xpath("//select[@id=\'SelectBrand\']")).click();
+					//Thread.sleep(3000);
+					driver.findElement(By.xpath("//option[@label='BITTIUM']")).click();
+					//Thread.sleep(3000);
+					driver.findElement(By.xpath("//select[@id=\'SelectModel\']")).click();
+					//Thread.sleep(3000);
+					driver.findElement(By.xpath("//option[@label='Tough Mobile']")).click();
+					//Thread.sleep(tiempo);
+				}
+				
 				driver.findElement(By.xpath("//div[@id='StepApprovedDevice_nextBtn']")).click();
 				Thread.sleep(tiempo);
+				
+				if (seleccionarDispositivo) {
+					seleccionDeDispositivo(driver);
+				}
 				
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
@@ -175,6 +192,8 @@ public class ProcesoFVentas {
 			        .until(ExpectedConditions.elementToBeClickable(By.id("RadioProfileNoVentas")));
 			//List<WebElement> opt = driver.findElements(By.id("RadioProfileNoVentas"));
 			driver.findElement(By.id("RadioProfileNoVentas")).findElement(By.xpath("./..")).click();
+			Thread.sleep(2000);
+			driver.findElement(By.xpath("//*[@id=\'RadioRetiroOtraSucursal|0\']/div/div[1]/label[2]/span[1]")).click();
 			Thread.sleep(2000);
 			driver.findElement(By.id("StepSaleProcessDevice_nextBtn")).click();
 			Thread.sleep(5000);

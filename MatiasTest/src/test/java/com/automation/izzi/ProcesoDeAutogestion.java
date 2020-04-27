@@ -76,7 +76,7 @@ public class ProcesoDeAutogestion {
 		/* Para esta seccion es necesario comentar uno de las 2 lineas de codigos siguientes (IMEI o Dispositivos)*/
 		
 		//ValidacionImei(driver);
-		ValidacionDispositivo(driver);//
+		validacionDispositivo(driver,1);//
 		
 		
 		
@@ -116,7 +116,7 @@ public class ProcesoDeAutogestion {
 		wait.until(ExpectedConditions.invisibilityOfElementLocated(By.className("slds-spinner_container")));
 		wait.until(ExpectedConditions.elementToBeClickable(By.id("RadioDevices")));
 		List<WebElement> opt = driver.findElements(By.id("RadioDevices"));
-		opt.get(index).findElement(By.xpath("./..")).click();
+		opt.get(index).findElement(By.xpath("./..")).click();//TRAE TU EQUIPO A IZZI
 		Thread.sleep(2000);
 		driver.findElement(By.id("StepDevicesSelect_nextBtn")).click();
 		Thread.sleep(5000);
@@ -141,7 +141,7 @@ public class ProcesoDeAutogestion {
 	//---------------------------------------------------------------------------------
 		//Este metodo se utiliza una vez elegido la opcion "Trae tu equipo a IZZI" en la seccion: Dispositivo
 		//Solo puede elegir entre la validacion por IMEI o validacion por disposiivo
-		public static void ValidacionDispositivo(WebDriver driver) {
+		public static void validacionDispositivo(WebDriver driver, int index) {
 			try {
 				int tiempo= 5000;
 				WebDriverWait wait = new WebDriverWait(driver, 40);
@@ -150,18 +150,34 @@ public class ProcesoDeAutogestion {
 				List<WebElement> mdv = driver.findElements(By.id("RadioSelectMethod"));
 				Thread.sleep(tiempo);
 				mdv.get(1).findElement(By.xpath("./..")).click();
-
 				Thread.sleep(tiempo);
-				driver.findElement(By.xpath("//select[@id=\'SelectBrand\']")).click();
-				//Thread.sleep(3000);
-				driver.findElement(By.xpath("//option[@label='BITTIUM']")).click();
-				//Thread.sleep(3000);
-				driver.findElement(By.xpath("//select[@id=\'SelectModel\']")).click();
-				//Thread.sleep(3000);
-				driver.findElement(By.xpath("//option[@label='Tough Mobile']")).click();
-				//Thread.sleep(tiempo);
+
+boolean seleccionarDispositivo = false;
+				
+				if (index == 1) {
+					WebElement check = driver.findElement(By.xpath("//input[@id=\'CheckCompatibility\']"));
+					JavascriptExecutor executor = (JavascriptExecutor)driver;
+					executor.executeScript("arguments[0].style.display = 'block'; arguments[0].style.zIndex = '999999'; arguments[0].click()", check);
+					
+					seleccionarDispositivo = true;
+				}else {
+
+					driver.findElement(By.xpath("//select[@id=\'SelectBrand\']")).click();
+					//Thread.sleep(3000);
+					driver.findElement(By.xpath("//option[@label='BITTIUM']")).click();
+					//Thread.sleep(3000);
+					driver.findElement(By.xpath("//select[@id=\'SelectModel\']")).click();
+					//Thread.sleep(3000);
+					driver.findElement(By.xpath("//option[@label='Tough Mobile']")).click();
+					//Thread.sleep(tiempo);
+				}
+				
 				driver.findElement(By.xpath("//div[@id='StepApprovedDevice_nextBtn']")).click();
 				Thread.sleep(tiempo);
+				
+				if (seleccionarDispositivo) {
+					seleccionDeDispositivo(driver);
+				}
 				
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
@@ -196,7 +212,9 @@ public class ProcesoDeAutogestion {
 			new WebDriverWait(driver, 40)
 			        .until(ExpectedConditions.elementToBeClickable(By.id("RadioProfileNoVentas")));
 			//List<WebElement> opt = driver.findElements(By.id("RadioProfileNoVentas"));
-			driver.findElement(By.id("RadioProfileNoVentas")).findElement(By.xpath("./..")).click();
+			driver.findElement(By.id("RadioProfileNoVentas")).findElement(By.xpath("./..")).click();//Selecciona sucursal
+			Thread.sleep(2000);
+			driver.findElement(By.xpath("//*[@id=\'RadioRetiroOtraSucursal|0\']/div/div[1]/label[2]/span[1]")).click();
 			Thread.sleep(2000);
 			driver.findElement(By.id("StepSaleProcessDevice_nextBtn")).click();
 			Thread.sleep(5000);
@@ -208,16 +226,16 @@ public class ProcesoDeAutogestion {
 				int tiempo= 5000;
 				WebDriverWait wait = new WebDriverWait(driver, 40);
 				wait.until(ExpectedConditions.invisibilityOfElementLocated(By.className("slds-spinner_container")));
-				WebElement btn = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//div[@id=\'DeliveryHomeSummary_nextBtn\']/p")));
+				WebElement btn = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id='doneAction-1222']/div/div/div[3]/div/button")));
 				while(btn.isDisplayed() && btn.isEnabled()) {
 					Thread.sleep(1000);
 					btn.click();
 				}
-				Thread.sleep(tiempo);
+				/*Thread.sleep(tiempo);
 				wait.until(ExpectedConditions.invisibilityOfElementLocated(By.className("slds-spinner_container")));
 				WebElement btnFinish = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//button[@class=\'slds-button slds-button_brand ng-binding\']")));
 				btnFinish.click();
-				Thread.sleep(tiempo);
+				Thread.sleep(tiempo);*/
 				//Nos muestra el numero de pedido 
 			} catch (InterruptedException e) {
 				e.printStackTrace();
@@ -255,5 +273,22 @@ public class ProcesoDeAutogestion {
 		driver.findElement(By.xpath("slds-button slds-button_brand ng-binding")). click();
 		Thread.sleep(2000);
 		
+	}
+		//---------------------------------------------------------------------------------
+	public static void seleccionDeDispositivo(WebDriver driver) throws InterruptedException {
+		WebDriverWait wait = new WebDriverWait(driver, 40);
+		wait.until(ExpectedConditions.invisibilityOfElementLocated(By.className("slds-spinner_container")));
+		WebElement opt = new WebDriverWait(driver, 40)
+		        .until(ExpectedConditions.elementToBeClickable(By.id("block_01t3K000000HEDoQAO")));
+		opt.findElement(By.xpath("./..")).click();
+		Thread.sleep(2000);
+		wait.until(ExpectedConditions.invisibilityOfElementLocated(By.className("slds-spinner_container")));
+		driver.findElement(By.id("vlcCart_Top")).findElement(By.xpath(".//div[1]")).click();
+		WebElement btn = driver.findElement(By.id("StepChooseDevices_nextBtn"));
+		while(btn.isEnabled() && btn.isDisplayed()) {
+			Thread.sleep(1000);
+			btn.click();
+		}
+		Thread.sleep(2000);
 	}
 }
