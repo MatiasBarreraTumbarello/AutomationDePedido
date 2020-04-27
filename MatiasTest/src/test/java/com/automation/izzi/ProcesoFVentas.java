@@ -273,7 +273,7 @@ public class ProcesoFVentas {
 			Thread.sleep(tiempo);
 			mdv.get(0).findElement(By.xpath("./..")).click();
 			Thread.sleep(tiempo);
-			//driver.findElement(By.xpath("//input[@id=\'NumberIMEI\']")).sendKeys("355576090532169"); // Válido
+			//driver.findElement(By.xpath("//input[@id=\'NumberIMEI\']")).sendKeys("355576090532169"); // Vï¿½lido
 			driver.findElement(By.xpath("//input[@id=\'NumberIMEI\']")).sendKeys("000000000000000");
 			//Thread.sleep(5000);
 			driver.findElement(By.xpath("//div[@id=\'IPAValidateIMEI\']/p")).click();
@@ -313,10 +313,6 @@ public class ProcesoFVentas {
 		
 	}
 	
-	/*@After
-	public void tearDown() {
-		driver.quit();
-	}*/
 	
 	
 	
