@@ -28,7 +28,7 @@ public class ProcesoFVentas {
 		System.setProperty("webdriver.chrome.driver", "./src/test/resources/chromedriver/chromedriver.exe");
 		driver = new ChromeDriver();
 		driver.manage().window().maximize();
-		driver.get("https://test1dom--sittest.my.salesforce.com/secur/frontdoor.jsp?sid=00D3K0000008jQa!ARwAQDdj8asTz1XGXVwAu86sw.3ler60B5mPt.c2almIkcwDdHZwdyj1hGUHRgLTIiyMAG6ZbyWlm55k680HiqIhl3zHQTNY");
+		driver.get("https://test1dom--sittest.my.salesforce.com/secur/frontdoor.jsp?sid=00D3K0000008jQa!ARwAQIO6gHmnB.8N3_W6jM.Okgok8oGGJJjZsB0sSWaUFNcMKrmNEw23Eh1EVXCzlTz130J91Oz7CM1wKSMX5qVBYprO9B16");
 		driver.get("https://test1dom--sittest.lightning.force.com/lightning/n/Nueva_Venta");
 		driver.manage().timeouts().pageLoadTimeout(40, TimeUnit.SECONDS);
 		Thread.sleep(20000);
@@ -82,6 +82,8 @@ public class ProcesoFVentas {
 
 	}
 	//------------------------------------------------METODOS DESARROLLO-------------------------------------------------------
+	//Elegir Plan, cambiando ID---------//
+	
 	public static void planesActualizado(WebDriver driver) throws InterruptedException{
 		 Thread.sleep(2000);
 		 WebDriverWait wait = new WebDriverWait(driver, 40);
@@ -100,6 +102,8 @@ public class ProcesoFVentas {
 		 Thread.sleep(10000);
 	}
 	//--------------------------------------------------------------------------------------------------------------------------
+	//Cambiar index para Trae tu equipo o compra--------------------
+	
 	public static void dispositivos(WebDriver driver, Integer index) throws InterruptedException {
 		WebDriverWait wait = new WebDriverWait(driver, 40);
 		wait.until(ExpectedConditions.invisibilityOfElementLocated(By.className("slds-spinner_container")));
@@ -164,6 +168,8 @@ public class ProcesoFVentas {
 			}
 		}
 		//--------------------------------------------------------------------------------------------------------------------------
+		//Agregar Index para Portabilidad SI------------------------
+		
 		public  void portabilidadNo(WebDriver driver) {
 			
 			try {
@@ -187,6 +193,7 @@ public class ProcesoFVentas {
 			}
 		}
 		//--------------------------------------------------------------------------------------------------------------------------
+		//Agregar por sucursal domicilio y Sucursal, index SI/NO y Picklist, Validar stock---------------------------
 		public static void tipoDeEntrega(WebDriver driver) throws InterruptedException {
 			new WebDriverWait(driver, 40)
 			        .until(ExpectedConditions.elementToBeClickable(By.id("RadioProfileNoVentas")));
