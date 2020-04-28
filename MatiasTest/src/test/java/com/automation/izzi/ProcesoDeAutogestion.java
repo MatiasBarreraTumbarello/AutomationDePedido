@@ -73,10 +73,10 @@ public class ProcesoDeAutogestion {
 		/* Para usar los metodos de MatiasClass es necesario cambiar el valor de 1 a 0 del llamamiento RoynerClass.dispositivos()
 		 * Y despues comentar los llamamientos de FranciscoClass.desinteresEquipo() */
 		 
-		/* Para esta seccion es necesario comentar uno de las 2 lineas de codigos siguientes (IMEI o Dispositivos)*/
 		
-		//ValidacionImei(driver);
-		validacionDispositivo(driver,1);//
+		/* Para esta seccion es necesario comentar una de las 2 lineas de codigos siguientes (IMEI o Dispositivos)*/
+		ValidacionImei(driver);
+		//validacionDispositivo(driver,1);//
 		
 		
 		
@@ -226,7 +226,7 @@ boolean seleccionarDispositivo = false;
 				int tiempo= 5000;
 				WebDriverWait wait = new WebDriverWait(driver, 40);
 				wait.until(ExpectedConditions.invisibilityOfElementLocated(By.className("slds-spinner_container")));
-				WebElement btn = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id='doneAction-1222']/div/div/div[3]/div/button")));
+				WebElement btn = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//button[@class='slds-button slds-button_brand ng-binding']")));
 				while(btn.isDisplayed() && btn.isEnabled()) {
 					Thread.sleep(1000);
 					btn.click();
@@ -250,12 +250,15 @@ boolean seleccionarDispositivo = false;
 		Thread.sleep(tiempo);
 		mdv.get(0).findElement(By.xpath("./..")).click();
 		Thread.sleep(tiempo);
-		driver.findElement(By.xpath("//input[@id=\'NumberIMEI\']")).sendKeys("355576090532169");
+		driver.findElement(By.xpath("//input[@id=\'NumberIMEI\']")).sendKeys("355576090532168");
 		//Thread.sleep(5000);
 		driver.findElement(By.xpath("//div[@id=\'IPAValidateIMEI\']/p")).click();
 		Thread.sleep(tiempo);
-		driver.findElement(By.xpath("//div[@id='StepApprovedDevice_nextBtn']")).click();
-		Thread.sleep(tiempo);
+		WebDriverWait wait = new WebDriverWait(driver, 40);
+		wait.until(ExpectedConditions.invisibilityOfElementLocated(By.className("slds-spinner_container")));
+		driver.findElement(By.xpath("//*[@id='StepApprovedDevice_nextBtn']")).click();
+		Thread.sleep(tiempo);//*[@id='StepApprovedDevice_nextBtn']
+		seleccionDeDispositivo(driver);
 	}
 		//---------------------------------------------------------------------------------
 	
