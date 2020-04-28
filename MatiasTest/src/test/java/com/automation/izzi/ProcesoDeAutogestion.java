@@ -20,7 +20,8 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 public class ProcesoDeAutogestion {
 	
 	private WebDriver driver;
-	public int tiempo= 4000;
+	private WebDriverWait wait;
+	public int tiempo = 2000;
 	//************************LEER*****************************************************************
 	// En eclipse para ir al desarrollo del metodo debo hacer CTRL + Click al llamamiento del mismo.
 	// En algunos casos hay metodos que estan comentados, en caso de querer cambiar las elecciones solo basta con descomentar uno y comentar el otro.
@@ -38,60 +39,45 @@ public class ProcesoDeAutogestion {
 		driver.findElement (By.xpath ("// input [@ class = 'button r4 wide primary']")). click ();
 		Thread.sleep(5000);
 		driver.manage().timeouts().pageLoadTimeout(40, TimeUnit.SECONDS);
-		Thread.sleep(20000);
+		wait = new WebDriverWait(driver, 40);
+		Thread.sleep(15000);
 	}
 		
 
 		
-	
 	@Test
-	public void IniciarContratacion () throws InterruptedException {
+	public void Main () throws InterruptedException {
+		StepiniciarContratacion(driver);
+		SeleccionDelPlan(driver);
+		StepDispositivos(0);
+		StepValidacionDeDispositivos(0);
+		StepPortabilidad(0);
+		StepTipoDeEntrega(0);
+		StepResumenDeCompra();
+		
+		
+	}
+		
+	/**
+	 * Iniciar la Contratacion
+	 * 
+	 * @throws InterruptedException
+	 */
+	public static void StepiniciarContratacion (WebDriver driver)throws InterruptedException {
+		
 		driver.switchTo().frame(0);
 		new WebDriverWait (driver, 20)
 		.until(ExpectedConditions.invisibilityOfElementLocated(By.className("slds-spinner_container")));
 		driver.findElement (By.xpath ("// button [@ class ='slds-button slds-button_brand btnCommunity']")). click ();
 		driver.switchTo().defaultContent();
-		//Seleccion del Plan------------------------------------------------------------
-		SeleccionDelPlan(driver);
-		Thread.sleep(4000);
-		
-		//-----------------------Seccion: Dispositivos----------------------------------
-		
-		Dispositivos(driver, 0);//trae tu equipo izzi
-		
-		// Solo funciona al seleccionar Compra de Equipo
-		//SeleccionDeDispositivo(driver);
-		
-		
-		//----------- Check: No estoy interesado en estos equipos.----------------------
-		
-		//desinteresEquipo(driver);
-		
-		
-		//-----------------------Seccion: Validacion de Dispositivos--------------------
-		
-		/* Para usar los metodos de MatiasClass es necesario cambiar el valor de 1 a 0 del llamamiento RoynerClass.dispositivos()
-		 * Y despues comentar los llamamientos de FranciscoClass.desinteresEquipo() */
-		 
-		
-		/* Para esta seccion es necesario comentar una de las 2 lineas de codigos siguientes (IMEI o Dispositivos)*/
-		ValidacionImei(driver);
-		//validacionDispositivo(driver,1);//
-		
-		
-		
-		//----------------------Portabilidad-------------------------------------------
-		
-		PortabilidadNo(driver);//no
-		//-----------------------------------------------------------------------------
-		TipoDeEntrega(driver);//sucursal
-		
-		//----------------------Resumen de Compra--------------------------------------
-		ResumenDeCompra(driver);//Finalizar
-		
-		Thread.sleep(3000);
 	}
-	//------------------------------------------------METODOS--------------------------
+	
+	
+	/**
+	 * Selecciona el plan en el paso Planes.
+	 * 
+	 * @throws InterruptedException
+	 */
 	public static void SeleccionDelPlan(WebDriver driver) throws InterruptedException{
 		WebDriverWait wait = new WebDriverWait(driver, 40);
 		wait.until(ExpectedConditions.elementToBeClickable(By.id("iFrameResizer1")));
@@ -110,188 +96,250 @@ public class ProcesoDeAutogestion {
 		}
 		Thread.sleep(10000);
 	}
-	//---------------------------------------------------------------------------------
-	public static void Dispositivos(WebDriver driver, Integer index) throws InterruptedException {
-		WebDriverWait wait = new WebDriverWait(driver, 40);
-		wait.until(ExpectedConditions.invisibilityOfElementLocated(By.className("slds-spinner_container")));
+
+	
+	/**
+	 * Selecciona entre usar un dispositivo propio o adquirir uno nuevo
+	 * 
+	 * @param index			0 = "Dispositivo propio" || 1 = "Compra de dispositivo"
+	 * @throws InterruptedException
+	 */
+	public void StepDispositivos(int index) throws InterruptedException {
+		WaitForInvisibleSpinner();
 		wait.until(ExpectedConditions.elementToBeClickable(By.id("RadioDevices")));
-		List<WebElement> opt = driver.findElements(By.id("RadioDevices"));
-		opt.get(index).findElement(By.xpath("./..")).click();//TRAE TU EQUIPO A IZZI
+		List<WebElement> optTipoDeDispositivo = driver.findElements(By.id("RadioDevices"));
+		optTipoDeDispositivo.get(index).findElement(By.xpath("./..")).click();//Trae Tu equipo a Izzi
 		Thread.sleep(2000);
 		driver.findElement(By.id("StepDevicesSelect_nextBtn")).click();
 		Thread.sleep(5000);
+		if (index == 1) {
+			StepSeleccionDeDispositivo();
+			// Selecciona el check que indica que el cliente no esta interesado en estos equipos.
+			// OptDesinteresEquipo();
+		}
 	}
-	//--------------------------------------------------------------------------------
-	public static void SeleccionDeDispositivo(WebDriver driver) throws InterruptedException {
-		WebDriverWait wait = new WebDriverWait(driver, 40);
-		wait.until(ExpectedConditions.invisibilityOfElementLocated(By.className("slds-spinner_container")));
-		WebElement opt = new WebDriverWait(driver, 40)
-		        .until(ExpectedConditions.elementToBeClickable(By.id("block_01t3K000000HEDoQAO")));
-		opt.findElement(By.xpath("./..")).click();
+	
+	/**
+	 * Selecciona un dispositivo en el paso Seleccion de Dispositivo.
+	 * 
+	 * @throws InterruptedException
+	 */
+	public void StepSeleccionDeDispositivo() throws InterruptedException {
+		WaitForInvisibleSpinner();
+		WebElement optDispositivo = wait.until(ExpectedConditions.elementToBeClickable(By.id("block_01t3K000000HEDoQAO")));
+		optDispositivo.findElement(By.xpath("./..")).click();
 		Thread.sleep(2000);
-		wait.until(ExpectedConditions.invisibilityOfElementLocated(By.className("slds-spinner_container")));
+		
+		WaitForInvisibleSpinner();
 		driver.findElement(By.id("vlcCart_Top")).findElement(By.xpath(".//div[1]")).click();
-		WebElement btn = driver.findElement(By.id("StepChooseDevices_nextBtn"));
-		while(btn.isEnabled() && btn.isDisplayed()) {
+		WebElement btnSiguiente = driver.findElement(By.id("StepChooseDevices_nextBtn"));
+		while(btnSiguiente.isEnabled() && btnSiguiente.isDisplayed()) {
 			Thread.sleep(1000);
-			btn.click();
+			btnSiguiente.click();
 		}
 		Thread.sleep(2000);
 	}
-	//---------------------------------------------------------------------------------
-		//Este metodo se utiliza una vez elegido la opcion "Trae tu equipo a IZZI" en la seccion: Dispositivo
-		//Solo puede elegir entre la validacion por IMEI o validacion por disposiivo
-		public static void validacionDispositivo(WebDriver driver, int index) {
-			try {
-				int tiempo= 5000;
-				WebDriverWait wait = new WebDriverWait(driver, 40);
-				wait.until(ExpectedConditions.invisibilityOfElementLocated(By.className("slds-spinner_container")));
-				wait.until(ExpectedConditions.elementToBeClickable(By.id("RadioSelectMethod")));
-				List<WebElement> mdv = driver.findElements(By.id("RadioSelectMethod"));
-				Thread.sleep(tiempo);
-				mdv.get(1).findElement(By.xpath("./..")).click();
-				Thread.sleep(tiempo);
 
-boolean seleccionarDispositivo = false;
-				
-				if (index == 1) {
-					WebElement check = driver.findElement(By.xpath("//input[@id=\'CheckCompatibility\']"));
-					JavascriptExecutor executor = (JavascriptExecutor)driver;
-					executor.executeScript("arguments[0].style.display = 'block'; arguments[0].style.zIndex = '999999'; arguments[0].click()", check);
-					
-					seleccionarDispositivo = true;
-				}else {
+	/**
+	 * Selecciona el metodo de validacion de compatibilidad con Izzi.
+	 * 
+	 * @param index			0 = "IMEI" || 1 = "Dispositivo"
+	 * @throws InterruptedException
+	 */
+	public void StepValidacionDeDispositivos(int index) throws InterruptedException {
+		WaitForInvisibleSpinner();
+		wait.until(ExpectedConditions.elementToBeClickable(By.id("RadioSelectMethod")));
+		List<WebElement> optMetodoDeValidacion = driver.findElements(By.id("RadioSelectMethod"));
+		Thread.sleep(tiempo);
+		optMetodoDeValidacion.get(index).findElement(By.xpath("./..")).click();
+		Thread.sleep(tiempo);
+		
+		if (index == 0)
+			OptValidacionPorImei();
+		else
+			// Se debe cambiar al false para no seleccionar dispositivos de la lista
+			OptValidacionPorDispositivo(true);
+	}
+	
+	/**
+	 * Realiza la validacion por IMEI.
+	 * 
+	 * @throws InterruptedException
+	 */
+	public void OptValidacionPorImei() throws InterruptedException {
+		// Imei valido
+		driver.findElement(By.xpath("//input[@id=\'NumberIMEI\']")).sendKeys("355576090532168");
+		
+		// Imei invalido
+		// driver.findElement(By.xpath("//input[@id=\'NumberIMEI\']")).sendKeys("000000000000000");
+		WebElement btnValidar = driver.findElement(By.xpath("//div[@id=\'IPAValidateIMEI\']/p"));
+		btnValidar.click();
+		Thread.sleep(tiempo);
 
-					driver.findElement(By.xpath("//select[@id=\'SelectBrand\']")).click();
-					//Thread.sleep(3000);
-					driver.findElement(By.xpath("//option[@label='BITTIUM']")).click();
-					//Thread.sleep(3000);
-					driver.findElement(By.xpath("//select[@id=\'SelectModel\']")).click();
-					//Thread.sleep(3000);
-					driver.findElement(By.xpath("//option[@label='Tough Mobile']")).click();
-					//Thread.sleep(tiempo);
-				}
-				
-				driver.findElement(By.xpath("//div[@id='StepApprovedDevice_nextBtn']")).click();
-				Thread.sleep(tiempo);
-				
-				if (seleccionarDispositivo) {
-					seleccionDeDispositivo(driver);
-				}
-				
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+		WaitForInvisibleSpinner();
+		List<WebElement> buy = driver.findElements(By.id("RadioBuyDevices"));
+		
+		boolean optVerEquiposCompatibles = false;
+		if (buy.get(0).isEnabled() && buy.get(0).isDisplayed()) {
+			optVerEquiposCompatibles = true;
 		}
-		//---------------------------------------------------------------------------------
-		public  void PortabilidadNo(WebDriver driver) {
+		
+		driver.findElement(By.xpath("//div[@id='StepApprovedDevice_nextBtn']")).click();
+		Thread.sleep(tiempo);
+		
+		if (optVerEquiposCompatibles)
+			StepSeleccionDeDispositivo();
+	}
+	
+	/**
+	 * Realiza la validacion por dispositivo. 
+	 * Toma el parametro booleano isValid el cual establece si se selecciona un dispositivo de la lista 
+	 * o si por el contrario se envia al paso Seleccionar dispositivo
+	 * 
+	 * @param isValid			true = "Selecciona un dispositivo de la lista" || false = "Habilita la opcion 'seleccion de dispositivo'"
+	 * @throws InterruptedException
+	 */
+	public void OptValidacionPorDispositivo(boolean isValid) throws InterruptedException {
+		boolean optVerEquiposCompatibles = false;
+		
+		// Si el parametro es false:
+		if (!isValid) {
+			// El flujo va a seleccion de dispositivo
+			WebElement chkDispositivoNoEncontrado = driver.findElement(By.xpath("//input[@id=\'CheckCompatibility\']"));
+			JavascriptExecutor executor = (JavascriptExecutor)driver;
+			executor.executeScript("arguments[0].style.display = 'block'; "
+					+ "arguments[0].style.zIndex = '999999'; "
+					+ "arguments[0].click()", chkDispositivoNoEncontrado);
 			
-			try {
-				new WebDriverWait(driver, 40).until(ExpectedConditions.elementToBeClickable(By.id("OptionPortability")));
+			optVerEquiposCompatibles = true;
+			
+		// En caso contrario selecciona un equipo de la lista y continua a portabilidad
+		}else {
+			// Selecciona la marca
+			driver.findElement(By.xpath("//select[@id=\'SelectBrand\']")).click();
+			driver.findElement(By.xpath("//option[@label='BITTIUM']")).click();
+			
+			// Selecciona el modelo
+			driver.findElement(By.xpath("//select[@id=\'SelectModel\']")).click();
+			driver.findElement(By.xpath("//option[@label='Tough Mobile']")).click();
+		}
+		
+		driver.findElement(By.xpath("//div[@id='StepApprovedDevice_nextBtn']")).click();
+		Thread.sleep(tiempo);
+		
+		if (optVerEquiposCompatibles)
+			StepSeleccionDeDispositivo();
+	}
+		
+	/**
+	 * Selecciona la opcion de portabilidad.
+	 * 
+	 * @param index			0 = "SI" || 1 = "NO"
+	 * @throws InterruptedException
+	 */
+	public void StepPortabilidad(int index) throws InterruptedException {
+		
+		wait.until(ExpectedConditions.elementToBeClickable(By.id("OptionPortability")));
+		Thread.sleep(1000);
+		
+		List<WebElement> optPortarNumeroActual = driver.findElements(By.id("OptionPortability"));
+		optPortarNumeroActual.get(index).findElement(By.xpath("./..")).click();
+		Thread.sleep(tiempo);
+		
+		WebElement btnSiguiente = driver.findElement(By.xpath("//*[@id=\'StepDeviceValidation_nextBtn\']/p"));
+		while(btnSiguiente.isEnabled() && btnSiguiente.isDisplayed()) {
+			Thread.sleep(1000);
+			btnSiguiente.click();
+		}
+		Thread.sleep(tiempo);
+	}
+	
+	/**
+	 * Selecciona el tipo de entrega en el paso Tipo de Entrega
+	 * 
+	 * @param index			0 = "Entrega en Suscursal" || 1 = "Entrega en Domicilio"
+	 * @throws InterruptedException
+	 */
+	public void StepTipoDeEntrega(int index) throws InterruptedException {
+		Thread.sleep(2000);
+		wait.until(ExpectedConditions.elementToBeClickable(By.id("RadioProfileNoVentas")));
+		List<WebElement> optTipoDeEntrega = driver.findElements(By.xpath("//input[@id='RadioProfileNoVentas']"));
+		Thread.sleep(2000);
+		
+		// Si  la entrega es en Sucursal:
+		if (index == 0) {
+			optTipoDeEntrega.get(index).findElement(By.xpath("./..")).click();
+			Thread.sleep(2000);
+			List<WebElement> stock = driver.findElements(By.xpath("//span[@class='slds-radio--faux ng-scope']"));
+			//driver.findElement(By.id("RadioRetiroOtraSucursal|0")).click();//ng-form[@id='RadioRetiroOtraSucursal|0']
+			
+			//Verifica si se puede seleccionar una sucursal
+			if (stock.get(stock.size()-2).isEnabled()) { 
+				stock.get(stock.size()-2).click();
+				
+				//selecciona la sucursal "ATIZAPAN"
+				driver.findElement(By.xpath("//*[@id=\'SelectSucursal\']/option[3]")).click(); 
 				Thread.sleep(1000);
 				
-				List<WebElement> web = driver.findElements(By.id("OptionPortability"));
-				web.get(1).findElement(By.xpath("./..")).click();
-				Thread.sleep(tiempo);
-				
-				WebElement btn = driver.findElement(By.xpath("//*[@id=\'StepDeviceValidation_nextBtn\']/p"));
-				while(btn.isEnabled() && btn.isDisplayed()) {
-					Thread.sleep(1000);
-					btn.click();
-				}
-				Thread.sleep(tiempo);
-				
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				//selecciona el boton validar
+				driver.findElement(By.xpath("//div[@id=\'WrapperCheckDeviceStockSucursal\']")).click(); 
 			}
-		}
-		//---------------------------------------------------------------------------------
-		public static void TipoDeEntrega(WebDriver driver) throws InterruptedException {
-			new WebDriverWait(driver, 40)
-			        .until(ExpectedConditions.elementToBeClickable(By.id("RadioProfileNoVentas")));
-			//List<WebElement> opt = driver.findElements(By.id("RadioProfileNoVentas"));
-			driver.findElement(By.id("RadioProfileNoVentas")).findElement(By.xpath("./..")).click();//Selecciona sucursal
 			Thread.sleep(2000);
-			driver.findElement(By.xpath("//*[@id=\'RadioRetiroOtraSucursal|0\']/div/div[1]/label[2]/span[1]")).click();
+			
+		//En caso contrario, la entrega es en Domicilio
+		} else { 
+			optTipoDeEntrega.get(index).findElement(By.xpath("./..")).click();
 			Thread.sleep(2000);
-			driver.findElement(By.id("StepSaleProcessDevice_nextBtn")).click();
-			Thread.sleep(5000);
 		}
-		//---------------------------------------------------------------------------------
-		//Este metodo es el paso final de la gestion de compra, donde se muestra el resumente y pasa a la siguiente pestaña de finalizar compra
-		public static void ResumenDeCompra(WebDriver driver) {
-			try {
-				int tiempo= 5000;
-				WebDriverWait wait = new WebDriverWait(driver, 40);
-				wait.until(ExpectedConditions.invisibilityOfElementLocated(By.className("slds-spinner_container")));
-				WebElement btn = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//button[@class='slds-button slds-button_brand ng-binding']")));
-				while(btn.isDisplayed() && btn.isEnabled()) {
-					Thread.sleep(1000);
-					btn.click();
-				}
-				/*Thread.sleep(tiempo);
-				wait.until(ExpectedConditions.invisibilityOfElementLocated(By.className("slds-spinner_container")));
-				WebElement btnFinish = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//button[@class=\'slds-button slds-button_brand ng-binding\']")));
-				btnFinish.click();
-				Thread.sleep(tiempo);*/
-				//Nos muestra el numero de pedido 
-			} catch (InterruptedException e) {
-				e.printStackTrace();
-			}
-		}
-		//---------------------------------------------------------------------------------
-	public static void ValidacionImei(WebDriver driver) throws InterruptedException {
-		int tiempo= 5000;
-		new WebDriverWait(driver, 40)
-		        .until(ExpectedConditions.elementToBeClickable(By.id("RadioSelectMethod")));
-		List<WebElement> mdv = driver.findElements(By.id("RadioSelectMethod"));
-		Thread.sleep(tiempo);
-		mdv.get(0).findElement(By.xpath("./..")).click();
-		Thread.sleep(tiempo);
-		driver.findElement(By.xpath("//input[@id=\'NumberIMEI\']")).sendKeys("355576090532168");
-		//Thread.sleep(5000);
-		driver.findElement(By.xpath("//div[@id=\'IPAValidateIMEI\']/p")).click();
-		Thread.sleep(tiempo);
-		WebDriverWait wait = new WebDriverWait(driver, 40);
-		wait.until(ExpectedConditions.invisibilityOfElementLocated(By.className("slds-spinner_container")));
-		driver.findElement(By.xpath("//*[@id='StepApprovedDevice_nextBtn']")).click();
-		Thread.sleep(tiempo);//*[@id='StepApprovedDevice_nextBtn']
-		seleccionDeDispositivo(driver);
+		
+		wait.until(ExpectedConditions.elementToBeClickable(By.id("StepSaleProcessDevice_nextBtn")));
+		driver.findElement(By.id("StepSaleProcessDevice_nextBtn")).click();
+		Thread.sleep(5000);
 	}
-		//---------------------------------------------------------------------------------
 	
-			//Compra de Equipo-> Check: No estoy interesado en estos equipos.
 	
-	public static void desinteresEquipo(WebDriver driver)throws InterruptedException {
-		
-		
-		driver.findElement(By.id("CheckboxDontWantDevice")).findElement(By.xpath("./..")).click();
-		Thread.sleep(3000);
-		
-		driver.findElement(By.id("StepChooseDevices_nextBtn")).click();
-		Thread.sleep(2000);
-		
-		driver.findElement(By.xpath("slds-button slds-button_brand ng-binding")). click();
-		Thread.sleep(2000);
-		
-	}
-		//---------------------------------------------------------------------------------
-	public static void seleccionDeDispositivo(WebDriver driver) throws InterruptedException {
-		WebDriverWait wait = new WebDriverWait(driver, 40);
-		wait.until(ExpectedConditions.invisibilityOfElementLocated(By.className("slds-spinner_container")));
-		WebElement opt = new WebDriverWait(driver, 40)
-		        .until(ExpectedConditions.elementToBeClickable(By.id("block_01t3K000000HEDoQAO")));
-		opt.findElement(By.xpath("./..")).click();
-		Thread.sleep(2000);
-		wait.until(ExpectedConditions.invisibilityOfElementLocated(By.className("slds-spinner_container")));
-		driver.findElement(By.id("vlcCart_Top")).findElement(By.xpath(".//div[1]")).click();
-		WebElement btn = driver.findElement(By.id("StepChooseDevices_nextBtn"));
-		while(btn.isEnabled() && btn.isDisplayed()) {
+	/**
+	 * Este metodo es el paso final de la gestion de compra, donde se muestra el resumen y pasa a la siguiente pantalla de finalizar compra
+	 * 
+	 * @throws InterruptedException
+	 */
+	public void StepResumenDeCompra() throws InterruptedException {
+		WaitForInvisibleSpinner();
+		WebElement btnSiguiente = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//div[@id=\'DeliveryHomeSummary_nextBtn\']/p")));
+		while(btnSiguiente.isDisplayed() && btnSiguiente.isEnabled()) {
 			Thread.sleep(1000);
-			btn.click();
+			btnSiguiente.click();
 		}
-		Thread.sleep(2000);
+		Thread.sleep(tiempo);
+		
+		WaitForInvisibleSpinner();
+		WebElement btnFinish = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//button[@class=\'slds-button slds-button_brand ng-binding\']")));
+		btnFinish.click();
+		Thread.sleep(tiempo);
+		//Nos muestra el numero de pedido
 	}
+
+	/**
+	 * Selecciona el check que indica que el cliente no esta interesado en ningun equipo.
+	 * 
+	 * @throws InterruptedException
+	 */
+	public void OptDesinteresEquipo() throws InterruptedException {
+		driver.findElement(By.id("CheckboxDontWantDevice")).findElement(By.xpath("./..")).click();
+		Thread.sleep(tiempo);
+		driver.findElement(By.id("StepChooseDevices_nextBtn")).click();
+		Thread.sleep(tiempo);
+		driver.findElement(By.xpath("slds-button slds-button_brand ng-binding")). click();
+		Thread.sleep(tiempo);
+		
+	}	
+	
+	/**
+	 * Retrasa la ejecucion hasta que spinner sea invisible
+	 */
+	public void WaitForInvisibleSpinner() {
+		wait.until(ExpectedConditions.invisibilityOfElementLocated(By.className("slds-spinner_container")));
+	}
+	
+	
 }
