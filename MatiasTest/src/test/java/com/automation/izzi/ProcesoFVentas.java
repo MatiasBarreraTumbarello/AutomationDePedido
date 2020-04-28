@@ -195,6 +195,10 @@ public class ProcesoFVentas {
 			if (index == 0) { //Entrega en sucursal
 			opt.get(index).findElement(By.xpath("./..")).click();
 			Thread.sleep(2000);
+			List<WebElement> stock = driver.findElements(By.xpath("//input[@id='RadioRetiroOtraSucursal']"));
+			if (stock.get(0).isEnabled())
+				stock.get(0).click();
+			Thread.sleep(2000);
 			
 			} else { //Entrega en domicilio
 			opt.get(index).findElement(By.xpath("./..")).click();
