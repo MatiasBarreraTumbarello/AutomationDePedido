@@ -29,7 +29,7 @@ public class ProcesoFVentas {
 		driver = new ChromeDriver();
 		driver.manage().window().maximize();
 
-		driver.get("https://test1dom--sittest.my.salesforce.com/secur/frontdoor.jsp?sid=00D3K0000008jQa!ARwAQDdj8asTz1XGXVwAu86sw.3ler60B5mPt.c2almIkcwDdHZwdyj1hGUHRgLTIiyMAG6ZbyWlm55k680HiqIhl3zHQTNY");
+		driver.get("https://test1dom--sittest.my.salesforce.com/secur/frontdoor.jsp?sid=00D3K0000008jQa!ARwAQIO6gHmnB.8N3_W6jM.Okgok8oGGJJjZsB0sSWaUFNcMKrmNEw23Eh1EVXCzlTz130J91Oz7CM1wKSMX5qVBYprO9B16");
 		driver.get("https://test1dom--sittest.lightning.force.com/lightning/n/Nueva_Venta");
 		driver.manage().timeouts().pageLoadTimeout(40, TimeUnit.SECONDS);
 		Thread.sleep(20000);
@@ -76,7 +76,7 @@ public class ProcesoFVentas {
 		//Nelson
 		portabilidadNo(driver);
 		//----------------------------------------------------------------
-		tipoDeEntrega(driver);
+		tipoDeEntrega(driver, 1);
 		//----------------------Seccion: Resumen de Compra
 		resumenDeCompra(driver);
 		Thread.sleep(3000);
@@ -188,14 +188,18 @@ public class ProcesoFVentas {
 			}
 		}
 		//--------------------------------------------------------------------------------------------------------------------------
-		public static void tipoDeEntrega(WebDriver driver) throws InterruptedException {
+		public static void tipoDeEntrega(WebDriver driver, int index) throws InterruptedException {
 			new WebDriverWait(driver, 40)
 			        .until(ExpectedConditions.elementToBeClickable(By.id("RadioProfileNoVentas")));
-			//List<WebElement> opt = driver.findElements(By.id("RadioProfileNoVentas"));
-			driver.findElement(By.id("RadioProfileNoVentas")).findElement(By.xpath("./..")).click();
+			List<WebElement> opt = driver.findElements(By.id("//input[@id='RadioProfileNoVentas']"));
+			if (index == 0) { //Entrega en sucursal
+			opt.get(index).findElement(By.xpath("./..")).click();
 			Thread.sleep(2000);
-			driver.findElement(By.xpath("//*[@id=\'RadioRetiroOtraSucursal|0\']/div/div[1]/label[2]/span[1]")).click();
+			
+			} else { //Entrega en domicilio
+			opt.get(index).findElement(By.xpath("./..")).click();
 			Thread.sleep(2000);
+			}
 			driver.findElement(By.id("StepSaleProcessDevice_nextBtn")).click();
 			Thread.sleep(5000);
 		}
