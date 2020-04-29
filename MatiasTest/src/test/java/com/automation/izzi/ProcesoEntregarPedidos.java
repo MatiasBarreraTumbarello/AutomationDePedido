@@ -24,9 +24,9 @@ public class ProcesoEntregarPedidos {
 		System.setProperty("webdriver.chrome.driver", "./src/test/resources/chromedriver/chromedriver.exe");
 		driver = new ChromeDriver();
 		driver.manage().window().maximize();
-		driver.get("https://test1dom--sittest.my.salesforce.com/secur/frontdoor.jsp?sid=00D3K0000008jQa!ARwAQDdj8asTz1XGXVwAu86sw.3ler60B5mPt.c2almIkcwDdHZwdyj1hGUHRgLTIiyMAG6ZbyWlm55k680HiqIhl3zHQTNY");
+		driver.get(" https://test1dom--sittest.my.salesforce.com/secur/frontdoor.jsp?sid=00D3K0000008jQa!ARwAQPVlNhNobm9e_kAqyzLlLqbI0RgonCUb4QAMTdJ84QgQ_k8t88Tq9VmIld2g1eQnxf9b3I8o589baXucbB3t7pHG7MCh");
 		Thread.sleep(10000);
-		driver.get("https://test1dom--sittest.lightning.force.com/lightning/r/Order/8013K000000EgRXQA0/view");
+		driver.get("https://test1dom--sittest.lightning.force.com/lightning/r/Order/8013K000000EiXtQAK/view");
 
 		driver.manage().timeouts().pageLoadTimeout(40, TimeUnit.SECONDS);
 		
@@ -70,10 +70,11 @@ public class ProcesoEntregarPedidos {
 
 		driver.findElement(By.xpath("//div[@id='WrapperValidarICCID']/p")).click();
 		try {
-			Thread.sleep(2000);
+			Thread.sleep(3000);
 			
 		//-----GUARDAR!!!!---- solo descomentar si se esta seguro que se quiere generar/guardar el Pedido.
-		driver.findElement(By.xpath("//*[@class='slds-button slds-button_brand ng-binding')]")).click();
+	
+		driver.findElement(By.xpath("//div[@id='DeliverySimCard_nextBtn']/p")).click();
 		} catch (InterruptedException e) {
 			
 			e.printStackTrace();
