@@ -22,6 +22,13 @@ public class ProcesoFVentas {
 	private WebDriverWait wait;
 	public int tiempo = 2000;
 	
+	private int pStepDispositivos = 0;
+	private int pStepValidacionDeDispositivos = 1;
+	private int pStepPortabilidad= 0;
+	private int pStepTipoDeEntrega= 0;
+	
+	private boolean pOptValidacionPorDispositivo = true;
+	
 	/** 
 	 * En eclipse para ir al desarrollo del metodo debo hacer CTRL + Click al llamamiento del mismo.
 	 * En algunos casos hay metodos que estan comentados, 
@@ -55,10 +62,10 @@ public class ProcesoFVentas {
 	public void Main() throws InterruptedException {
 		StepBuscarCliente();
 		StepPlanes();
-		StepDispositivos(0);
-		StepValidacionDeDispositivos(1);
-		StepPortabilidad(0);
-		StepTipoDeEntrega(0);
+		StepDispositivos(pStepDispositivos);
+		StepValidacionDeDispositivos(pStepValidacionDeDispositivos);
+		StepPortabilidad(pStepPortabilidad);
+		StepTipoDeEntrega(pStepTipoDeEntrega);
 		StepResumenDeCompra();
 		Thread.sleep(tiempo);
 	}
@@ -219,7 +226,7 @@ public class ProcesoFVentas {
 			OptValidacionPorImei();
 		else
 			// Se debe cambiar al false para no seleccionar dispositivos de la lista
-			OptValidacionPorDispositivo(true);
+			OptValidacionPorDispositivo(paramOptValidacionPorDispositivo);
 	}
 	
 	/**
@@ -238,10 +245,10 @@ public class ProcesoFVentas {
 		Thread.sleep(tiempo);
 
 		WaitForInvisibleSpinner();
-		List<WebElement> buy = driver.findElements(By.id("RadioBuyDevices"));
+		List<WebElement> optListVerEquiposCompatibles = driver.findElements(By.id("RadioBuyDevices"));
 		
 		boolean optVerEquiposCompatibles = false;
-		if (buy.get(0).isEnabled() && buy.get(0).isDisplayed()) {
+		if (optListVerEquiposCompatibles.get(0).isEnabled() && optListVerEquiposCompatibles.get(0).isDisplayed()) {
 			optVerEquiposCompatibles = true;
 		}
 		
