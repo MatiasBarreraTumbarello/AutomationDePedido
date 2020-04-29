@@ -36,10 +36,6 @@ public class ProcesoFVentas {
 		System.setProperty("webdriver.chrome.driver", "./src/test/resources/chromedriver/chromedriver.exe");
 		driver = new ChromeDriver();
 		driver.manage().window().maximize();
-<<<<<<< HEAD
-
-=======
->>>>>>> branch 'master' of https://github.com/MatiasBarreraTumbarello/AutomationDePedido.git
 		driver.get("https://test1dom--sittest.my.salesforce.com/secur/frontdoor.jsp?sid=00D3K0000008jQa!ARwAQPVlNhNobm9e_kAqyzLlLqbI0RgonCUb4QAMTdJ84QgQ_k8t88Tq9VmIld2g1eQnxf9b3I8o589baXucbB3t7pHG7MCh");
 		driver.get("https://test1dom--sittest.lightning.force.com/lightning/n/Nueva_Venta");
 		driver.manage().timeouts().pageLoadTimeout(40, TimeUnit.SECONDS);
