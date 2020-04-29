@@ -35,7 +35,7 @@ public class ProcesoFVentas {
 		System.setProperty("webdriver.chrome.driver", "./src/test/resources/chromedriver/chromedriver.exe");
 		driver = new ChromeDriver();
 		driver.manage().window().maximize();
-		driver.get("https://test1dom--sittest.my.salesforce.com/secur/frontdoor.jsp?sid=00D3K0000008jQa!ARwAQBW1r5eWbnNctf4ouk6n8a2.G7XDquS67HbV74Z5wHyJU_AyD3gC6QYnsf3s3eymWErbKsWxGXGL7dv8DY3nNQxqcVQt");
+		driver.get("https://test1dom--sittest.my.salesforce.com/secur/frontdoor.jsp?sid=00D3K0000008jQa!ARwAQK4dObWJFEK2jq6cH_To8s4EuZ60vP6ruUY5I5plFLiesyIkXNXyeFMyg5bPXylrTepfuEER2A9UmqH8EBAAI2ao25MD");
 		driver.get("https://test1dom--sittest.lightning.force.com/lightning/n/Nueva_Venta");
 		driver.manage().timeouts().pageLoadTimeout(40, TimeUnit.SECONDS);
 		wait = new WebDriverWait(driver, 40);
