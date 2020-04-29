@@ -271,33 +271,36 @@ public class ProcesoDeAutogestion {
 		wait.until(ExpectedConditions.elementToBeClickable(By.id("RadioProfileNoVentas")));
 		List<WebElement> optTipoDeEntrega = driver.findElements(By.xpath("//input[@id='RadioProfileNoVentas']"));
 		Thread.sleep(2000);
-
-		// Si la entrega es en Sucursal:
+		
+		// Si  la entrega es en Sucursal:
 		if (index == 0) {
 			optTipoDeEntrega.get(index).findElement(By.xpath("./..")).click();
 			Thread.sleep(2000);
 			List<WebElement> stock = driver.findElements(By.xpath("//span[@class='slds-radio--faux ng-scope']"));
-			// driver.findElement(By.id("RadioRetiroOtraSucursal|0")).click();//ng-form[@id='RadioRetiroOtraSucursal|0']
-
-			// Verifica si se puede seleccionar una sucursal
-			if (stock.get(stock.size() - 2).isEnabled()) {
-				stock.get(stock.size() - 2).click();
-
-				// selecciona la sucursal "ATIZAPAN"
-				driver.findElement(By.xpath("//*[@id=\'SelectSucursal\']/option[3]")).click();
+			//driver.findElement(By.id("RadioRetiroOtraSucursal|0")).click();//ng-form[@id='RadioRetiroOtraSucursal|0']
+			
+			//Verifica si se puede seleccionar una sucursal
+			if (stock.get(0).isEnabled() && stock.get(0).isDisplayed()) {
+				
+				stock.get(1).click();
+				
+				//selecciona la sucursal "ATIZAPAN"
+				driver.findElement(By.xpath("//*[@id=\'SelectSucursal\']/option[3]")).click(); 
 				Thread.sleep(1000);
 
-				// selecciona el boton validar
-				driver.findElement(By.xpath("//div[@id=\'WrapperCheckDeviceStockSucursal\']")).click();
+				
+				//selecciona el boton validar
+				driver.findElement(By.xpath("//div[@id=\'WrapperCheckDeviceStockSucursal\']")).click(); 
 			}
-			Thread.sleep(2000);
 
-			// En caso contrario, la entrega es en Domicilio
-		} else {
+			Thread.sleep(2000);
+			
+		//En caso contrario, la entrega es en Domicilio
+		} else { 
 			optTipoDeEntrega.get(index).findElement(By.xpath("./..")).click();
 			Thread.sleep(2000);
 		}
-
+		
 		wait.until(ExpectedConditions.elementToBeClickable(By.id("StepSaleProcessDevice_nextBtn")));
 		driver.findElement(By.id("StepSaleProcessDevice_nextBtn")).click();
 		Thread.sleep(5000);
