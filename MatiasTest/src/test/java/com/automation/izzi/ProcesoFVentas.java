@@ -3,12 +3,11 @@ package com.automation.izzi;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
-import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.openqa.selenium.By;
+
 import org.openqa.selenium.JavascriptExecutor;
-import org.openqa.selenium.By.ByTagName;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -17,10 +16,18 @@ import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class ProcesoFVentas {
-	
+
 	private WebDriver driver;
+
 	private WebDriverWait wait;
 	public int tiempo = 2000;
+	
+	private int pStepDispositivos = 0;
+	private int pStepValidacionDeDispositivos = 1;
+	private int pStepPortabilidad= 0;
+	private int pStepTipoDeEntrega= 0;
+	
+	private boolean pOptValidacionPorDispositivo = true;
 	
 	/** 
 	 * En eclipse para ir al desarrollo del metodo debo hacer CTRL + Click al llamamiento del mismo.
@@ -30,14 +37,18 @@ public class ProcesoFVentas {
 	 * Al iniciar el setUp se encarga del ingreso en la aplicacion y la redireccion a la pagina correcta
 	 */	
 	@Before
+
 	public void SetUp() throws InterruptedException {
 		
 		System.setProperty("webdriver.chrome.driver", "./src/test/resources/chromedriver/chromedriver.exe");
 		driver = new ChromeDriver();
 		driver.manage().window().maximize();
+
 		driver.get("https://test1dom--sittest.my.salesforce.com/secur/frontdoor.jsp?sid=00D3K0000008jQa!ARwAQK4dObWJFEK2jq6cH_To8s4EuZ60vP6ruUY5I5plFLiesyIkXNXyeFMyg5bPXylrTepfuEER2A9UmqH8EBAAI2ao25MD");
+
 		driver.get("https://test1dom--sittest.lightning.force.com/lightning/n/Nueva_Venta");
 		driver.manage().timeouts().pageLoadTimeout(40, TimeUnit.SECONDS);
+
 		wait = new WebDriverWait(driver, 40);
 		
 	}
@@ -47,14 +58,16 @@ public class ProcesoFVentas {
 	 * 
 	 * @throws InterruptedException			Intercepta los errores de ejecucion.
 	 */
+
 	@Test
+
 	public void Main() throws InterruptedException {
 		StepBuscarCliente();
 		StepPlanes();
-		StepDispositivos(0);
-		StepValidacionDeDispositivos(0);
-		StepPortabilidad(0);
-		StepTipoDeEntrega(0);
+		StepDispositivos(pStepDispositivos);
+		StepValidacionDeDispositivos(pStepValidacionDeDispositivos);
+		StepPortabilidad(pStepPortabilidad);
+		StepTipoDeEntrega(pStepTipoDeEntrega);
 		StepResumenDeCompra();
 		Thread.sleep(tiempo);
 	}
@@ -169,6 +182,7 @@ public class ProcesoFVentas {
 		driver.findElement(By.id("StepDevicesSelect_nextBtn")).click();
 		Thread.sleep(5000);
 		if (index == 1) {
+
 			StepSeleccionDeDispositivo();
 			// Selecciona el check que indica que el cliente no esta interesado en estos equipos.
 			// OptDesinteresEquipo();
@@ -214,7 +228,7 @@ public class ProcesoFVentas {
 			OptValidacionPorImei();
 		else
 			// Se debe cambiar al false para no seleccionar dispositivos de la lista
-			OptValidacionPorDispositivo(true);
+			OptValidacionPorDispositivo(pOptValidacionPorDispositivo);
 	}
 	
 	/**
@@ -233,10 +247,10 @@ public class ProcesoFVentas {
 		Thread.sleep(tiempo);
 
 		WaitForInvisibleSpinner();
-		List<WebElement> buy = driver.findElements(By.id("RadioBuyDevices"));
+		List<WebElement> optListVerEquiposCompatibles = driver.findElements(By.id("RadioBuyDevices"));
 		
 		boolean optVerEquiposCompatibles = false;
-		if (buy.get(0).isEnabled() && buy.get(0).isDisplayed()) {
+		if (optListVerEquiposCompatibles.size() != 0) {
 			optVerEquiposCompatibles = true;
 		}
 		
@@ -330,16 +344,19 @@ public class ProcesoFVentas {
 			//driver.findElement(By.id("RadioRetiroOtraSucursal|0")).click();//ng-form[@id='RadioRetiroOtraSucursal|0']
 			
 			//Verifica si se puede seleccionar una sucursal
-			if (stock.get(stock.size()-2).isEnabled()) { 
-				stock.get(stock.size()-2).click();
+			if (stock.get(0).isEnabled() && stock.get(0).isDisplayed()) {
+				
+				stock.get(1).click();
 				
 				//selecciona la sucursal "ATIZAPAN"
 				driver.findElement(By.xpath("//*[@id=\'SelectSucursal\']/option[3]")).click(); 
 				Thread.sleep(1000);
+
 				
 				//selecciona el boton validar
 				driver.findElement(By.xpath("//div[@id=\'WrapperCheckDeviceStockSucursal\']")).click(); 
 			}
+
 			Thread.sleep(2000);
 			
 		//En caso contrario, la entrega es en Domicilio
@@ -352,7 +369,6 @@ public class ProcesoFVentas {
 		driver.findElement(By.id("StepSaleProcessDevice_nextBtn")).click();
 		Thread.sleep(5000);
 	}
-	
 	
 	/**
 	 * Este metodo es el paso final de la gestion de compra, donde se muestra el resumen y pasa a la siguiente pantalla de finalizar compra
@@ -396,9 +412,5 @@ public class ProcesoFVentas {
 	public void WaitForInvisibleSpinner() {
 		wait.until(ExpectedConditions.invisibilityOfElementLocated(By.className("slds-spinner_container")));
 	}
-	
-	
-	
-	
-	
+
 }
