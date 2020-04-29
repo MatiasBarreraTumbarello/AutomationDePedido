@@ -248,7 +248,7 @@ public class ProcesoFVentas {
 		List<WebElement> optListVerEquiposCompatibles = driver.findElements(By.id("RadioBuyDevices"));
 		
 		boolean optVerEquiposCompatibles = false;
-		if (optListVerEquiposCompatibles.get(0).isEnabled() && optListVerEquiposCompatibles.get(0).isDisplayed()) {
+		if (optListVerEquiposCompatibles.size() != 0) {
 			optVerEquiposCompatibles = true;
 		}
 		
