@@ -23,7 +23,7 @@ public class ProcesoFVentas {
 	public int tiempo = 2000;
 	
 	private int pStepDispositivos = 0;
-	private int pStepValidacionDeDispositivos = 1;
+	private int pStepValidacionDeDispositivos = 0;
 	private int pStepPortabilidad= 0;
 	private int pStepTipoDeEntrega= 0;
 	
@@ -243,7 +243,7 @@ public class ProcesoFVentas {
 		List<WebElement> optListVerEquiposCompatibles = driver.findElements(By.id("RadioBuyDevices"));
 		
 		boolean optVerEquiposCompatibles = false;
-		if (optListVerEquiposCompatibles.get(0).isEnabled() && optListVerEquiposCompatibles.get(0).isDisplayed()) {
+		if (optListVerEquiposCompatibles.size() != 0) {
 			optVerEquiposCompatibles = true;
 		}
 		
