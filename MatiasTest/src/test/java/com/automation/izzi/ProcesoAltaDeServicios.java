@@ -30,7 +30,7 @@ public class ProcesoAltaDeServicios {
 		driver = new ChromeDriver();
 		driver.manage().window().maximize();
 
-		driver.get("https://test1dom--sittest.my.salesforce.com/secur/frontdoor.jsp?sid=00D3K0000008jQa!ARwAQKqOWdozya.BG9zeiOTFpX38eIXZWd_iojFro6bTekpA5h6O34rZj43kyxrxWjMLUP3mluXgRjWu6EX9QpeNPsef.wgL");
+		driver.get("https://test1dom--sittest.my.salesforce.com/secur/frontdoor.jsp?sid=00D3K0000008jQa!ARwAQPVlNhNobm9e_kAqyzLlLqbI0RgonCUb4QAMTdJ84QgQ_k8t88Tq9VmIld2g1eQnxf9b3I8o589baXucbB3t7pHG7MCh");
 
 		driver.get("https://test1dom--sittest.lightning.force.com/lightning/r/Account/001c000002JvBrCAAV/view");
 
@@ -87,12 +87,20 @@ public class ProcesoAltaDeServicios {
 		wait.until(ExpectedConditions.elementToBeClickable(By.id("Confirmation_nextBtn")));
 		Thread.sleep(2000);
 		driver.findElement(By.id("Confirmation_nextBtn")).click(); //boton siguiente
-	
+		Thread.sleep(3000);
+		
 		//Seccion: Resumen de compra
 	
 		wait.until(ExpectedConditions.invisibilityOfElementLocated(By.className("slds-spinner_container")));
 		wait.until(ExpectedConditions.elementToBeClickable(By.id("DeliveryHomeSummary_nextBtn")));
-		driver.findElement(By.id("DeliveryHomeSummary_nextBtn")).click();//boton finalizar
+		driver.findElement(By.xpath("//*[@id='DeliveryHomeSummary_nextBtn']/p")).click();
+	
+		Thread.sleep(3000);
+		
+		wait.until(ExpectedConditions.invisibilityOfElementLocated(By.className("slds-spinner_container")));
+		wait.until(ExpectedConditions.elementToBeClickable(By.id("DeliveryHomeSummary_nextBtn")));
+		driver.findElement(By.xpath("//button[@class='slds-button slds-button_brand ng-binding']")).click();
+		Thread.sleep(3000);
 	}
 	
 	public static void llamadosDeMetodos (WebDriver driver)throws InterruptedException {
