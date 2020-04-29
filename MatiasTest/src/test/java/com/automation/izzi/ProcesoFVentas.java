@@ -221,7 +221,7 @@ public class ProcesoFVentas {
 			OptValidacionPorImei();
 		else
 			// Se debe cambiar al false para no seleccionar dispositivos de la lista
-			OptValidacionPorDispositivo(paramOptValidacionPorDispositivo);
+			OptValidacionPorDispositivo(pOptValidacionPorDispositivo);
 	}
 	
 	/**
