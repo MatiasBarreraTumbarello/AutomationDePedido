@@ -3,12 +3,11 @@ package com.automation.izzi;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
-import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.openqa.selenium.By;
+
 import org.openqa.selenium.JavascriptExecutor;
-import org.openqa.selenium.By.ByTagName;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -17,8 +16,9 @@ import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class ProcesoFVentas {
-	
+
 	private WebDriver driver;
+
 	private WebDriverWait wait;
 	public int tiempo = 2000;
 	
@@ -37,6 +37,7 @@ public class ProcesoFVentas {
 	 * Al iniciar el setUp se encarga del ingreso en la aplicacion y la redireccion a la pagina correcta
 	 */	
 	@Before
+
 	public void SetUp() throws InterruptedException {
 		
 		System.setProperty("webdriver.chrome.driver", "./src/test/resources/chromedriver/chromedriver.exe");
@@ -45,6 +46,7 @@ public class ProcesoFVentas {
 		driver.get("https://test1dom--sittest.my.salesforce.com/secur/frontdoor.jsp?sid=00D3K0000008jQa!ARwAQPVlNhNobm9e_kAqyzLlLqbI0RgonCUb4QAMTdJ84QgQ_k8t88Tq9VmIld2g1eQnxf9b3I8o589baXucbB3t7pHG7MCh");
 		driver.get("https://test1dom--sittest.lightning.force.com/lightning/n/Nueva_Venta");
 		driver.manage().timeouts().pageLoadTimeout(40, TimeUnit.SECONDS);
+
 		wait = new WebDriverWait(driver, 40);
 		
 	}
@@ -54,7 +56,9 @@ public class ProcesoFVentas {
 	 * 
 	 * @throws InterruptedException			Intercepta los errores de ejecucion.
 	 */
+
 	@Test
+
 	public void Main() throws InterruptedException {
 		StepBuscarCliente();
 		StepPlanes();
@@ -176,6 +180,7 @@ public class ProcesoFVentas {
 		driver.findElement(By.id("StepDevicesSelect_nextBtn")).click();
 		Thread.sleep(5000);
 		if (index == 1) {
+
 			StepSeleccionDeDispositivo();
 			// Selecciona el check que indica que el cliente no esta interesado en estos equipos.
 			// OptDesinteresEquipo();
@@ -344,10 +349,12 @@ public class ProcesoFVentas {
 				//selecciona la sucursal "ATIZAPAN"
 				driver.findElement(By.xpath("//*[@id=\'SelectSucursal\']/option[3]")).click(); 
 				Thread.sleep(1000);
+
 				
 				//selecciona el boton validar
 				driver.findElement(By.xpath("//div[@id=\'WrapperCheckDeviceStockSucursal\']")).click(); 
 			}
+
 			Thread.sleep(2000);
 			
 		//En caso contrario, la entrega es en Domicilio
@@ -360,7 +367,6 @@ public class ProcesoFVentas {
 		driver.findElement(By.id("StepSaleProcessDevice_nextBtn")).click();
 		Thread.sleep(5000);
 	}
-	
 	
 	/**
 	 * Este metodo es el paso final de la gestion de compra, donde se muestra el resumen y pasa a la siguiente pantalla de finalizar compra
@@ -404,9 +410,5 @@ public class ProcesoFVentas {
 	public void WaitForInvisibleSpinner() {
 		wait.until(ExpectedConditions.invisibilityOfElementLocated(By.className("slds-spinner_container")));
 	}
-	
-	
-	
-	
-	
+
 }
