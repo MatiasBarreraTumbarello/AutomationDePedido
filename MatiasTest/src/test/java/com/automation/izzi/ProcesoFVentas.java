@@ -35,7 +35,7 @@ public class ProcesoFVentas {
 		System.setProperty("webdriver.chrome.driver", "./src/test/resources/chromedriver/chromedriver.exe");
 		driver = new ChromeDriver();
 		driver.manage().window().maximize();
-		driver.get("https://test1dom--sittest.my.salesforce.com/secur/frontdoor.jsp?sid=00D3K0000008jQa!ARwAQBW1r5eWbnNctf4ouk6n8a2.G7XDquS67HbV74Z5wHyJU_AyD3gC6QYnsf3s3eymWErbKsWxGXGL7dv8DY3nNQxqcVQt");
+		driver.get("https://test1dom--sittest.my.salesforce.com/secur/frontdoor.jsp?sid=00D3K0000008jQa!ARwAQPVlNhNobm9e_kAqyzLlLqbI0RgonCUb4QAMTdJ84QgQ_k8t88Tq9VmIld2g1eQnxf9b3I8o589baXucbB3t7pHG7MCh");
 		driver.get("https://test1dom--sittest.lightning.force.com/lightning/n/Nueva_Venta");
 		driver.manage().timeouts().pageLoadTimeout(40, TimeUnit.SECONDS);
 		wait = new WebDriverWait(driver, 40);
@@ -52,7 +52,7 @@ public class ProcesoFVentas {
 		StepBuscarCliente();
 		StepPlanes();
 		StepDispositivos(0);
-		StepValidacionDeDispositivos(0);
+		StepValidacionDeDispositivos(1);
 		StepPortabilidad(0);
 		StepTipoDeEntrega(0);
 		StepResumenDeCompra();
@@ -330,8 +330,9 @@ public class ProcesoFVentas {
 			//driver.findElement(By.id("RadioRetiroOtraSucursal|0")).click();//ng-form[@id='RadioRetiroOtraSucursal|0']
 			
 			//Verifica si se puede seleccionar una sucursal
-			if (stock.get(stock.size()-2).isEnabled()) { 
-				stock.get(stock.size()-2).click();
+			if (stock.get(0).isEnabled() && stock.get(0).isDisplayed()) {
+				
+				stock.get(1).click();
 				
 				//selecciona la sucursal "ATIZAPAN"
 				driver.findElement(By.xpath("//*[@id=\'SelectSucursal\']/option[3]")).click(); 
