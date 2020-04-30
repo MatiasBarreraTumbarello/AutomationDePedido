@@ -280,9 +280,10 @@ public class ProcesoDeAutogestion {
 			// driver.findElement(By.id("RadioRetiroOtraSucursal|0")).click();//ng-form[@id='RadioRetiroOtraSucursal|0']
 
 			// Verifica si se puede seleccionar una sucursal
-			if (stock.get(stock.size() - 2).isEnabled()) {
-				stock.get(stock.size() - 2).click();
-
+			if (stock.get(0).isEnabled() && stock.get(0).isDisplayed()) {
+				
+				stock.get(1).click();
+				
 				// selecciona la sucursal "ATIZAPAN"
 				driver.findElement(By.xpath("//*[@id=\'SelectSucursal\']/option[3]")).click();
 				Thread.sleep(1000);
@@ -299,7 +300,7 @@ public class ProcesoDeAutogestion {
 		}
 
 		wait.until(ExpectedConditions.elementToBeClickable(By.id("StepSaleProcessDevice_nextBtn")));
-		driver.findElement(By.id("StepSaleProcessDevice_nextBtn")).click();
+		driver.findElement(By.xpath("//*[@id=\"StepSaleProcessDevice_nextBtn\"]/p")).click();
 		Thread.sleep(5000);
 	}
 
