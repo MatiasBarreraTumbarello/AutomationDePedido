@@ -277,15 +277,16 @@ public class ProcesoDeAutogestion {
 			optTipoDeEntrega.get(index).findElement(By.xpath("./..")).click();
 			Thread.sleep(2000);
 			List<WebElement> stock = driver.findElements(By.xpath("//span[@class='slds-radio--faux ng-scope']"));
-			//driver.findElement(By.id("RadioRetiroOtraSucursal|0")).click();//ng-form[@id='RadioRetiroOtraSucursal|0']
-			
-			//Verifica si se puede seleccionar una sucursal
+			// driver.findElement(By.id("RadioRetiroOtraSucursal|0")).click();//ng-form[@id='RadioRetiroOtraSucursal|0']
+
+			// Verifica si se puede seleccionar una sucursal
 			if (stock.get(0).isEnabled() && stock.get(0).isDisplayed()) {
 				
 				stock.get(1).click();
 				
-				//selecciona la sucursal "ATIZAPAN"
-				driver.findElement(By.xpath("//*[@id=\'SelectSucursal\']/option[3]")).click(); 
+				// selecciona la sucursal "ATIZAPAN"
+				driver.findElement(By.xpath("//*[@id=\'SelectSucursal\']/option[3]")).click();
+				
 				Thread.sleep(1000);
 
 				
@@ -302,7 +303,7 @@ public class ProcesoDeAutogestion {
 		}
 		
 		wait.until(ExpectedConditions.elementToBeClickable(By.id("StepSaleProcessDevice_nextBtn")));
-		driver.findElement(By.id("StepSaleProcessDevice_nextBtn")).click();
+		driver.findElement(By.xpath("//*[@id=\"StepSaleProcessDevice_nextBtn\"]/p")).click();
 		Thread.sleep(5000);
 	}
 
