@@ -25,7 +25,7 @@ public class ProcesoDeAutogestion {
 	private int pStepDispositivos = 0;
 	private int pStepValidacionDeDispositivos = 1;
 	private int pStepPortabilidad = 0;
-	private int pStepTipoDeEntrega = 1;
+	private int pStepTipoDeEntrega = 0;
 
 	private boolean pOptValidacionPorDispositivo = true;
 	// ************************LEER*****************************************************************
