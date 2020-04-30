@@ -25,7 +25,7 @@ private WebDriver driver;
 		driver = new ChromeDriver();
 		driver.manage().window().maximize();
 
-		driver.get("https://test1dom--sittest.my.salesforce.com/secur/frontdoor.jsp?sid=00D3K0000008jQa!ARwAQILXXLk7kXMN1rMnQcJFtEXP0AJTCgjKsXYZVhzPqr.9L2rd9P4DRmuE.suispsvJDYX6AxTWP6OGeO7kaZRLWk87VYK");
+		driver.get("https://test1dom--sittest.my.salesforce.com/secur/frontdoor.jsp?sid=00D3K0000008jQa!ARwAQLb_4mZgRMSEfdjqSMKKkyYaJCmcSU8gEfeDxz9I7BYgl7I_4bG6M4HJPFRc8HyT99jXXrqSOZ0llyolc9xGEHhdR0FF");
 
 		driver.get("https://test1dom--sittest.lightning.force.com/lightning/r/Account/001c000002JvBrCAAV/view");
 
