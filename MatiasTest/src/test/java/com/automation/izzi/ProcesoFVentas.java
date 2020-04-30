@@ -81,7 +81,7 @@ public class ProcesoFVentas {
 		WebElement frm = wait.until(ExpectedConditions.elementToBeClickable(By.id("iFrameResizer0")));
 		driver.switchTo().frame(frm);
 		Select pklBuscarPor = new Select(driver.findElement(By.id("selectAccountOrTlfn")));
-		pklBuscarPor.selectByIndex(1);
+		pklBuscarPor.selectByIndex(2);
 		Thread.sleep(tiempo);
 		driver.findElement(By.xpath("//input[@id='seibelUser']")).sendKeys("19964717");
 		
