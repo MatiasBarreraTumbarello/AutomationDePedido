@@ -30,7 +30,7 @@ public class ProcesoAltaDeServicios {
 		driver = new ChromeDriver();
 		driver.manage().window().maximize();
 
-		driver.get("https://test1dom--sittest.my.salesforce.com/secur/frontdoor.jsp?sid=00D3K0000008jQa!ARwAQPVlNhNobm9e_kAqyzLlLqbI0RgonCUb4QAMTdJ84QgQ_k8t88Tq9VmIld2g1eQnxf9b3I8o589baXucbB3t7pHG7MCh");
+		driver.get("https://test1dom--sittest.my.salesforce.com/secur/frontdoor.jsp?sid=00D3K0000008jQa!ARwAQLb_4mZgRMSEfdjqSMKKkyYaJCmcSU8gEfeDxz9I7BYgl7I_4bG6M4HJPFRc8HyT99jXXrqSOZ0llyolc9xGEHhdR0FF");
 
 		driver.get("https://test1dom--sittest.lightning.force.com/lightning/r/Account/001c000002JvBrCAAV/view");
 
@@ -55,7 +55,7 @@ public class ProcesoAltaDeServicios {
 		driver.switchTo().frame(frame);
 		Thread.sleep(2000);
 		List<WebElement> links = driver.findElements(By.linkText("Alta de Servicios"));
-		executor.executeScript("arguments[0].click();", links.get(0));
+		executor.executeScript("arguments[0].click();", links.get(1));
 		//links.get(0).click();
 		Thread.sleep(2000);
 	}
@@ -99,8 +99,14 @@ public class ProcesoAltaDeServicios {
 		
 		wait.until(ExpectedConditions.invisibilityOfElementLocated(By.className("slds-spinner_container")));
 		wait.until(ExpectedConditions.elementToBeClickable(By.id("DeliveryHomeSummary_nextBtn")));
+		Thread.sleep(3000);
+		wait.until(ExpectedConditions.invisibilityOfElementLocated(By.className("slds-spinner_container")));
 		driver.findElement(By.xpath("//button[@class='slds-button slds-button_brand ng-binding']")).click();
 		Thread.sleep(3000);
+		
+		//Finalizar
+		
+		//button[@class='slds-button slds-button_brand ng-binding']
 	}
 	
 	public static void llamadosDeMetodos (WebDriver driver)throws InterruptedException {
