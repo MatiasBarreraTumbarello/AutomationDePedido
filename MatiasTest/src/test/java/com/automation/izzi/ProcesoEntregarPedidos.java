@@ -24,9 +24,11 @@ public class ProcesoEntregarPedidos {
 		System.setProperty("webdriver.chrome.driver", "./src/test/resources/chromedriver/chromedriver.exe");
 		driver = new ChromeDriver();
 		driver.manage().window().maximize();
-		driver.get("https://test1dom--sittest.my.salesforce.com/secur/frontdoor.jsp?sid=00D3K0000008jQa!ARwAQK4dObWJFEK2jq6cH_To8s4EuZ60vP6ruUY5I5plFLiesyIkXNXyeFMyg5bPXylrTepfuEER2A9UmqH8EBAAI2ao25MD");
+
+		driver.get("https://test1dom--sittest.my.salesforce.com/secur/frontdoor.jsp?sid=00D3K0000008jQa!ARwAQILXXLk7kXMN1rMnQcJFtEXP0AJTCgjKsXYZVhzPqr.9L2rd9P4DRmuE.suispsvJDYX6AxTWP6OGeO7kaZRLWk87VYK");
+
 		Thread.sleep(10000);
-		driver.get("https://test1dom--sittest.lightning.force.com/lightning/r/Order/8013K000000EiyWQAS/view");
+		driver.get("https://test1dom--sittest.lightning.force.com/lightning/r/Order/8013K000000EjIQQA0/view");
 
 		driver.manage().timeouts().pageLoadTimeout(40, TimeUnit.SECONDS);
 		
@@ -76,7 +78,9 @@ public class ProcesoEntregarPedidos {
 	
 		driver.findElement(By.xpath("//div[@id='DeliverySimCard_nextBtn']/p")).click();
 		Thread.sleep(3000);
-		
+		//-----Finalizar-------
+		ewait.until(ExpectedConditions.invisibilityOfElementLocated(By.className("slds-spinner_container")));
+		driver.findElement(By.xpath("//button[@class='slds-button slds-button_brand ng-binding']")).click();
 		
 		} catch (InterruptedException e) {
 			
