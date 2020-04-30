@@ -24,7 +24,7 @@ public class ProcesoPortabilidad {
 		driver = new ChromeDriver();
 		driver.manage().window().maximize();
 
-		driver.get("https://test1dom--sittest.my.salesforce.com/secur/frontdoor.jsp?sid=00D3K0000008jQa!ARwAQBf1VsgJ9TcQuAhxbO8imePgS8j_99EKgjmLkFOB29wb0X87OXHdrSDf.MLX_vukgM72Gc1vmSdw7vRDUn5TsDbsZQKO");
+		driver.get("https://test1dom--sittest.my.salesforce.com/secur/frontdoor.jsp?sid=00D3K0000008jQa!ARwAQILXXLk7kXMN1rMnQcJFtEXP0AJTCgjKsXYZVhzPqr.9L2rd9P4DRmuE.suispsvJDYX6AxTWP6OGeO7kaZRLWk87VYK");
 
 		driver.get("https://test1dom--sittest.lightning.force.com/lightning/r/Account/0013K000005YuoUQAS/view");
 
