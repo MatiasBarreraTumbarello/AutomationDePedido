@@ -98,10 +98,10 @@ public class ProcesoAltaDeServicios {
 		Thread.sleep(3000);
 		
 		wait.until(ExpectedConditions.invisibilityOfElementLocated(By.className("slds-spinner_container")));
-		wait.until(ExpectedConditions.elementToBeClickable(By.id("DeliveryHomeSummary_nextBtn")));
+		
 		Thread.sleep(3000);
-		wait.until(ExpectedConditions.invisibilityOfElementLocated(By.className("slds-spinner_container")));
-		driver.findElement(By.xpath("//button[@class='slds-button slds-button_brand ng-binding']")).click();
+	
+		driver.findElement(By.xpath("//button[@class='slds-button slds-button_brand ng-binding' and contains(text(),Finalizar)]")).click();
 		Thread.sleep(3000);
 		
 		//Finalizar
