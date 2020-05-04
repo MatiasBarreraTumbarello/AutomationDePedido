@@ -1,5 +1,6 @@
 package com.automation.izzi;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
@@ -13,23 +14,19 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import org.testng.internal.Utils;
 
 public class ProcesoPortabilidad {
+	private Config config = new Config();
 	private WebDriver driver;
 	
 	@Before
-	public void setUp() throws InterruptedException {
+	public void setUp() throws InterruptedException, IOException {
 		
-		System.setProperty("webdriver.chrome.driver", "./src/test/resources/chromedriver/chromedriver.exe");
-		driver = new ChromeDriver();
-		driver.manage().window().maximize();
-
-		driver.get("https://test1dom--sittest.my.salesforce.com/secur/frontdoor.jsp?sid=00D3K0000008jQa!ARwAQBf1VsgJ9TcQuAhxbO8imePgS8j_99EKgjmLkFOB29wb0X87OXHdrSDf.MLX_vukgM72Gc1vmSdw7vRDUn5TsDbsZQKO");
-
-		driver.get("https://test1dom--sittest.lightning.force.com/lightning/r/Account/0013K000005YuoUQAS/view");
-
+		config.initBrowser();
+		config.goToAccountLink();
+		driver = config.driver;
 		driver.manage().timeouts().pageLoadTimeout(40, TimeUnit.SECONDS);
-		
 		Thread.sleep(20000);
 		
 	}
@@ -147,9 +144,12 @@ public class ProcesoPortabilidad {
 		wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//div[@id='Documentation_nextBtn']")));//*[@id="Documentation_nextBtn"]
 		driver.findElement(By.xpath("//div[@id='Documentation_nextBtn']")).click();
 		
+		wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//button[@class='slds-button slds-button_brand ng-binding' and contains(text(),Finalizar)]")));//*[@id="Documentation_nextBtn"]
+		driver.findElement(By.xpath("//button[@class='slds-button slds-button_brand ng-binding' and contains(text(),Finalizar)]")).click();
+		
 		driver.switchTo().defaultContent();
 	}
-	
+
 	public static String generateNIP() {
 		int number = (int)(Math.random() * (9999 - 1000 + 1) + 1000);
 		return "" + number;
