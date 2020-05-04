@@ -11,6 +11,7 @@ import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -54,7 +55,7 @@ public class ProcesoGestionDeCasos {
 		driver.switchTo().defaultContent();
 
 		CrearModificarCaso(1);
-		//driver.findElement(By.xpath("//div[@ng-if='control.propSetMap.structMessage.btnName']")).click();
+		
 	}
 
 	public void CrearModificarCaso(int index) throws InterruptedException {
@@ -132,12 +133,6 @@ public class ProcesoGestionDeCasos {
 		Thread.sleep(1000);
 		driver.findElement(By.xpath("//*[@id=\'Descripcion_nextBtn\']")).click();
 
-		if (new WebDriverWait(driver, 20)
-				.until(ExpectedConditions
-						.elementToBeClickable(By.xpath("//div[@ng-if='control.propSetMap.structMessage.btnName']")))
-				.isEnabled()) {
-			driver.findElement(By.xpath("//div[@ng-if='control.propSetMap.structMessage.btnName']")).click();
-		}
 		driver.switchTo().defaultContent();
 
 	}
@@ -160,22 +155,7 @@ public class ProcesoGestionDeCasos {
 		new WebDriverWait(driver, 20)
 				.until(ExpectedConditions.invisibilityOfElementLocated(By.className("slds-spinner_container")));
 		
-		JavascriptExecutor executor = (JavascriptExecutor) driver;
-		
-		WebElement finalizar = driver.findElement(By.xpath("//div[@ng-if='control.propSetMap.structMessage.btnName']"));
-		
-		executor.executeScript("arguments[0].style.display = 'block'; arguments[0].style.zIndex = '999999';", finalizar);
-		
-		
-		
-		
-		
-/*		if (driver.findElement(By.xpath("//div[@ng-if='control.propSetMap.structMessage.btnName']"))
-				.isEnabled()) {
-			driver.findElement(By.xpath("//div[@ng-if='control.propSetMap.structMessage.btnName']")).click();
-		}*/
-		//driver.switchTo().defaultContent();
-
+		driver.switchTo().defaultContent();
 	}
 
 }
