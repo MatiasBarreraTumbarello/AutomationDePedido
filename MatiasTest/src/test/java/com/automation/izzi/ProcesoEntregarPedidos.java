@@ -31,11 +31,8 @@ public class ProcesoEntregarPedidos {
 
 		Thread.sleep(10000);
 
-<<<<<<< HEAD
-		driver.get("https://test1dom--sittest.lightning.force.com/lightning/r/Order/8013K000000EjPgQAK/view");
-=======
+
 		driver.get("https://test1dom--sittest.lightning.force.com/lightning/r/Order/8013K000000EkOjQAK/view");
->>>>>>> branch 'master' of https://github.com/MatiasBarreraTumbarello/AutomationDePedido.git
 
 		driver.manage().timeouts().pageLoadTimeout(40, TimeUnit.SECONDS);
 		
