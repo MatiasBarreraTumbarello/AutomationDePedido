@@ -1,5 +1,6 @@
 package com.automation.izzi;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
@@ -10,20 +11,23 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+//import org.testng.annotations.Test;
+
 public class ProcesoFVentas {
+	
+	private Config config = new Config();
 
 	private WebDriver driver;
 
 	private WebDriverWait wait;
-	public int tiempo = 2000;
+	public int tiempo = config.tiempo;
 	
 	private int pStepDispositivos = 0;
-	private int pStepValidacionDeDispositivos = 1;
+	private int pStepValidacionDeDispositivos = 0;
 	private int pStepPortabilidad= 0;
 	private int pStepTipoDeEntrega= 0;
 	
@@ -35,21 +39,16 @@ public class ProcesoFVentas {
 	 * en caso de querer cambiar las elecciones solo basta con descomentar uno y comentar el otro.
 	 * 
 	 * Al iniciar el setUp se encarga del ingreso en la aplicacion y la redireccion a la pagina correcta
+	 * @throws IOException 
 	 */	
 	@Before
 
-	public void SetUp() throws InterruptedException {
-		
-		System.setProperty("webdriver.chrome.driver", "./src/test/resources/chromedriver/chromedriver.exe");
-		driver = new ChromeDriver();
-		driver.manage().window().maximize();
-
-		driver.get("https://test1dom--sittest.my.salesforce.com/secur/frontdoor.jsp?sid=00D3K0000008jQa!ARwAQCiQzIdwPVD0GdShmu4zzQxi7OhwPVV9.EDjYa2_W1UguRyTlpmQXUqr64VSHEV7wp0ZDWBURxXKLGCCu439Xbrau0J4");
-
+	public void SetUp() throws InterruptedException, IOException {
+		config.initBrowser();
+		driver = config.driver;
+		wait = new WebDriverWait(driver, 40);
 		driver.get("https://test1dom--sittest.lightning.force.com/lightning/n/Nueva_Venta");
 		driver.manage().timeouts().pageLoadTimeout(40, TimeUnit.SECONDS);
-
-		wait = new WebDriverWait(driver, 40);
 		
 	}
 	
@@ -121,7 +120,7 @@ public class ProcesoFVentas {
 	 * @throws InterruptedException
 	 */
 	public void StepDatosAdicionalesDelCliente() throws InterruptedException {	
-		WaitForInvisibleSpinner();
+		config.waitForInvisibleSpinner(wait);
 		wait.until(ExpectedConditions.elementToBeClickable(By.id("TextNumberPhone")));
 		WebElement txtPhone = driver.findElement(By.id("TextNumberPhone"));
 		txtPhone.clear();
@@ -149,14 +148,14 @@ public class ProcesoFVentas {
 	 * @throws InterruptedException
 	 */
 	public void StepPlanes() throws InterruptedException{
-		 WaitForInvisibleSpinner();
+		 config.waitForInvisibleSpinner(wait);
 		 
 		 // Para elegir otro plan es necesario cambiar el id por el del plan que se desea seleccionar.
 		 WebElement optPlan = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id=\'block_01tc0000007pvuiAAA\']")));
 		 Thread.sleep(1000);
 		 optPlan.click();
 		 
-		 WaitForInvisibleSpinner();
+		 config.waitForInvisibleSpinner(wait);
 		 WebElement btnSiguiente = wait.until(ExpectedConditions.elementToBeClickable(By.id("PlanSelection_nextBtn")));
 		 while(btnSiguiente.isEnabled() && btnSiguiente.isDisplayed()) {
 			 Thread.sleep(1000);
@@ -174,7 +173,7 @@ public class ProcesoFVentas {
 	 * @throws InterruptedException
 	 */
 	public void StepDispositivos(int index) throws InterruptedException {
-		WaitForInvisibleSpinner();
+		config.waitForInvisibleSpinner(wait);
 		wait.until(ExpectedConditions.elementToBeClickable(By.id("RadioDevices")));
 		List<WebElement> optTipoDeDispositivo = driver.findElements(By.id("RadioDevices"));
 		optTipoDeDispositivo.get(index).findElement(By.xpath("./..")).click();
@@ -195,19 +194,19 @@ public class ProcesoFVentas {
 	 * @throws InterruptedException
 	 */
 	public void StepSeleccionDeDispositivo() throws InterruptedException {
-		WaitForInvisibleSpinner();
+		config.waitForInvisibleSpinner(wait);
 		WebElement optDispositivo = wait.until(ExpectedConditions.elementToBeClickable(By.id("block_01t3K000000HEDoQAO")));
 		optDispositivo.findElement(By.xpath("./..")).click();
-		Thread.sleep(2000);
+		Thread.sleep(tiempo);
 		
-		WaitForInvisibleSpinner();
+		config.waitForInvisibleSpinner(wait);
 		driver.findElement(By.id("vlcCart_Top")).findElement(By.xpath(".//div[1]")).click();
 		WebElement btnSiguiente = driver.findElement(By.id("StepChooseDevices_nextBtn"));
 		while(btnSiguiente.isEnabled() && btnSiguiente.isDisplayed()) {
 			Thread.sleep(1000);
 			btnSiguiente.click();
 		}
-		Thread.sleep(2000);
+		Thread.sleep(tiempo);
 	}
 
 	/**
@@ -217,7 +216,7 @@ public class ProcesoFVentas {
 	 * @throws InterruptedException
 	 */
 	public void StepValidacionDeDispositivos(int index) throws InterruptedException {
-		WaitForInvisibleSpinner();
+		config.waitForInvisibleSpinner(wait);
 		wait.until(ExpectedConditions.elementToBeClickable(By.id("RadioSelectMethod")));
 		List<WebElement> optMetodoDeValidacion = driver.findElements(By.id("RadioSelectMethod"));
 		Thread.sleep(tiempo);
@@ -246,7 +245,7 @@ public class ProcesoFVentas {
 		btnValidar.click();
 		Thread.sleep(tiempo);
 
-		WaitForInvisibleSpinner();
+		config.waitForInvisibleSpinner(wait);
 		List<WebElement> optListVerEquiposCompatibles = driver.findElements(By.id("RadioBuyDevices"));
 		
 		boolean optVerEquiposCompatibles = false;
@@ -254,8 +253,12 @@ public class ProcesoFVentas {
 			optVerEquiposCompatibles = true;
 		}
 		
-		driver.findElement(By.xpath("//div[@id='StepApprovedDevice_nextBtn']")).click();
+		WebElement btnSiguiente = driver.findElement(By.xpath("//div[@id='StepApprovedDevice_nextBtn']"));
 		Thread.sleep(tiempo);
+		while(btnSiguiente.isEnabled() && btnSiguiente.isDisplayed()) {
+			Thread.sleep(1000);
+			btnSiguiente.click();
+		}
 		
 		if (optVerEquiposCompatibles)
 			StepSeleccionDeDispositivo();
@@ -294,8 +297,12 @@ public class ProcesoFVentas {
 			driver.findElement(By.xpath("//option[@label='Tough Mobile']")).click();
 		}
 		
-		driver.findElement(By.xpath("//div[@id='StepApprovedDevice_nextBtn']")).click();
+		WebElement btnSiguiente = driver.findElement(By.xpath("//div[@id='StepApprovedDevice_nextBtn']"));
 		Thread.sleep(tiempo);
+		while(btnSiguiente.isEnabled() && btnSiguiente.isDisplayed()) {
+			Thread.sleep(1000);
+			btnSiguiente.click();
+		}
 		
 		if (optVerEquiposCompatibles)
 			StepSeleccionDeDispositivo();
@@ -334,12 +341,12 @@ public class ProcesoFVentas {
 		Thread.sleep(2000);
 		wait.until(ExpectedConditions.elementToBeClickable(By.id("RadioProfileNoVentas")));
 		List<WebElement> optTipoDeEntrega = driver.findElements(By.xpath("//input[@id='RadioProfileNoVentas']"));
-		Thread.sleep(2000);
+		Thread.sleep(tiempo);
 		
 		// Si  la entrega es en Sucursal:
 		if (index == 0) {
 			optTipoDeEntrega.get(index).findElement(By.xpath("./..")).click();
-			Thread.sleep(2000);
+			Thread.sleep(tiempo);
 			List<WebElement> stock = driver.findElements(By.xpath("//span[@class='slds-radio--faux ng-scope']"));
 			//driver.findElement(By.id("RadioRetiroOtraSucursal|0")).click();//ng-form[@id='RadioRetiroOtraSucursal|0']
 			
@@ -357,12 +364,12 @@ public class ProcesoFVentas {
 				driver.findElement(By.xpath("//div[@id=\'WrapperCheckDeviceStockSucursal\']")).click(); 
 			}
 
-			Thread.sleep(2000);
+			Thread.sleep(tiempo);
 			
 		//En caso contrario, la entrega es en Domicilio
 		} else { 
 			optTipoDeEntrega.get(index).findElement(By.xpath("./..")).click();
-			Thread.sleep(2000);
+			Thread.sleep(tiempo);
 		}
 		
 		wait.until(ExpectedConditions.elementToBeClickable(By.id("StepSaleProcessDevice_nextBtn")));
@@ -376,7 +383,7 @@ public class ProcesoFVentas {
 	 * @throws InterruptedException
 	 */
 	public void StepResumenDeCompra() throws InterruptedException {
-		WaitForInvisibleSpinner();
+		config.waitForInvisibleSpinner(wait);
 		WebElement btnSiguiente = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//div[@id=\'DeliveryHomeSummary_nextBtn\']/p")));
 		while(btnSiguiente.isDisplayed() && btnSiguiente.isEnabled()) {
 			Thread.sleep(1000);
@@ -384,7 +391,7 @@ public class ProcesoFVentas {
 		}
 		Thread.sleep(tiempo);
 		
-		WaitForInvisibleSpinner();
+		config.waitForInvisibleSpinner(wait);
 		WebElement btnFinish = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//button[@class=\'slds-button slds-button_brand ng-binding\']")));
 		btnFinish.click();
 		Thread.sleep(tiempo);
@@ -405,12 +412,4 @@ public class ProcesoFVentas {
 		Thread.sleep(tiempo);
 		
 	}
-
-	/**
-	 * Retrasa la ejecucion hasta que spinner sea invisible
-	 */
-	public void WaitForInvisibleSpinner() {
-		wait.until(ExpectedConditions.invisibilityOfElementLocated(By.className("slds-spinner_container")));
-	}
-
 }
