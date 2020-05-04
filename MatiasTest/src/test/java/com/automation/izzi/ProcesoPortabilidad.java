@@ -1,5 +1,6 @@
 package com.automation.izzi;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
@@ -13,23 +14,19 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import org.testng.internal.Utils;
 
 public class ProcesoPortabilidad {
+	private Config config = new Config();
 	private WebDriver driver;
 	
 	@Before
-	public void setUp() throws InterruptedException {
-		
-		System.setProperty("webdriver.chrome.driver", "./src/test/resources/chromedriver/chromedriver.exe");
-		driver = new ChromeDriver();
-		driver.manage().window().maximize();
+	public void setUp() throws InterruptedException, IOException {
 
-		driver.get("https://test1dom--sittest.my.salesforce.com/secur/frontdoor.jsp?sid=00D3K0000008jQa!ARwAQCiQzIdwPVD0GdShmu4zzQxi7OhwPVV9.EDjYa2_W1UguRyTlpmQXUqr64VSHEV7wp0ZDWBURxXKLGCCu439Xbrau0J4");
-
-		driver.get("https://test1dom--sittest.lightning.force.com/lightning/r/Account/001c000002JvBrCAAV/view");
-
+		config.initBrowser();
+		config.goToAccountLink();
+		driver = config.driver;
 		driver.manage().timeouts().pageLoadTimeout(40, TimeUnit.SECONDS);
-		
 		Thread.sleep(20000);
 		
 	}
@@ -152,9 +149,12 @@ public class ProcesoPortabilidad {
 		driver.findElement(By.xpath("//button[@class='slds-button slds-button_brand ng-binding' and contains(text(),Finalizar)]")).click();
 		Thread.sleep(1000);
 		
+		wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//button[@class='slds-button slds-button_brand ng-binding' and contains(text(),Finalizar)]")));//*[@id="Documentation_nextBtn"]
+		driver.findElement(By.xpath("//button[@class='slds-button slds-button_brand ng-binding' and contains(text(),Finalizar)]")).click();
+		
 		driver.switchTo().defaultContent();
 	}
-	
+
 	public static String generateNIP() {
 		int number = (int)(Math.random() * (9999 - 1000 + 1) + 1000);
 		return "" + number;
