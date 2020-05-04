@@ -3,6 +3,7 @@ package com.automation.izzi;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.openqa.selenium.By;
@@ -25,7 +26,7 @@ private WebDriver driver;
 		driver = new ChromeDriver();
 		driver.manage().window().maximize();
 
-		driver.get(" https://test1dom--sittest.my.salesforce.com/secur/frontdoor.jsp?sid=00D3K0000008jQa!ARwAQDbCiCxeNyVmRccDWKWw.jYKVm5YidLDwL9DYJSL23MN8mvEC5H6bK8CriiZt29xY05MZP4oupt4qDAkHu17ZlNCk_yh");
+		driver.get("https://test1dom--sittest.my.salesforce.com/secur/frontdoor.jsp?sid=00D3K0000008jQa!ARwAQCiQzIdwPVD0GdShmu4zzQxi7OhwPVV9.EDjYa2_W1UguRyTlpmQXUqr64VSHEV7wp0ZDWBURxXKLGCCu439Xbrau0J4");
 
 		driver.get("https://test1dom--sittest.lightning.force.com/lightning/r/Account/001c000002JvBrCAAV/view");
 
@@ -137,6 +138,7 @@ private WebDriver driver;
 	
 	//Esto es en "Modificar caso", para su edición y finalización.
 	void Edicion() throws InterruptedException{
+		new WebDriverWait(driver, 30).until(ExpectedConditions.invisibilityOfElementLocated(By.className("slds-spinner_container")));
 		
 		Select picklist = new Select(driver.findElement(By.id("SelectEstado")));
 		picklist.selectByIndex(1);
@@ -148,8 +150,10 @@ private WebDriver driver;
 		driver.findElement(By.xpath("//div[@id='Edicion_nextBtn']")). click();
 		Thread.sleep(5000);
 		
-		new WebDriverWait (driver, 40).until(ExpectedConditions.invisibilityOfElementLocated(By.className("slds-spinner_container")));
-		driver.findElement(By.xpath("//button[@class='sslds-button slds-button_brand ng-binding']")).click();
-		Thread.sleep(1000);
+		new WebDriverWait(driver, 30).until(ExpectedConditions.invisibilityOfElementLocated(By.className("slds-spinner_container")));
+		driver.findElement(By.xpath("//button[@class='slds-button slds-button_brand ng-binding' and contains(text(),Finalizar)]")).click();
+		Thread.sleep(2000);
+		
 	}
+	
 }
