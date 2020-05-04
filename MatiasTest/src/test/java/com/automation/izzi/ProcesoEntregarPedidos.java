@@ -2,6 +2,8 @@ package com.automation.izzi;
 
 import java.util.List;
 import java.util.concurrent.TimeUnit;
+
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.openqa.selenium.By;
@@ -25,11 +27,15 @@ public class ProcesoEntregarPedidos {
 		driver = new ChromeDriver();
 		driver.manage().window().maximize();
 
-		driver.get("https://test1dom--sittest.my.salesforce.com/secur/frontdoor.jsp?sid=00D3K0000008jQa!ARwAQLb_4mZgRMSEfdjqSMKKkyYaJCmcSU8gEfeDxz9I7BYgl7I_4bG6M4HJPFRc8HyT99jXXrqSOZ0llyolc9xGEHhdR0FF");
+		driver.get("https://test1dom--sittest.my.salesforce.com/secur/frontdoor.jsp?sid=00D3K0000008jQa!ARwAQCiQzIdwPVD0GdShmu4zzQxi7OhwPVV9.EDjYa2_W1UguRyTlpmQXUqr64VSHEV7wp0ZDWBURxXKLGCCu439Xbrau0J4");
 
 		Thread.sleep(10000);
 
+<<<<<<< HEAD
 		driver.get("https://test1dom--sittest.lightning.force.com/lightning/r/Order/8013K000000EjPgQAK/view");
+=======
+		driver.get("https://test1dom--sittest.lightning.force.com/lightning/r/Order/8013K000000EkOjQAK/view");
+>>>>>>> branch 'master' of https://github.com/MatiasBarreraTumbarello/AutomationDePedido.git
 
 		driver.manage().timeouts().pageLoadTimeout(40, TimeUnit.SECONDS);
 		
@@ -81,11 +87,13 @@ public class ProcesoEntregarPedidos {
 		Thread.sleep(3000);
 		//-----Finalizar-------
 		ewait.until(ExpectedConditions.invisibilityOfElementLocated(By.className("slds-spinner_container")));
-		driver.findElement(By.xpath("//button[@class='slds-button slds-button_brand ng-binding']")).click();
+		driver.findElement(By.xpath("//button[@class='slds-button slds-button_brand ng-binding' and contains(text(),Finalizar)]")).click();
 		
 		} catch (InterruptedException e) {
 			
 			e.printStackTrace();
 		}
 	}
+		
+
 }
