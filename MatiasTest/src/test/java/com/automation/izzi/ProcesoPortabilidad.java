@@ -129,10 +129,10 @@ public class ProcesoPortabilidad {
 			.until(ExpectedConditions.invisibilityOfElementLocated(By.className("slds-spinner_container")));
 		Thread.sleep(1000);
 		driver.findElement(By.id("StepPortabilityNumber_nextBtn")).click();
-		Thread.sleep(5000);
+		Thread.sleep(3000);
 	}
 	
-	public static void pasoDocumentacion (WebDriver driver) {
+	public static void pasoDocumentacion (WebDriver driver) throws InterruptedException {
 		WebDriverWait wait = new WebDriverWait (driver, 40);
 		
 		driver.switchTo().defaultContent();
@@ -146,6 +146,11 @@ public class ProcesoPortabilidad {
 		
 		wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//div[@id='Documentation_nextBtn']")));//*[@id="Documentation_nextBtn"]
 		driver.findElement(By.xpath("//div[@id='Documentation_nextBtn']")).click();
+		Thread.sleep(1000);
+		
+		wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//button[@class='slds-button slds-button_brand ng-binding' and contains(text(),Finalizar)]")));
+		driver.findElement(By.xpath("//button[@class='slds-button slds-button_brand ng-binding' and contains(text(),Finalizar)]")).click();
+		Thread.sleep(1000);
 		
 		driver.switchTo().defaultContent();
 	}
