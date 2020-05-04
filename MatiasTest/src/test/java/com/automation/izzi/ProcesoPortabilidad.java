@@ -149,8 +149,6 @@ public class ProcesoPortabilidad {
 		driver.findElement(By.xpath("//button[@class='slds-button slds-button_brand ng-binding' and contains(text(),Finalizar)]")).click();
 		Thread.sleep(1000);
 		
-		wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//button[@class='slds-button slds-button_brand ng-binding' and contains(text(),Finalizar)]")));//*[@id="Documentation_nextBtn"]
-		driver.findElement(By.xpath("//button[@class='slds-button slds-button_brand ng-binding' and contains(text(),Finalizar)]")).click();
 		
 		driver.switchTo().defaultContent();
 	}
