@@ -33,12 +33,12 @@ public class ProcesoGestionDeCasos {
 
 		driver.manage().timeouts().pageLoadTimeout(40, TimeUnit.SECONDS);
 
-		Thread.sleep(20000);
+		Thread.sleep(30000);
 	}
 
 	@Test
 	public void Gestion() throws InterruptedException {
-		WebDriverWait wait = new WebDriverWait(driver, 30);
+		WebDriverWait wait = new WebDriverWait(driver, 40);
 
 		wait.until(ExpectedConditions.invisibilityOfElementLocated(By.className("slds-spinner_container")));
 
@@ -54,8 +54,7 @@ public class ProcesoGestionDeCasos {
 		driver.switchTo().defaultContent();
 
 		CrearModificarCaso(1);
-		// descripcion();
-
+		//driver.findElement(By.xpath("//div[@ng-if='control.propSetMap.structMessage.btnName']")).click();
 	}
 
 	public void CrearModificarCaso(int index) throws InterruptedException {
@@ -83,7 +82,7 @@ public class ProcesoGestionDeCasos {
 	}
 
 	public void Crear() throws InterruptedException {
-		new WebDriverWait(driver, 40)
+		new WebDriverWait(driver, 20)
 				.until(ExpectedConditions.invisibilityOfElementLocated(By.className("slds-spinner_container")));
 		SelectPicklist("Origen");
 		SelectPicklist("Prioridad");
@@ -92,13 +91,15 @@ public class ProcesoGestionDeCasos {
 
 		driver.findElement(By.id("CrearCaso_nextBtn")).click();
 		Thread.sleep(2000);
+
+		descripcion();
 	}
 
 	void Modificar() throws InterruptedException {
 		Thread.sleep(3000);
-		new WebDriverWait(driver, 40)
+		new WebDriverWait(driver, 20)
 				.until(ExpectedConditions.invisibilityOfElementLocated(By.className("slds-spinner_container")));
-		new WebDriverWait(driver, 40).until(ExpectedConditions.elementToBeClickable(By.id("CaseSelect")));
+		new WebDriverWait(driver, 20).until(ExpectedConditions.elementToBeClickable(By.id("CaseSelect")));
 
 		List<WebElement> casos = driver.findElements(By.xpath("//span[@class = 'slds-radio_faux']"));
 		casos.get(0).click();
@@ -119,29 +120,31 @@ public class ProcesoGestionDeCasos {
 	// Una vez que entramos a Crear caso. esto llenaria la descripcion del mismo y
 	// finaliza el proceso.
 
-	/*
-	 * void descripcion () throws InterruptedException { new WebDriverWait (driver,
-	 * 40).until(ExpectedConditions.invisibilityOfElementLocated(By.className(
-	 * "slds-spinner_container")));
-	 * 
-	 * driver.findElement(By.xpath("//*[@id=\'TextAreaAsunto\']")).sendKeys("hola");
-	 * Thread.sleep(1000);
-	 * driver.findElement(By.xpath("//*[@id=\'TextAreaDescripcion\']")).sendKeys(
-	 * "hola"); Thread.sleep(1000);
-	 * driver.findElement(By.xpath("//*[@id=\'TextAreaComentarios\']")).sendKeys(
-	 * "hola"); Thread.sleep(1000);
-	 * driver.findElement(By.xpath("//*[@id=\'Descripcion_nextBtn\']")).click();
-	 * 
-	 * new WebDriverWait (driver,
-	 * 40).until(ExpectedConditions.invisibilityOfElementLocated(By.className(
-	 * "slds-spinner_container"))); driver.findElement(By.
-	 * xpath("//button[@class='slds-button slds-button_brand ng-binding']")).click()
-	 * ; }
-	 */
+	void descripcion() throws InterruptedException {
+		new WebDriverWait(driver, 20)
+				.until(ExpectedConditions.invisibilityOfElementLocated(By.className("slds-spinner_container")));
+
+		driver.findElement(By.xpath("//*[@id=\'TextAreaAsunto\']")).sendKeys("hola");
+		Thread.sleep(1000);
+		driver.findElement(By.xpath("//*[@id=\'TextAreaDescripcion\']")).sendKeys("hola");
+		Thread.sleep(1000);
+		driver.findElement(By.xpath("//*[@id=\'TextAreaComentarios\']")).sendKeys("hola");
+		Thread.sleep(1000);
+		driver.findElement(By.xpath("//*[@id=\'Descripcion_nextBtn\']")).click();
+
+		if (new WebDriverWait(driver, 20)
+				.until(ExpectedConditions
+						.elementToBeClickable(By.xpath("//div[@ng-if='control.propSetMap.structMessage.btnName']")))
+				.isEnabled()) {
+			driver.findElement(By.xpath("//div[@ng-if='control.propSetMap.structMessage.btnName']")).click();
+		}
+		driver.switchTo().defaultContent();
+
+	}
 
 	// Esto es en "Modificar caso", para su edición y finalización.
 	void Edicion() throws InterruptedException {
-		new WebDriverWait(driver, 30)
+		new WebDriverWait(driver, 20)
 				.until(ExpectedConditions.invisibilityOfElementLocated(By.className("slds-spinner_container")));
 
 		Select picklist = new Select(driver.findElement(By.id("SelectEstado")));
@@ -154,12 +157,24 @@ public class ProcesoGestionDeCasos {
 		driver.findElement(By.xpath("//div[@id='Edicion_nextBtn']")).click();
 		Thread.sleep(5000);
 
-		new WebDriverWait(driver, 30)
+		new WebDriverWait(driver, 20)
 				.until(ExpectedConditions.invisibilityOfElementLocated(By.className("slds-spinner_container")));
-		driver.findElement(
-				By.xpath("//button[@class='slds-button slds-button_brand ng-binding' and contains(text(),Finalizar)]"))
-				.click();
-		Thread.sleep(2000);
+		
+		JavascriptExecutor executor = (JavascriptExecutor) driver;
+		
+		WebElement finalizar = driver.findElement(By.xpath("//div[@ng-if='control.propSetMap.structMessage.btnName']"));
+		
+		executor.executeScript("arguments[0].style.display = 'block'; arguments[0].style.zIndex = '999999';", finalizar);
+		
+		
+		
+		
+		
+/*		if (driver.findElement(By.xpath("//div[@ng-if='control.propSetMap.structMessage.btnName']"))
+				.isEnabled()) {
+			driver.findElement(By.xpath("//div[@ng-if='control.propSetMap.structMessage.btnName']")).click();
+		}*/
+		//driver.switchTo().defaultContent();
 
 	}
 
