@@ -10,11 +10,9 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
-import org.testng.internal.Utils;
 
 public class ProcesoPortabilidad {
 	private Config config = new Config();
@@ -126,10 +124,10 @@ public class ProcesoPortabilidad {
 			.until(ExpectedConditions.invisibilityOfElementLocated(By.className("slds-spinner_container")));
 		Thread.sleep(1000);
 		driver.findElement(By.id("StepPortabilityNumber_nextBtn")).click();
-		Thread.sleep(5000);
+		Thread.sleep(3000);
 	}
 	
-	public static void pasoDocumentacion (WebDriver driver) {
+	public static void pasoDocumentacion (WebDriver driver) throws InterruptedException {
 		WebDriverWait wait = new WebDriverWait (driver, 40);
 		
 		driver.switchTo().defaultContent();
@@ -143,9 +141,12 @@ public class ProcesoPortabilidad {
 		
 		wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//div[@id='Documentation_nextBtn']")));//*[@id="Documentation_nextBtn"]
 		driver.findElement(By.xpath("//div[@id='Documentation_nextBtn']")).click();
+		Thread.sleep(1000);
 		
-		wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//button[@class='slds-button slds-button_brand ng-binding' and contains(text(),Finalizar)]")));//*[@id="Documentation_nextBtn"]
+		wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//button[@class='slds-button slds-button_brand ng-binding' and contains(text(),Finalizar)]")));
 		driver.findElement(By.xpath("//button[@class='slds-button slds-button_brand ng-binding' and contains(text(),Finalizar)]")).click();
+		Thread.sleep(1000);
+		
 		
 		driver.switchTo().defaultContent();
 	}
