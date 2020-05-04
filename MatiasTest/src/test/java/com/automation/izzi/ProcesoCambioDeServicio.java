@@ -50,7 +50,7 @@ public class ProcesoCambioDeServicio {
 		driver.switchTo().frame(frame);
 		Thread.sleep(2000);
 		List<WebElement> links = driver.findElements(By.linkText("Cambio de Servicio"));
-		executor.executeScript("arguments[0].click();", links.get(0));
+		executor.executeScript("arguments[0].click();", links.get(2));
 		driver.switchTo().defaultContent();
 	}
 
@@ -62,8 +62,24 @@ public class ProcesoCambioDeServicio {
 		driver.switchTo().frame(frame);
 		// frames.get(size-1).click();
 		Thread.sleep(2000);
-		WebElement opt = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id=\'block_01tc0000007pvuhAAA\']")));
-		opt.click();
+		try {
+			WebElement opt = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id=\'block_01tc0000007pvuiAAA\']")));
+			if (opt != null) {
+				opt.click();
+			}else {
+				WebElement opt2 = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id=\'block_01tc0000007pvuhAAA\']")));
+				opt2.click();
+			}
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+		
+			
+			
+		
+		
+		
+		
 		//siguiente
 		wait.until(ExpectedConditions.invisibilityOfElementLocated(By.className("slds-spinner_container")));
 		WebElement siguiente = wait.until(ExpectedConditions.elementToBeClickable(By.id("Planes_nextBtn")));
