@@ -77,7 +77,7 @@ private WebDriver driver;
 		driver.findElement(By.id("stepConfirmationCancelLinea_nextBtn")).click();
 		Thread.sleep(2000);
 		
-		driver.findElement(By.xpath("//button[@class= 'slds-button slds-button_brand ng-binding']")).click();
-		Thread.sleep(2000);
+		//driver.findElement(By.xpath("//button[@class= 'slds-button slds-button_brand ng-binding']")).click();
+		//Thread.sleep(2000);
 }
 }
