@@ -73,13 +73,6 @@ public class ProcesoCambioDeServicio {
 		} catch (Exception e) {
 			// TODO: handle exception
 		}
-		
-			
-			
-		
-		
-		
-		
 		//siguiente
 		wait.until(ExpectedConditions.invisibilityOfElementLocated(By.className("slds-spinner_container")));
 		WebElement siguiente = wait.until(ExpectedConditions.elementToBeClickable(By.id("Planes_nextBtn")));
