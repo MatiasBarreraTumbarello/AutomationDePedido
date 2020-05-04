@@ -22,7 +22,7 @@ public class ProcesoPortabilidad {
 	
 	@Before
 	public void setUp() throws InterruptedException, IOException {
-		
+
 		config.initBrowser();
 		config.goToAccountLink();
 		driver = config.driver;
