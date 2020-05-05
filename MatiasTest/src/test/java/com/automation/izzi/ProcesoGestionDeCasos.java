@@ -4,14 +4,12 @@ import java.io.IOException;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
-import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -20,7 +18,6 @@ public class ProcesoGestionDeCasos {
 	
 	private Config config = new Config();
 	private WebDriver driver;
-	private WebDriverWait wait;
 	
 	@Before
 
@@ -49,7 +46,7 @@ public class ProcesoGestionDeCasos {
 		driver.switchTo().defaultContent();
 		
 		
-		CrearModificarCaso(0);
+		CrearModificarCaso(1);
 
 		
 	}
@@ -93,7 +90,7 @@ public class ProcesoGestionDeCasos {
 	void Modificar() throws InterruptedException {
 		Thread.sleep(3000);
 		config.waitForInvisibleSpinner();
-		wait.until(ExpectedConditions.elementToBeClickable(By.id("CaseSelect")));
+		new WebDriverWait(driver, 40).until(ExpectedConditions.elementToBeClickable(By.id("CaseSelect")));
 		
 		List<WebElement> casos = driver.findElements(By.xpath("//span[@class = 'slds-radio_faux']"));
 		casos.get(0).click();
@@ -159,7 +156,20 @@ public class ProcesoGestionDeCasos {
 		Thread.sleep(5000);
 		
 		config.waitForInvisibleSpinner();
-		
+
+		new WebDriverWait (driver, 20)
+				.until(ExpectedConditions.elementToBeClickable(By.xpath("//div[@ng-if='control.propSetMap.structMessage.btnName']")));
+
+		String orden = driver.findElement(By.xpath("//p[@ng-repeat='(key, value) in control.propSetMap.message']")).getText();
+		driver.switchTo().defaultContent();
+		String letra = "";
+		for (int i = 5; i < orden.length(); i++) {
+		letra = letra + orden.charAt(i);
+		}
+		driver.findElement(By.xpath("//input[@id='159:0;p']")).sendKeys(letra);
+		Thread.sleep(2000);
+		List<WebElement> desplegable = driver.findElements(By.xpath("//li[@data-aura-class='uiAutocompleteOption forceSearchInputDesktopOption']"));
+		desplegable.get(1).click();
 	}
 	
 }
