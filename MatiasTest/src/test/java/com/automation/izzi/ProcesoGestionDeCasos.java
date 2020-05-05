@@ -132,11 +132,23 @@ public class ProcesoGestionDeCasos {
 		driver.findElement(By.xpath("//*[@id=\'TextAreaComentarios\']")).sendKeys("Automation");
 		Thread.sleep(1000);
 		driver.findElement(By.xpath("//*[@id=\'Descripcion_nextBtn\']")).click();
+		
+		new WebDriverWait (driver, 20)
+				.until(ExpectedConditions.elementToBeClickable(By.xpath("//div[@ng-if='control.propSetMap.structMessage.btnName']")));
 
 		String orden = driver.findElement(By.xpath("//p[@ng-repeat='(key, value) in control.propSetMap.message']")).getText();
-		
-		System.out.println(orden);
 		driver.switchTo().defaultContent();
+		String letra = "";
+		for (int i = 5; i < orden.length(); i++) {
+		letra = letra + orden.charAt(i);
+		}
+		driver.findElement(By.xpath("//input[@id='159:0;p']")).sendKeys(letra);
+		Thread.sleep(2000);
+		List<WebElement> desplegable = driver.findElements(By.xpath("//li[@data-aura-class='uiAutocompleteOption forceSearchInputDesktopOption']"));
+		desplegable.get(1).click();
+		
+		
+		
 
 	}
 
