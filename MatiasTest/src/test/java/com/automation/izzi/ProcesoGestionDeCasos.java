@@ -1,5 +1,6 @@
 package com.automation.izzi;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
@@ -17,18 +18,16 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class ProcesoGestionDeCasos {
 	
-private WebDriver driver;
+	private Config config = new Config();
+	private WebDriver driver;
+	private WebDriverWait wait;
 	
 	@Before
-	public void setUp() throws InterruptedException {
+	public void setUp() throws InterruptedException, IOException {
 		
-		System.setProperty("webdriver.chrome.driver", "./src/test/resources/chromedriver/chromedriver.exe");
-		driver = new ChromeDriver();
-		driver.manage().window().maximize();
-
-		driver.get("https://test1dom--sittest.my.salesforce.com/secur/frontdoor.jsp?sid=00D3K0000008jQa!ARwAQCiQzIdwPVD0GdShmu4zzQxi7OhwPVV9.EDjYa2_W1UguRyTlpmQXUqr64VSHEV7wp0ZDWBURxXKLGCCu439Xbrau0J4");
-
-		driver.get("https://test1dom--sittest.lightning.force.com/lightning/r/Account/001c000002JvBrCAAV/view");
+		config.initBrowser();
+		config.goToAccountLink();
+		driver = config.driver;
 
 		driver.manage().timeouts().pageLoadTimeout(40, TimeUnit.SECONDS);
 		
@@ -37,9 +36,7 @@ private WebDriver driver;
 	
 	@Test
 	public void Gestion () throws InterruptedException {
-		WebDriverWait wait = new WebDriverWait(driver, 30);
-		
-		wait.until(ExpectedConditions.invisibilityOfElementLocated(By.className("slds-spinner_container")));
+		config.waitForInvisibleSpinner(wait);
 		
 		WebElement frame = driver.findElement(By.id("iFrameResizer1"));
 		JavascriptExecutor executor = (JavascriptExecutor)driver;
@@ -57,8 +54,7 @@ private WebDriver driver;
 	}
 	
 	public void CrearModificarCaso(int index) throws InterruptedException {
-		WebDriverWait  wait = new WebDriverWait (driver, 40);
-		wait.until(ExpectedConditions.invisibilityOfElementLocated(By.className("slds-spinner_container")));
+		config.waitForInvisibleSpinner(wait);
 		
 		WebElement frame = new WebDriverWait(driver, 40)
 				.until(ExpectedConditions.elementToBeClickable(By.id("iFrameResizer3")));
@@ -83,8 +79,7 @@ private WebDriver driver;
 
 	
 	public void Crear() throws InterruptedException {
-		new WebDriverWait(driver, 40)
-			.until(ExpectedConditions.invisibilityOfElementLocated(By.className("slds-spinner_container")));
+		config.waitForInvisibleSpinner(wait);
 		SelectPicklist("Origen");
 		SelectPicklist("Prioridad");
 		SelectPicklist("Tipo");
@@ -96,8 +91,8 @@ private WebDriver driver;
 	
 	void Modificar() throws InterruptedException {
 		Thread.sleep(3000);
-		new WebDriverWait (driver, 40).until(ExpectedConditions.invisibilityOfElementLocated(By.className("slds-spinner_container")));
-		new WebDriverWait (driver, 40).until(ExpectedConditions.elementToBeClickable(By.id("CaseSelect")));
+		config.waitForInvisibleSpinner(wait);
+		wait.until(ExpectedConditions.elementToBeClickable(By.id("CaseSelect")));
 		
 		List<WebElement> casos = driver.findElements(By.xpath("//span[@class = 'slds-radio_faux']"));
 		casos.get(0).click();
@@ -121,7 +116,7 @@ private WebDriver driver;
 	//Una vez que entramos a Crear caso. esto llenaria la descripcion del mismo y finaliza el proceso.
 	
 	/*void descripcion () throws InterruptedException {
-		new WebDriverWait (driver, 40).until(ExpectedConditions.invisibilityOfElementLocated(By.className("slds-spinner_container")));
+		config.waitForInvisibleSpinner(wait);
 		
 		driver.findElement(By.xpath("//*[@id=\'TextAreaAsunto\']")).sendKeys("hola");
 		Thread.sleep(1000);
@@ -131,14 +126,14 @@ private WebDriver driver;
 		Thread.sleep(1000);
 		driver.findElement(By.xpath("//*[@id=\'Descripcion_nextBtn\']")).click();
 		
-		new WebDriverWait (driver, 40).until(ExpectedConditions.invisibilityOfElementLocated(By.className("slds-spinner_container")));
+		config.waitForInvisibleSpinner(wait);
 		driver.findElement(By.xpath("//button[@class='slds-button slds-button_brand ng-binding']")).click();
 	}
 */
 	
 	//Esto es en "Modificar caso", para su edición y finalización.
 	void Edicion() throws InterruptedException{
-		new WebDriverWait(driver, 30).until(ExpectedConditions.invisibilityOfElementLocated(By.className("slds-spinner_container")));
+		config.waitForInvisibleSpinner(wait);
 		
 		Select picklist = new Select(driver.findElement(By.id("SelectEstado")));
 		picklist.selectByIndex(1);
@@ -150,7 +145,7 @@ private WebDriver driver;
 		driver.findElement(By.xpath("//div[@id='Edicion_nextBtn']")). click();
 		Thread.sleep(5000);
 		
-		new WebDriverWait(driver, 30).until(ExpectedConditions.invisibilityOfElementLocated(By.className("slds-spinner_container")));
+		config.waitForInvisibleSpinner(wait);
 		driver.findElement(By.xpath("//button[@class='slds-button slds-button_brand ng-binding' and contains(text(),Finalizar)]")).click();
 		Thread.sleep(2000);
 		

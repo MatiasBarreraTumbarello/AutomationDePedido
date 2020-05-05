@@ -27,7 +27,6 @@ public class ProcesoCancelacionLinea {
 		config.initBrowser();
 		config.goToAccountLink();
 		driver = config.driver;
-		wait = config.wait;
 		driver.manage().timeouts().pageLoadTimeout(40, TimeUnit.SECONDS);
 		
 		Thread.sleep(20000);

@@ -1,5 +1,6 @@
 package com.automation.izzi;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
@@ -15,19 +16,17 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class ProcesoCambioDeSim {
 	
+	private Config config = new Config();
 	private WebDriver driver;
+	private WebDriverWait wait;
 	
 
 	@Before
-	public void setUp() throws InterruptedException {
+	public void setUp() throws InterruptedException, IOException {
 		
-		System.setProperty("webdriver.chrome.driver", "./src/test/resources/chromedriver/chromedriver.exe");
-		driver = new ChromeDriver();
-		driver.manage().window().maximize();
-
-		driver.get("https://test1dom--sittest.my.salesforce.com/secur/frontdoor.jsp?sid=00D3K0000008jQa!ARwAQGBdI3GM6xpbj3g1o5HzF9Qj5wNe0fr2Jo7CYrb9s_rbUqN.aRuqd0rOT8FzO3JQmzNroxfUxlpgufquzKVw_1nmV3rU");
-
-		driver.get("https://test1dom--sittest.lightning.force.com/lightning/r/Account/001c000002JvBrCAAV/view");
+		config.initBrowser();
+		config.goToAccountLink();
+		driver = config.driver;
 
 		driver.manage().timeouts().pageLoadTimeout(40, TimeUnit.SECONDS);
 		
@@ -38,11 +37,11 @@ public class ProcesoCambioDeSim {
 	@Test
 	public void testScript() throws InterruptedException {
 	
-		cambioDeSim(driver);
-		selecionSim(driver);
+		cambioDeSim();
+		selecionSim();
 		
 	}
-	public void cambioDeSim (WebDriver driver) throws InterruptedException{
+	public void cambioDeSim () throws InterruptedException{
 		Thread.sleep(2000);
 		WebElement frame = driver.findElement(By.id("iFrameResizer2"));
 		JavascriptExecutor executor = (JavascriptExecutor)driver;
@@ -54,11 +53,9 @@ public class ProcesoCambioDeSim {
 		driver.switchTo().defaultContent();
 	}
 		
-	public void selecionSim (WebDriver driver) throws InterruptedException {
+	public void selecionSim () throws InterruptedException {
 		
-		WebDriverWait wait = new WebDriverWait(driver, 30);
-		
-		wait.until(ExpectedConditions.invisibilityOfElementLocated(By.className("slds-spinner_container")));
+		config.waitForInvisibleSpinner(wait);
 
 
 		WebElement iframe = wait.until(ExpectedConditions.elementToBeClickable(By.id("iFrameResizer3")));
@@ -71,16 +68,14 @@ public class ProcesoCambioDeSim {
 		opcion.click();
 		driver.findElement(By.xpath("//*[@id=\'Step1_nextBtn\']")).click();
 		//Paso3
-		WebDriverWait wait2 = new WebDriverWait (driver, 40);
-		wait2.until(ExpectedConditions.invisibilityOfElementLocated(By.className("slds-spinner_container")));
+		config.waitForInvisibleSpinner(wait);
 		
 		driver.findElement(By.xpath("//*[@id=\'newIMSI\']")).sendKeys("123456789101113");
 		Thread.sleep(2000);
 		driver.findElement(By.xpath("//input[@id=\'newICCID\']")).sendKeys("12345678910111213143");
 		driver.findElement(By.xpath("//*[@id=\'Step2_nextBtn\']")).click();
 		//Paso4
-		WebDriverWait wait3 = new WebDriverWait (driver, 40);
-		wait3.until(ExpectedConditions.invisibilityOfElementLocated(By.className("slds-spinner_container")));
+		config.waitForInvisibleSpinner(wait);
 		
 		Thread.sleep(2000);
 		driver.findElement(By.xpath("//*[@id=\'doneAction-137\']/div/div/div[3]/div/button")).click();
