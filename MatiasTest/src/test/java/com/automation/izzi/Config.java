@@ -17,6 +17,7 @@ public class Config {
 	public WebDriverWait wait;
 	public String staticAccessLink;
 	public String accountId = "001c000002JvBrCAAV";
+	public String orderId = "8013K000000EkOjQAK";
 	public int tiempo = 2000;
 	
 	private boolean isAutoTest = false;
@@ -34,12 +35,16 @@ public class Config {
 	}
 	
 	public String getStaticAccessLink() {
-		staticAccessLink = "https://test1dom--sittest.my.salesforce.com/secur/frontdoor.jsp?sid=00D3K0000008jQa!ARwAQCiQzIdwPVD0GdShmu4zzQxi7OhwPVV9.EDjYa2_W1UguRyTlpmQXUqr64VSHEV7wp0ZDWBURxXKLGCCu439Xbrau0J4";
+		staticAccessLink = "https://test1dom--sittest.my.salesforce.com/secur/frontdoor.jsp?sid=00D3K0000008jQa!ARwAQNN7vw_H9HrLMalZm64NxW1cl5QbhwY3tRQpXSn8va2ch.a9buxtS9KanRsGQzo9BZB2FVcCL6JUw0CG7C7SIGfeBHs0";
 		return staticAccessLink;
 	}
 	
 	public void goToAccountLink() {
 		driver.get("https://test1dom--sittest.lightning.force.com/lightning/r/Account/" + accountId + "/view");
+	}
+	
+	public void goToOrderLink() {
+		driver.get("\"https://test1dom--sittest.lightning.force.com/lightning/r/Order/" + orderId + "/view");
 	}
 	
 	public String getAutoTestUrl() throws IOException {
