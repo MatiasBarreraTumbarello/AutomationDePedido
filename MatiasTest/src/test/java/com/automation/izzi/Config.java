@@ -18,7 +18,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 public class Config {
 	
 	public WebDriver driver;
-	public WebDriverWait wait;
+	public WebDriverWait wait;;
 	public String staticAccessLink;
 	public String accountId = "001c000002JvBrCAAV";
 	public String orderId = "8013K000000EkOjQAK";
@@ -111,7 +111,7 @@ public class Config {
 	/**
 	 * Retrasa la ejecucion hasta que spinner sea invisible
 	 */
-	public void waitForInvisibleSpinner(WebDriverWait wait) {
-		wait.until(ExpectedConditions.invisibilityOfElementLocated(By.className("slds-spinner_container")));
+	public void waitForInvisibleSpinner() {
+		new WebDriverWait(driver, 40).until(ExpectedConditions.invisibilityOfElementLocated(By.className("slds-spinner_container")));
 	}
 }

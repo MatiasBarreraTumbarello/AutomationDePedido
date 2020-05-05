@@ -52,7 +52,7 @@ public class ProcesoReactivacion {
 	}
 	
 	public void Confirmar(int index) throws InterruptedException {
-		config.waitForInvisibleSpinner(wait);
+		config.waitForInvisibleSpinner();
 		
 		WebElement frame = new WebDriverWait(driver, 40)
 			.until(ExpectedConditions.elementToBeClickable(By.id("iFrameResizer3")));
@@ -76,7 +76,7 @@ public class ProcesoReactivacion {
 
 	
 	public void Finalizar() throws InterruptedException {
-		config.waitForInvisibleSpinner(wait);
+		config.waitForInvisibleSpinner();
 		WebElement button = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//button[@class='slds-button slds-button_brand ng-binding']")));
 		button.click();
 		Thread.sleep(1000);

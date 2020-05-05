@@ -26,6 +26,7 @@ public class ProcesoEntregarPedidos {
 	@Before
 	public void setUp() throws InterruptedException, IOException {
 		
+
 		config.initBrowser();
 		config.goToOrderLink();
 		driver = config.driver;
@@ -59,7 +60,7 @@ public class ProcesoEntregarPedidos {
 		int size = cantIFrames.size();
 		driver.switchTo().frame(size - 1);
 		
-		config.waitForInvisibleSpinner(wait);
+		config.waitForInvisibleSpinner();
 
 		
 		driver.findElement(By.xpath("//input[@id=\'ICCID\']")).sendKeys("8952140061741671430F");
@@ -77,8 +78,8 @@ public class ProcesoEntregarPedidos {
 		driver.findElement(By.xpath("//div[@id='DeliverySimCard_nextBtn']/p")).click();
 		Thread.sleep(3000);
 		//-----Finalizar-------
-		config.waitForInvisibleSpinner(wait);
-		driver.findElement(By.xpath("//button[@class='slds-button slds-button_brand ng-binding' and contains(text(),Finalizar)]")).click();
+
+		config.waitForInvisibleSpinner();
 		
 		} catch (InterruptedException e) {
 			
