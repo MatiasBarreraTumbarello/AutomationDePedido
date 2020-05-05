@@ -1,9 +1,13 @@
 package com.automation.izzi;
 
+import java.awt.List;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.Dictionary;
+import java.util.Hashtable;
 
+import org.junit.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -22,6 +26,22 @@ public class Config {
 	
 	private boolean isAutoTest = false;
 	
+	@Test
+	public void startExecution() throws IOException {
+		String[] classesList = executionOrder();
+		for (int i = 0; i < classesList.length; i++) {
+			boolean waiting = true;
+			ProcessBuilder builder = new ProcessBuilder(
+					"cmd.exe", "/c", "mvn -Dtest=" + classesList[i] + " test");
+			builder.redirectErrorStream(true);
+	        builder.start();
+
+			while (waiting) {
+				continue;
+			}
+		}
+	}
+	
 	public void initBrowser() throws IOException {
 		String accessUrl = "";
 		if (isAutoTest)
@@ -34,6 +54,23 @@ public class Config {
 		driver.get(accessUrl);
 	}
 	
+	public String[] executionOrder() {
+		String[] classesList = {
+				"ProcesoFVentas",
+				"ProcesoAltaDeServicios",
+				"ProcesoSuspenciones",
+				"ProcesoPortabilidad",
+				"ProcesoReactivacion",
+				"ProcesoCambioDeServicio",
+				"PorcesoCambioDeSim",
+				"ProcesoCancelacionDeLinea",
+				"ProcesoEntregarPedidos",
+				"ProcesoGestionDeCasos",
+				"ProcesoAltaDeServicios"
+				};
+		return classesList;
+	}
+	
 	public String getStaticAccessLink() {
 		staticAccessLink = "https://test1dom--sittest.my.salesforce.com/secur/frontdoor.jsp?sid=00D3K0000008jQa!ARwAQNN7vw_H9HrLMalZm64NxW1cl5QbhwY3tRQpXSn8va2ch.a9buxtS9KanRsGQzo9BZB2FVcCL6JUw0CG7C7SIGfeBHs0";
 		return staticAccessLink;
@@ -44,7 +81,7 @@ public class Config {
 	}
 	
 	public void goToOrderLink() {
-		driver.get("\"https://test1dom--sittest.lightning.force.com/lightning/r/Order/" + orderId + "/view");
+		driver.get("https://test1dom--sittest.lightning.force.com/lightning/r/Order/" + orderId + "/view");
 	}
 	
 	public String getAutoTestUrl() throws IOException {
