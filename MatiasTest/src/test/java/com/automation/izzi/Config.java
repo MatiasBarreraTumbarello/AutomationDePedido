@@ -1,18 +1,17 @@
 package com.automation.izzi;
 
-import java.awt.List;
+import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.Dictionary;
-import java.util.Hashtable;
+import java.time.LocalDate;
 
 import org.junit.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.Wait;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class Config {
@@ -22,6 +21,7 @@ public class Config {
 	public String staticAccessLink;
 	public String accountId = "001c000002JvBrCAAV";
 	public String orderId = "8013K000000EkOjQAK";
+	public String fileToWrite;
 	public int tiempo = 2000;
 	
 	private boolean isAutoTest = false;
@@ -29,6 +29,7 @@ public class Config {
 	@Test
 	public void startExecution() throws IOException {
 		String[] classesList = executionOrder();
+		fileToWrite = fileToWrite();
 		for (int i = 0; i < classesList.length; i++) {
 			boolean waiting = true;
 			ProcessBuilder builder = new ProcessBuilder(
@@ -39,7 +40,10 @@ public class Config {
 			while (waiting) {
 				continue;
 			}
+
+			//writeFile(fileToWrite, "mensaje" + i);
 		}
+		driver.quit();
 	}
 	
 	public void initBrowser() throws IOException {
@@ -114,4 +118,58 @@ public class Config {
 	public void waitForInvisibleSpinner() {
 		new WebDriverWait(driver, 40).until(ExpectedConditions.invisibilityOfElementLocated(By.className("slds-spinner_container")));
 	}
+	
+	public String createFile() throws IOException {
+        String date = LocalDate.now().toString();
+        String folderName = date;
+        
+        String absoluteFolderPath = "C:\\sfdx\\executions\\" + folderName;
+        boolean dir = new File(absoluteFolderPath).mkdir();
+        if(dir){
+            System.out.println(absoluteFolderPath+" Dir Created");
+        }else {
+        	System.out.println("File "+absoluteFolderPath+" already exists");
+        }
+
+        String fileName = "execution_" + (new File(absoluteFolderPath).list().length + 1);
+        String absoluteFilePath = absoluteFolderPath + "\\" + fileName + ".txt";
+        File file = new File(absoluteFilePath);
+        if (file.createNewFile()) {
+    		System.out.println(absoluteFilePath+" File Created");
+		}else {
+        	System.out.println("File file.txt already exists in the project root directory");
+        }
+        
+        return file.toString();
+    }
+	
+	public void writeFile (String path, String str) {
+	    try {
+    		FileWriter writer = new FileWriter(path, true);
+			writer.write(str + "\n");
+			writer.close();
+			System.out.println("Successfully wrote to the file.");
+	    } catch (IOException e) {
+    		System.out.println("An error occurred.");
+ 			e.printStackTrace();
+	    }
+	}
+	
+	public String fileToWrite() throws IOException {
+		String file = "";
+		File dir = new File("C:\\sfdx\\executions\\" + LocalDate.now().toString());
+		if (!dir.mkdir() || dir.list().length == 0) {
+			file = createFile();
+		} else if(dir.list().length > 0) {
+			File lastFile = new File("C:\\sfdx\\executions\\" + LocalDate.now().toString() + "execution_" + dir.list().length);
+			if (lastFile.length() > 0) {
+				file = createFile();
+			}else {
+				file = lastFile.toString();
+			}
+		}
+			
+		return file;
+	}
+
 }
