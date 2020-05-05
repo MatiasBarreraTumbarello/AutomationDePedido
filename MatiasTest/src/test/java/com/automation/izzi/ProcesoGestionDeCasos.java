@@ -28,7 +28,7 @@ public class ProcesoGestionDeCasos {
 		driver.manage().window().maximize();
 
 		driver.get(
-				"https://test1dom--sittest.my.salesforce.com/secur/frontdoor.jsp?sid=00D3K0000008jQa!ARwAQCiQzIdwPVD0GdShmu4zzQxi7OhwPVV9.EDjYa2_W1UguRyTlpmQXUqr64VSHEV7wp0ZDWBURxXKLGCCu439Xbrau0J4");
+				"https://test1dom--sittest.my.salesforce.com/secur/frontdoor.jsp?sid=00D3K0000008jQa!ARwAQNN7vw_H9HrLMalZm64NxW1cl5QbhwY3tRQpXSn8va2ch.a9buxtS9KanRsGQzo9BZB2FVcCL6JUw0CG7C7SIGfeBHs0");
 
 		driver.get("https://test1dom--sittest.lightning.force.com/lightning/r/Account/001c000002JvBrCAAV/view");
 
@@ -54,7 +54,7 @@ public class ProcesoGestionDeCasos {
 
 		driver.switchTo().defaultContent();
 
-		CrearModificarCaso(1);
+		CrearModificarCaso(0);
 		
 	}
 
@@ -125,14 +125,17 @@ public class ProcesoGestionDeCasos {
 		new WebDriverWait(driver, 20)
 				.until(ExpectedConditions.invisibilityOfElementLocated(By.className("slds-spinner_container")));
 
-		driver.findElement(By.xpath("//*[@id=\'TextAreaAsunto\']")).sendKeys("hola");
+		driver.findElement(By.xpath("//*[@id=\'TextAreaAsunto\']")).sendKeys("Test");
 		Thread.sleep(1000);
-		driver.findElement(By.xpath("//*[@id=\'TextAreaDescripcion\']")).sendKeys("hola");
+		driver.findElement(By.xpath("//*[@id=\'TextAreaDescripcion\']")).sendKeys("Testing");
 		Thread.sleep(1000);
-		driver.findElement(By.xpath("//*[@id=\'TextAreaComentarios\']")).sendKeys("hola");
+		driver.findElement(By.xpath("//*[@id=\'TextAreaComentarios\']")).sendKeys("Automation");
 		Thread.sleep(1000);
 		driver.findElement(By.xpath("//*[@id=\'Descripcion_nextBtn\']")).click();
 
+		String orden = driver.findElement(By.xpath("//p[@ng-repeat='(key, value) in control.propSetMap.message']")).getText();
+		
+		System.out.println(orden);
 		driver.switchTo().defaultContent();
 
 	}
