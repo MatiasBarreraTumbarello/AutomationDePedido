@@ -67,21 +67,21 @@ public class ProcesoAltaDeServicios {
 		WebElement plan = new WebDriverWait(driver, 40)
 		    	.until(ExpectedConditions.elementToBeClickable(By.xpath("//div[@id='block_0']")));
 		plan.findElement(By.xpath("./..")).click();
-		config.waitForInvisibleSpinner(wait);
+		config.waitForInvisibleSpinner();
 		driver.findElement(By.xpath("//div[@id='ChooseAndAddProducts_nextBtn']")).click();
 		Thread.sleep(2000);
 	}
 	
 	public void confirmarServicio() throws InterruptedException{
 		//Seccion: Confirmacion
-		config.waitForInvisibleSpinner(wait);
+		config.waitForInvisibleSpinner();
 		wait.until(ExpectedConditions.elementToBeClickable(By.id("RadioConfirmation")));
 		List<WebElement> opcion = driver.findElements(By.id("RadioConfirmation"));
 	
 		//En caso de seleccionar la opcion de NO, descomentar la siguiente linea, por defecto se selecciona SI
 		//opcion.get(1).findElement(By.xpath("../.")).click();
 	
-		config.waitForInvisibleSpinner(wait);
+		config.waitForInvisibleSpinner();
 		wait.until(ExpectedConditions.elementToBeClickable(By.id("Confirmation_nextBtn")));
 		Thread.sleep(2000);
 		driver.findElement(By.id("Confirmation_nextBtn")).click(); //boton siguiente
@@ -89,13 +89,13 @@ public class ProcesoAltaDeServicios {
 		
 		//Seccion: Resumen de compra
 	
-		config.waitForInvisibleSpinner(wait);
+		config.waitForInvisibleSpinner();
 		wait.until(ExpectedConditions.elementToBeClickable(By.id("DeliveryHomeSummary_nextBtn")));
 		driver.findElement(By.xpath("//*[@id='DeliveryHomeSummary_nextBtn']/p")).click();
 	
 		Thread.sleep(3000);
 		
-		config.waitForInvisibleSpinner(wait);
+		config.waitForInvisibleSpinner();
 		
 		Thread.sleep(3000);
 	

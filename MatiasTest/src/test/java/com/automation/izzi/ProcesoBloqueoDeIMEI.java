@@ -38,7 +38,7 @@ public class ProcesoBloqueoDeIMEI {
 	@Test
 	public void Bloqueo() throws InterruptedException {
 		
-		config.waitForInvisibleSpinner(wait);
+		config.waitForInvisibleSpinner();
 		
 		WebElement frame = driver.findElement(By.id("iFrameResizer1"));
 		JavascriptExecutor executor = (JavascriptExecutor)driver;
@@ -88,7 +88,7 @@ public class ProcesoBloqueoDeIMEI {
 			}
 			
 	
-		config.waitForInvisibleSpinner(wait);
+		config.waitForInvisibleSpinner();
 		WebElement siguiente = wait.until(ExpectedConditions.elementToBeClickable(By.id("StepLockImei_nextBtn")));
 		siguiente.click();
 		Thread.sleep(1000);
@@ -98,7 +98,7 @@ public class ProcesoBloqueoDeIMEI {
 	
 	public void Confirmacion() throws InterruptedException {
 		
-		config.waitForInvisibleSpinner(wait);
+		config.waitForInvisibleSpinner();
 		
 		wait.until(ExpectedConditions.elementToBeClickable(By.id("radioConfirmation")));
 		Thread.sleep(3000);
@@ -108,12 +108,12 @@ public class ProcesoBloqueoDeIMEI {
 		opt.get(0).findElement(By.xpath("./..")).click();
 		Thread.sleep(2000);
 		
-		config.waitForInvisibleSpinner(wait);
+		config.waitForInvisibleSpinner();
 		WebElement siguiente = wait.until(ExpectedConditions.elementToBeClickable(By.id("Confirmation_nextBtn")));
 		siguiente.click();
 		Thread.sleep(2000);
 		
-		config.waitForInvisibleSpinner(wait);
+		config.waitForInvisibleSpinner();
 		WebElement finalizar = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id=\"doneAction-241\"]/div/div/div[3]/div/button")));
 		finalizar.click();
 		

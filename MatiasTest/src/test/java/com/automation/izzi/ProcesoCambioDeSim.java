@@ -55,7 +55,7 @@ public class ProcesoCambioDeSim {
 		
 	public void selecionSim () throws InterruptedException {
 		
-		config.waitForInvisibleSpinner(wait);
+		config.waitForInvisibleSpinner();
 
 
 		WebElement iframe = wait.until(ExpectedConditions.elementToBeClickable(By.id("iFrameResizer3")));
@@ -68,14 +68,14 @@ public class ProcesoCambioDeSim {
 		opcion.click();
 		driver.findElement(By.xpath("//*[@id=\'Step1_nextBtn\']")).click();
 		//Paso3
-		config.waitForInvisibleSpinner(wait);
+		config.waitForInvisibleSpinner();
 		
 		driver.findElement(By.xpath("//*[@id=\'newIMSI\']")).sendKeys("123456789101113");
 		Thread.sleep(2000);
 		driver.findElement(By.xpath("//input[@id=\'newICCID\']")).sendKeys("12345678910111213143");
 		driver.findElement(By.xpath("//*[@id=\'Step2_nextBtn\']")).click();
 		//Paso4
-		config.waitForInvisibleSpinner(wait);
+		config.waitForInvisibleSpinner();
 		
 		Thread.sleep(2000);
 		driver.findElement(By.xpath("//*[@id=\'doneAction-137\']/div/div/div[3]/div/button")).click();

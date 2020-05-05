@@ -37,8 +37,7 @@ public class ProcesoGestionDeCasos {
 	
 	@Test
 	public void Gestion () throws InterruptedException {
-		config.waitForInvisibleSpinner(wait);
-		
+		config.waitForInvisibleSpinner();
 		WebElement frame = driver.findElement(By.id("iFrameResizer1"));
 		JavascriptExecutor executor = (JavascriptExecutor)driver;
 		executor.executeScript("arguments[0].style.display = 'block'; arguments[0].style.zIndex = '999999';", frame);
@@ -48,16 +47,15 @@ public class ProcesoGestionDeCasos {
 		executor.executeScript("arguments[0].click();", boton);
 		
 		driver.switchTo().defaultContent();
-
 		
-		CrearModificarCaso(1);
-		//descripcion();
+		
+		CrearModificarCaso(0);
+
 		
 	}
 	
 	public void CrearModificarCaso(int index) throws InterruptedException {
-		config.waitForInvisibleSpinner(wait);
-		
+		config.waitForInvisibleSpinner();
 		WebElement frame = new WebDriverWait(driver, 40)
 				.until(ExpectedConditions.elementToBeClickable(By.id("iFrameResizer3")));
 		frame.click();
@@ -81,7 +79,7 @@ public class ProcesoGestionDeCasos {
 
 	
 	public void Crear() throws InterruptedException {
-		config.waitForInvisibleSpinner(wait);
+		config.waitForInvisibleSpinner();
 		SelectPicklist("Origen");
 		SelectPicklist("Prioridad");
 		SelectPicklist("Tipo");
@@ -89,11 +87,12 @@ public class ProcesoGestionDeCasos {
 		
 		driver.findElement(By.id("CrearCaso_nextBtn")).click();
 		Thread.sleep(2000);
+		descripcion();
 	}
 	
 	void Modificar() throws InterruptedException {
 		Thread.sleep(3000);
-		config.waitForInvisibleSpinner(wait);
+		config.waitForInvisibleSpinner();
 		wait.until(ExpectedConditions.elementToBeClickable(By.id("CaseSelect")));
 		
 		List<WebElement> casos = driver.findElements(By.xpath("//span[@class = 'slds-radio_faux']"));
@@ -118,11 +117,9 @@ public class ProcesoGestionDeCasos {
 
 	//Una vez que entramos a Crear caso. esto llenaria la descripcion del mismo y finaliza el proceso.
 	
-	/*void descripcion () throws InterruptedException {
-		config.waitForInvisibleSpinner(wait);
-		
-		driver.findElement(By.xpath("//*[@id=\'TextAreaAsunto\']")).sendKeys("hola");
->>>>>>> branch 'master' of https://github.com/MatiasBarreraTumbarello/AutomationDePedido.git
+	void descripcion () throws InterruptedException {
+		config.waitForInvisibleSpinner();
+		driver.findElement(By.xpath("//*[@id=\'TextAreaAsunto\']")).sendKeys("Test");
 		Thread.sleep(1000);
 		driver.findElement(By.xpath("//*[@id=\'TextAreaDescripcion\']")).sendKeys("Testing");
 		Thread.sleep(1000);
@@ -130,7 +127,7 @@ public class ProcesoGestionDeCasos {
 		Thread.sleep(1000);
 		driver.findElement(By.xpath("//*[@id=\'Descripcion_nextBtn\']")).click();
 		
-<<<<<<< HEAD
+
 		new WebDriverWait (driver, 20)
 				.until(ExpectedConditions.elementToBeClickable(By.xpath("//div[@ng-if='control.propSetMap.structMessage.btnName']")));
 
@@ -144,21 +141,12 @@ public class ProcesoGestionDeCasos {
 		Thread.sleep(2000);
 		List<WebElement> desplegable = driver.findElements(By.xpath("//li[@data-aura-class='uiAutocompleteOption forceSearchInputDesktopOption']"));
 		desplegable.get(1).click();
-		
-		
-		
-		
-
-=======
-		config.waitForInvisibleSpinner(wait);
-		driver.findElement(By.xpath("//button[@class='slds-button slds-button_brand ng-binding']")).click();
->>>>>>> branch 'master' of https://github.com/MatiasBarreraTumbarello/AutomationDePedido.git
 	}
-*/
+
 	
 	//Esto es en "Modificar caso", para su edición y finalización.
 	void Edicion() throws InterruptedException{
-		config.waitForInvisibleSpinner(wait);
+		config.waitForInvisibleSpinner();
 		
 		Select picklist = new Select(driver.findElement(By.id("SelectEstado")));
 		picklist.selectByIndex(1);
@@ -170,9 +158,7 @@ public class ProcesoGestionDeCasos {
 		driver.findElement(By.xpath("//div[@id='Edicion_nextBtn']")). click();
 		Thread.sleep(5000);
 		
-		config.waitForInvisibleSpinner(wait);
-		driver.findElement(By.xpath("//button[@class='slds-button slds-button_brand ng-binding' and contains(text(),Finalizar)]")).click();
-		Thread.sleep(2000);
+		config.waitForInvisibleSpinner();
 		
 	}
 	

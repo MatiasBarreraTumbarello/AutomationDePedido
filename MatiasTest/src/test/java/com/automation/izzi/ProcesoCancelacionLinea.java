@@ -35,7 +35,7 @@ public class ProcesoCancelacionLinea {
 	@Test
 	public void cancelacion() throws InterruptedException {
 		
-		config.waitForInvisibleSpinner(wait);
+		config.waitForInvisibleSpinner();
 		
 		WebElement frame = driver.findElement(By.id("iFrameResizer1"));
 		JavascriptExecutor executor = (JavascriptExecutor)driver;
@@ -51,7 +51,7 @@ public class ProcesoCancelacionLinea {
 	}
 	
 	public void linea(WebDriver driver)throws InterruptedException {
-		config.waitForInvisibleSpinner(wait);
+		config.waitForInvisibleSpinner();
 		
 		WebElement frame = new WebDriverWait(driver, 40)
 				.until(ExpectedConditions.elementToBeClickable(By.id("iFrameResizer3")));
