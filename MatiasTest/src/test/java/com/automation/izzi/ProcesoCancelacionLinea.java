@@ -1,5 +1,6 @@
 package com.automation.izzi;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
@@ -16,19 +17,16 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class ProcesoCancelacionLinea {
 	
-private WebDriver driver;
+	private Config config = new Config();
+	private WebDriver driver;
+	private WebDriverWait wait;
 	
 	@Before
-	public void setUp() throws InterruptedException {
+	public void setUp() throws InterruptedException, IOException {
 		
-		System.setProperty("webdriver.chrome.driver", "./src/test/resources/chromedriver/chromedriver.exe");
-		driver = new ChromeDriver();
-		driver.manage().window().maximize();
-
-		driver.get("https://test1dom--sittest.my.salesforce.com/secur/frontdoor.jsp?sid=00D3K0000008jQa!ARwAQILXXLk7kXMN1rMnQcJFtEXP0AJTCgjKsXYZVhzPqr.9L2rd9P4DRmuE.suispsvJDYX6AxTWP6OGeO7kaZRLWk87VYK");
-
-		driver.get("https://test1dom--sittest.lightning.force.com/lightning/r/Account/0013K000005YuoUQAS/view");
-
+		config.initBrowser();
+		config.goToAccountLink();
+		driver = config.driver;
 		driver.manage().timeouts().pageLoadTimeout(40, TimeUnit.SECONDS);
 		
 		Thread.sleep(20000);
@@ -37,8 +35,7 @@ private WebDriver driver;
 	@Test
 	public void cancelacion() throws InterruptedException {
 		
-		WebDriverWait wait = new WebDriverWait(driver, 30);
-		wait.until(ExpectedConditions.invisibilityOfElementLocated(By.className("slds-spinner_container")));
+		config.waitForInvisibleSpinner(wait);
 		
 		WebElement frame = driver.findElement(By.id("iFrameResizer1"));
 		JavascriptExecutor executor = (JavascriptExecutor)driver;
@@ -54,15 +51,14 @@ private WebDriver driver;
 	}
 	
 	public void linea(WebDriver driver)throws InterruptedException {
-		WebDriverWait ewait = new WebDriverWait(driver, 30);
-		ewait.until(ExpectedConditions.invisibilityOfElementLocated(By.className("slds-spinner_container")));
+		config.waitForInvisibleSpinner(wait);
 		
 		WebElement frame = new WebDriverWait(driver, 40)
 				.until(ExpectedConditions.elementToBeClickable(By.id("iFrameResizer3")));
 		frame.click();
 		driver.switchTo().frame(frame);
 		
-		ewait.until(ExpectedConditions.elementToBeClickable(By.name("Line-options")));
+		wait.until(ExpectedConditions.elementToBeClickable(By.name("Line-options")));
 		List<WebElement> radioButton = driver.findElements(By.name("Line-options"));
 		Thread.sleep(1000);
 		JavascriptExecutor executor = (JavascriptExecutor)driver;
@@ -77,7 +73,7 @@ private WebDriver driver;
 		driver.findElement(By.id("stepConfirmationCancelLinea_nextBtn")).click();
 		Thread.sleep(2000);
 		
-		driver.findElement(By.xpath("//button[@class= 'slds-button slds-button_brand ng-binding']")).click();
-		Thread.sleep(2000);
+		/*driver.findElement(By.xpath("//button[@class='slds-button slds-button_brand ng-binding' and contains(text(),Finalizar)]")).click();
+		Thread.sleep(2000);*/
 }
 }

@@ -271,8 +271,8 @@ public class ProcesoDeAutogestion {
 		wait.until(ExpectedConditions.elementToBeClickable(By.id("RadioProfileNoVentas")));
 		List<WebElement> optTipoDeEntrega = driver.findElements(By.xpath("//input[@id='RadioProfileNoVentas']"));
 		Thread.sleep(2000);
-		
-		// Si  la entrega es en Sucursal:
+
+		// Si la entrega es en Sucursal:
 		if (index == 0) {
 			optTipoDeEntrega.get(index).findElement(By.xpath("./..")).click();
 			Thread.sleep(2000);
@@ -286,22 +286,19 @@ public class ProcesoDeAutogestion {
 				
 				// selecciona la sucursal "ATIZAPAN"
 				driver.findElement(By.xpath("//*[@id=\'SelectSucursal\']/option[3]")).click();
-				
 				Thread.sleep(1000);
 
-				
-				//selecciona el boton validar
-				driver.findElement(By.xpath("//div[@id=\'WrapperCheckDeviceStockSucursal\']")).click(); 
+				// selecciona el boton validar
+				driver.findElement(By.xpath("//div[@id=\'WrapperCheckDeviceStockSucursal\']")).click();
 			}
-
 			Thread.sleep(2000);
-			
-		//En caso contrario, la entrega es en Domicilio
-		} else { 
+
+			// En caso contrario, la entrega es en Domicilio
+		} else {
 			optTipoDeEntrega.get(index).findElement(By.xpath("./..")).click();
 			Thread.sleep(2000);
 		}
-		
+
 		wait.until(ExpectedConditions.elementToBeClickable(By.id("StepSaleProcessDevice_nextBtn")));
 		driver.findElement(By.xpath("//*[@id=\"StepSaleProcessDevice_nextBtn\"]/p")).click();
 		Thread.sleep(5000);

@@ -1,5 +1,6 @@
 package com.automation.izzi;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
@@ -11,104 +12,97 @@ import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class ProcesoGestionDeCasos {
-
+	
+	private Config config = new Config();
 	private WebDriver driver;
-
+	private WebDriverWait wait;
+	
 	@Before
-	public void setUp() throws InterruptedException {
 
-		System.setProperty("webdriver.chrome.driver", "./src/test/resources/chromedriver/chromedriver.exe");
-		driver = new ChromeDriver();
-		driver.manage().window().maximize();
-
-		driver.get(
-				"https://test1dom--sittest.my.salesforce.com/secur/frontdoor.jsp?sid=00D3K0000008jQa!ARwAQNN7vw_H9HrLMalZm64NxW1cl5QbhwY3tRQpXSn8va2ch.a9buxtS9KanRsGQzo9BZB2FVcCL6JUw0CG7C7SIGfeBHs0");
-
-		driver.get("https://test1dom--sittest.lightning.force.com/lightning/r/Account/001c000002JvBrCAAV/view");
+	public void setUp() throws InterruptedException, IOException {
+		
+		config.initBrowser();
+		config.goToAccountLink();
+		driver = config.driver;
 
 		driver.manage().timeouts().pageLoadTimeout(40, TimeUnit.SECONDS);
-
-		Thread.sleep(30000);
+		
+		Thread.sleep(20000);
 	}
-
+	
 	@Test
-	public void Gestion() throws InterruptedException {
-		WebDriverWait wait = new WebDriverWait(driver, 40);
-
-		wait.until(ExpectedConditions.invisibilityOfElementLocated(By.className("slds-spinner_container")));
-
+	public void Gestion () throws InterruptedException {
+		config.waitForInvisibleSpinner(wait);
+		
 		WebElement frame = driver.findElement(By.id("iFrameResizer1"));
-		JavascriptExecutor executor = (JavascriptExecutor) driver;
+		JavascriptExecutor executor = (JavascriptExecutor)driver;
 		executor.executeScript("arguments[0].style.display = 'block'; arguments[0].style.zIndex = '999999';", frame);
 		driver.switchTo().frame(frame);
 		Thread.sleep(2000);
-		WebElement boton = driver
-				.findElement(By.xpath("/html/body/div[1]/div[1]/ng-include/div/div/section/div[6]/button"));
+		WebElement boton = driver.findElement(By.xpath("/html/body/div[1]/div[1]/ng-include/div/div/section/div[6]/button"));
 		executor.executeScript("arguments[0].click();", boton);
-
+		
 		driver.switchTo().defaultContent();
 
-		CrearModificarCaso(0);
+		
+		CrearModificarCaso(1);
+		//descripcion();
 		
 	}
-
+	
 	public void CrearModificarCaso(int index) throws InterruptedException {
-		WebDriverWait wait = new WebDriverWait(driver, 40);
-		wait.until(ExpectedConditions.invisibilityOfElementLocated(By.className("slds-spinner_container")));
-
+		config.waitForInvisibleSpinner(wait);
+		
 		WebElement frame = new WebDriverWait(driver, 40)
 				.until(ExpectedConditions.elementToBeClickable(By.id("iFrameResizer3")));
 		frame.click();
 		driver.switchTo().frame(frame);
-
-		new WebDriverWait(driver, 40).until(ExpectedConditions.elementToBeClickable(By.id("RadioOptions")));
+		
+		new WebDriverWait(driver, 40)
+			.until(ExpectedConditions.elementToBeClickable(By.id("RadioOptions")));
 		List<WebElement> opt = driver.findElements(By.id("RadioOptions"));
 		Thread.sleep(1000);
 		opt.get(index).findElement(By.xpath("./..")).click();
 		Thread.sleep(1000);
-
+		
 		driver.findElement(By.id("GestionCasos_nextBtn")).click();
 		Thread.sleep(2000);
 		if (index == 0)
 			Crear();
 		else
 			Modificar();
-
+		
 	}
 
+	
 	public void Crear() throws InterruptedException {
-		new WebDriverWait(driver, 20)
-				.until(ExpectedConditions.invisibilityOfElementLocated(By.className("slds-spinner_container")));
+		config.waitForInvisibleSpinner(wait);
 		SelectPicklist("Origen");
 		SelectPicklist("Prioridad");
 		SelectPicklist("Tipo");
 		SelectPicklist("MotivoInfGeneral");
-
+		
 		driver.findElement(By.id("CrearCaso_nextBtn")).click();
 		Thread.sleep(2000);
-
-		descripcion();
 	}
-
+	
 	void Modificar() throws InterruptedException {
 		Thread.sleep(3000);
-		new WebDriverWait(driver, 20)
-				.until(ExpectedConditions.invisibilityOfElementLocated(By.className("slds-spinner_container")));
-		new WebDriverWait(driver, 20).until(ExpectedConditions.elementToBeClickable(By.id("CaseSelect")));
-
+		config.waitForInvisibleSpinner(wait);
+		wait.until(ExpectedConditions.elementToBeClickable(By.id("CaseSelect")));
+		
 		List<WebElement> casos = driver.findElements(By.xpath("//span[@class = 'slds-radio_faux']"));
 		casos.get(0).click();
 		Thread.sleep(2000);
-
+		
 		driver.findElement(By.xpath("//div[@id='Casos_nextBtn']")).click();
 		Thread.sleep(2000);
-
+		
 		Edicion();
 	}
 
@@ -117,15 +111,18 @@ public class ProcesoGestionDeCasos {
 		picklist.selectByIndex(1);
 		Thread.sleep(1000);
 	}
+	
+	
 
-	// Una vez que entramos a Crear caso. esto llenaria la descripcion del mismo y
-	// finaliza el proceso.
 
-	void descripcion() throws InterruptedException {
-		new WebDriverWait(driver, 20)
-				.until(ExpectedConditions.invisibilityOfElementLocated(By.className("slds-spinner_container")));
 
-		driver.findElement(By.xpath("//*[@id=\'TextAreaAsunto\']")).sendKeys("Test");
+	//Una vez que entramos a Crear caso. esto llenaria la descripcion del mismo y finaliza el proceso.
+	
+	/*void descripcion () throws InterruptedException {
+		config.waitForInvisibleSpinner(wait);
+		
+		driver.findElement(By.xpath("//*[@id=\'TextAreaAsunto\']")).sendKeys("hola");
+>>>>>>> branch 'master' of https://github.com/MatiasBarreraTumbarello/AutomationDePedido.git
 		Thread.sleep(1000);
 		driver.findElement(By.xpath("//*[@id=\'TextAreaDescripcion\']")).sendKeys("Testing");
 		Thread.sleep(1000);
@@ -133,6 +130,7 @@ public class ProcesoGestionDeCasos {
 		Thread.sleep(1000);
 		driver.findElement(By.xpath("//*[@id=\'Descripcion_nextBtn\']")).click();
 		
+<<<<<<< HEAD
 		new WebDriverWait (driver, 20)
 				.until(ExpectedConditions.elementToBeClickable(By.xpath("//div[@ng-if='control.propSetMap.structMessage.btnName']")));
 
@@ -151,27 +149,31 @@ public class ProcesoGestionDeCasos {
 		
 		
 
+=======
+		config.waitForInvisibleSpinner(wait);
+		driver.findElement(By.xpath("//button[@class='slds-button slds-button_brand ng-binding']")).click();
+>>>>>>> branch 'master' of https://github.com/MatiasBarreraTumbarello/AutomationDePedido.git
 	}
-
-	// Esto es en "Modificar caso", para su edición y finalización.
-	void Edicion() throws InterruptedException {
-		new WebDriverWait(driver, 20)
-				.until(ExpectedConditions.invisibilityOfElementLocated(By.className("slds-spinner_container")));
-
+*/
+	
+	//Esto es en "Modificar caso", para su edición y finalización.
+	void Edicion() throws InterruptedException{
+		config.waitForInvisibleSpinner(wait);
+		
 		Select picklist = new Select(driver.findElement(By.id("SelectEstado")));
 		picklist.selectByIndex(1);
 		Thread.sleep(1000);
-
+		
 		driver.findElement(By.xpath("//*[@id=\'TextAreaComentarios2\']")).sendKeys("Hi");
 		Thread.sleep(1000);
-
-		driver.findElement(By.xpath("//div[@id='Edicion_nextBtn']")).click();
-		Thread.sleep(5000);
-
-		new WebDriverWait(driver, 20)
-				.until(ExpectedConditions.invisibilityOfElementLocated(By.className("slds-spinner_container")));
 		
-		driver.switchTo().defaultContent();
+		driver.findElement(By.xpath("//div[@id='Edicion_nextBtn']")). click();
+		Thread.sleep(5000);
+		
+		config.waitForInvisibleSpinner(wait);
+		driver.findElement(By.xpath("//button[@class='slds-button slds-button_brand ng-binding' and contains(text(),Finalizar)]")).click();
+		Thread.sleep(2000);
+		
 	}
-
+	
 }

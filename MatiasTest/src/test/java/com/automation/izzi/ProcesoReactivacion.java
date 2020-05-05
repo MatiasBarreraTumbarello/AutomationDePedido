@@ -1,5 +1,6 @@
 package com.automation.izzi;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
@@ -15,18 +16,17 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class ProcesoReactivacion {
 	
-private WebDriver driver;
+	private Config config = new Config();
+	private WebDriver driver;
+	private WebDriverWait wait;
 	
 	@Before
-	public void setUp() throws InterruptedException {
+	public void setUp() throws InterruptedException, IOException {
 		
-		System.setProperty("webdriver.chrome.driver", "./src/test/resources/chromedriver/chromedriver.exe");
-		driver = new ChromeDriver();
-		driver.manage().window().maximize();
-
-		driver.get("https://test1dom--sittest.my.salesforce.com/secur/frontdoor.jsp?sid=00D3K0000008jQa!ARwAQILXXLk7kXMN1rMnQcJFtEXP0AJTCgjKsXYZVhzPqr.9L2rd9P4DRmuE.suispsvJDYX6AxTWP6OGeO7kaZRLWk87VYK");
-
-		driver.get("https://test1dom--sittest.lightning.force.com/lightning/r/Account/001c000002JvBrCAAV/view");
+		config.initBrowser();
+		config.goToAccountLink();
+		driver = config.driver;
+		wait = config.wait;
 
 		driver.manage().timeouts().pageLoadTimeout(40, TimeUnit.SECONDS);
 		
@@ -52,8 +52,7 @@ private WebDriver driver;
 	}
 	
 	public void Confirmar(int index) throws InterruptedException {
-		WebDriverWait  wait = new WebDriverWait (driver, 40);
-		wait.until(ExpectedConditions.invisibilityOfElementLocated(By.className("slds-spinner_container")));
+		config.waitForInvisibleSpinner(wait);
 		
 		WebElement frame = new WebDriverWait(driver, 40)
 			.until(ExpectedConditions.elementToBeClickable(By.id("iFrameResizer3")));
@@ -77,8 +76,7 @@ private WebDriver driver;
 
 	
 	public void Finalizar() throws InterruptedException {
-		WebDriverWait  wait = new WebDriverWait (driver, 40);
-		wait.until(ExpectedConditions.invisibilityOfElementLocated(By.className("slds-spinner_container")));
+		config.waitForInvisibleSpinner(wait);
 		WebElement button = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//button[@class='slds-button slds-button_brand ng-binding']")));
 		button.click();
 		Thread.sleep(1000);

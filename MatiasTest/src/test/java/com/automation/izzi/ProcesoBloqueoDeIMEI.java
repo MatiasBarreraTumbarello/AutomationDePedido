@@ -1,5 +1,6 @@
 package com.automation.izzi;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
@@ -15,19 +16,17 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class ProcesoBloqueoDeIMEI {
 	
-private WebDriver driver;
+	private Config config = new Config();
+	private WebDriver driver;
+	private WebDriverWait wait;
 
 	
 	@Before
-	public void setUp() throws InterruptedException {
+	public void setUp() throws InterruptedException, IOException {
 		
-		System.setProperty("webdriver.chrome.driver", "./src/test/resources/chromedriver/chromedriver.exe");
-		driver = new ChromeDriver();
-		driver.manage().window().maximize();
-
-		driver.get("https://test1dom--sittest.my.salesforce.com/secur/frontdoor.jsp?sid=00D3K0000008jQa!ARwAQILXXLk7kXMN1rMnQcJFtEXP0AJTCgjKsXYZVhzPqr.9L2rd9P4DRmuE.suispsvJDYX6AxTWP6OGeO7kaZRLWk87VYK");
-
-		driver.get("https://test1dom--sittest.lightning.force.com/lightning/r/Account/001c000002JvBrCAAV/view");
+		config.initBrowser();
+		config.goToAccountLink();
+		driver = config.driver;
 
 		driver.manage().timeouts().pageLoadTimeout(40, TimeUnit.SECONDS);
 		
@@ -39,9 +38,7 @@ private WebDriver driver;
 	@Test
 	public void Bloqueo() throws InterruptedException {
 		
-		WebDriverWait wait = new WebDriverWait(driver, 30);
-		
-		wait.until(ExpectedConditions.invisibilityOfElementLocated(By.className("slds-spinner_container")));
+		config.waitForInvisibleSpinner(wait);
 		
 		WebElement frame = driver.findElement(By.id("iFrameResizer1"));
 		JavascriptExecutor executor = (JavascriptExecutor)driver;
@@ -91,8 +88,7 @@ private WebDriver driver;
 			}
 			
 	
-		WebDriverWait wait = new WebDriverWait(driver, 30);
-		wait.until(ExpectedConditions.invisibilityOfElementLocated(By.className("slds-spinner_container")));
+		config.waitForInvisibleSpinner(wait);
 		WebElement siguiente = wait.until(ExpectedConditions.elementToBeClickable(By.id("StepLockImei_nextBtn")));
 		siguiente.click();
 		Thread.sleep(1000);
@@ -102,8 +98,7 @@ private WebDriver driver;
 	
 	public void Confirmacion() throws InterruptedException {
 		
-		WebDriverWait wait = new WebDriverWait(driver, 40);
-		wait.until(ExpectedConditions.invisibilityOfElementLocated(By.className("slds-spinner_container")));
+		config.waitForInvisibleSpinner(wait);
 		
 		wait.until(ExpectedConditions.elementToBeClickable(By.id("radioConfirmation")));
 		Thread.sleep(3000);
@@ -113,12 +108,12 @@ private WebDriver driver;
 		opt.get(0).findElement(By.xpath("./..")).click();
 		Thread.sleep(2000);
 		
-		wait.until(ExpectedConditions.invisibilityOfElementLocated(By.className("slds-spinner_container")));
+		config.waitForInvisibleSpinner(wait);
 		WebElement siguiente = wait.until(ExpectedConditions.elementToBeClickable(By.id("Confirmation_nextBtn")));
 		siguiente.click();
 		Thread.sleep(2000);
 		
-		wait.until(ExpectedConditions.invisibilityOfElementLocated(By.className("slds-spinner_container")));
+		config.waitForInvisibleSpinner(wait);
 		WebElement finalizar = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id=\"doneAction-241\"]/div/div/div[3]/div/button")));
 		finalizar.click();
 		

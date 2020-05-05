@@ -1,5 +1,6 @@
 package com.automation.izzi;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
@@ -15,18 +16,16 @@ import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class ProcesoSuspenciones {
+	private Config config = new Config();
 	private WebDriver driver;
+	private WebDriverWait wait;
 	
 	@Before
-	public void setUp() throws InterruptedException {
+	public void setUp() throws InterruptedException, IOException {
 		
-		System.setProperty("webdriver.chrome.driver", "./src/test/resources/chromedriver/chromedriver.exe");
-		driver = new ChromeDriver();
-		driver.manage().window().maximize();
-
-		driver.get("https://test1dom--sittest.my.salesforce.com/secur/frontdoor.jsp?sid=00D3K0000008jQa!ARwAQBVfkMth.4rmDYSVQh8fTRP2DFn.P_dufeTxawAJEt93vuuJSeyfluWd5G51mNdu2sD1au99YrXo3Pr.TSoLM5KuxH1m");
-
-		driver.get("https://test1dom--sittest.lightning.force.com/lightning/r/Account/001c000002JvBrCAAV/view");
+		config.initBrowser();
+		config.goToAccountLink();
+		driver = config.driver;
 
 		driver.manage().timeouts().pageLoadTimeout(40, TimeUnit.SECONDS);
 		
