@@ -1,3 +1,4 @@
+
 package com.automation.izzi;
 
 import java.io.IOException;
@@ -17,6 +18,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 public class ProcesoPortabilidad {
 	private Config config = new Config();
 	private WebDriver driver;
+	private WebDriverWait wait;
 	
 	@Before
 	public void setUp() throws InterruptedException, IOException {
@@ -33,22 +35,20 @@ public class ProcesoPortabilidad {
 	@Test
 	public void testScript() throws InterruptedException {
 		
-		portabilidad(driver);
+		portabilidad();
 		
-		codigoNIP(driver);
+		codigoNIP();
 		
-		PortabilidadSeleccionDeLinea(driver);
+		PortabilidadSeleccionDeLinea();
 		
-		NumeroAPortar(driver);
+		NumeroAPortar();
 		
 		//La siguiente linea realiza la portabildiad del nro por lo que no se va a poder volver a realizar la portabilidad
-		pasoDocumentacion(driver);
+		pasoDocumentacion();
 	}
 	
-	public static void portabilidad (WebDriver driver) throws InterruptedException {
-		WebDriverWait wait = new WebDriverWait(driver, 30);
-		
-		wait.until(ExpectedConditions.invisibilityOfElementLocated(By.className("slds-spinner_container")));
+	public void portabilidad () throws InterruptedException {
+		config.waitForInvisibleSpinner();
 		
 		WebElement frame = driver.findElement(By.id("iFrameResizer1"));
 		JavascriptExecutor executor = (JavascriptExecutor)driver;
@@ -62,11 +62,10 @@ public class ProcesoPortabilidad {
 	}
 	
 	//Este metodo se utiliza en el primer paso del flujo de portabilidad
-	public static void codigoNIP(WebDriver driver) throws InterruptedException{
+	public void codigoNIP() throws InterruptedException{
 		//*[@id="RadioNIP|0"]/div/div[1]/label[1]
 		
-		WebDriverWait  wait = new WebDriverWait (driver, 40);
-		wait.until(ExpectedConditions.invisibilityOfElementLocated(By.className("slds-spinner_container")));
+		config.waitForInvisibleSpinner();
 		
 		WebElement frame = new WebDriverWait(driver, 40)
 				.until(ExpectedConditions.elementToBeClickable(By.id("iFrameResizer3")));
@@ -98,20 +97,18 @@ public class ProcesoPortabilidad {
 	}
 	
 	//Pertenece al proceso de portabilidad.
-	public static void PortabilidadSeleccionDeLinea(WebDriver driver) throws InterruptedException{
+	public  void PortabilidadSeleccionDeLinea() throws InterruptedException{
 		
-		WebDriverWait ewait = new WebDriverWait(driver, 30);
-		ewait.until(ExpectedConditions.invisibilityOfElementLocated(By.className("slds-spinner_container")));
+		config.waitForInvisibleSpinner();
 		
 		List<WebElement> radioButtons =driver.findElements(By.xpath("//span[@class=\'slds-radio--faux\']"));
-		radioButtons.get(0).click();
+		radioButtons.get(1).click();
 		Thread.sleep(1000);
 		driver.findElement(By.id("StepShowActiveLines_nextBtn")).click();
 	}
 	
-	public static void NumeroAPortar(WebDriver driver) throws InterruptedException {
-		new WebDriverWait(driver, 40)
-			.until(ExpectedConditions.invisibilityOfElementLocated(By.className("slds-spinner_container")));
+	public void NumeroAPortar() throws InterruptedException {
+		config.waitForInvisibleSpinner();
 		Select picklist = new Select(driver.findElement(By.id("SelectCompany")));
 		picklist.selectByIndex(2);
 		Thread.sleep(1000);
@@ -120,19 +117,16 @@ public class ProcesoPortabilidad {
 		Thread.sleep(1000);
 		driver.findElement(By.id("IPValidateMSISDN")).click();
 		Thread.sleep(1000);
-		new WebDriverWait(driver, 40)
-			.until(ExpectedConditions.invisibilityOfElementLocated(By.className("slds-spinner_container")));
+		config.waitForInvisibleSpinner();
 		Thread.sleep(1000);
 		driver.findElement(By.id("StepPortabilityNumber_nextBtn")).click();
 		Thread.sleep(3000);
 	}
 	
-	public static void pasoDocumentacion (WebDriver driver) throws InterruptedException {
-		WebDriverWait wait = new WebDriverWait (driver, 40);
-		
+	public void pasoDocumentacion () throws InterruptedException {
 		driver.switchTo().defaultContent();
 		
-		wait.until(ExpectedConditions.invisibilityOfElementLocated(By.className("slds-spinner_container")));
+		config.waitForInvisibleSpinner();
 		
 		List<WebElement> iframe = driver.findElements(By.xpath("//iframe"));
 		int dimension = iframe.size();
@@ -143,9 +137,9 @@ public class ProcesoPortabilidad {
 		driver.findElement(By.xpath("//div[@id='Documentation_nextBtn']")).click();
 		Thread.sleep(1000);
 		
-		/*wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//button[@class='slds-button slds-button_brand ng-binding' and contains(text(),Finalizar)]")));
+		wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//button[@class='slds-button slds-button_brand ng-binding' and contains(text(),Finalizar)]")));
 		driver.findElement(By.xpath("//button[@class='slds-button slds-button_brand ng-binding' and contains(text(),Finalizar)]")).click();
-		Thread.sleep(1000);*/
+		Thread.sleep(1000);
 		
 		
 		driver.switchTo().defaultContent();

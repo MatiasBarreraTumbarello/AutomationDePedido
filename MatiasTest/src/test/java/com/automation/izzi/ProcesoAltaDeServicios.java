@@ -1,5 +1,6 @@
 package com.automation.izzi;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
@@ -20,19 +21,18 @@ public class ProcesoAltaDeServicios {
 		link.click();
 		Thread.sleep(2000);
 	}*/
+	private Config config = new Config();
 	private WebDriver driver;
+	private WebDriverWait wait;
 	
 	
 	@Before
-	public void setUp() throws InterruptedException {
+	public void setUp() throws InterruptedException, IOException {
 		
-		System.setProperty("webdriver.chrome.driver", "./src/test/resources/chromedriver/chromedriver.exe");
-		driver = new ChromeDriver();
-		driver.manage().window().maximize();
 
-		driver.get("https://test1dom--sittest.my.salesforce.com/secur/frontdoor.jsp?sid=00D3K0000008jQa!ARwAQNN7vw_H9HrLMalZm64NxW1cl5QbhwY3tRQpXSn8va2ch.a9buxtS9KanRsGQzo9BZB2FVcCL6JUw0CG7C7SIGfeBHs0");
-
-		driver.get("https://test1dom--sittest.lightning.force.com/lightning/r/Account/001c000002JvBrCAAV/view");
+		config.initBrowser();
+		config.goToAccountLink();
+		driver = config.driver;
 
 		driver.manage().timeouts().pageLoadTimeout(40, TimeUnit.SECONDS);
 		
@@ -43,11 +43,11 @@ public class ProcesoAltaDeServicios {
 	@Test
 	public void testScript() throws InterruptedException {
 
-		llamadosDeMetodos(driver);
+		llamadosDeMetodos();
 		
 	}
 
-	public static void AltaDeServicios(WebDriver driver) throws InterruptedException {
+	public void AltaDeServicios() throws InterruptedException {
 		Thread.sleep(2000);
 		WebElement frame = driver.findElement(By.id("iFrameResizer2"));
 		JavascriptExecutor executor = (JavascriptExecutor)driver;
@@ -60,7 +60,7 @@ public class ProcesoAltaDeServicios {
 		Thread.sleep(2000);
 	}
 	
-	public static void SeleccionDePlan(WebDriver driver) throws InterruptedException {
+	public void SeleccionDePlan() throws InterruptedException {
 		Thread.sleep(4000);
 		driver.switchTo().defaultContent();
 		WebElement frame = driver.findElement(By.id("iFrameResizer3"));
@@ -68,22 +68,23 @@ public class ProcesoAltaDeServicios {
 		WebElement plan = new WebDriverWait(driver, 40)
 		    	.until(ExpectedConditions.elementToBeClickable(By.xpath("//div[@id='block_0']")));
 		plan.findElement(By.xpath("./..")).click();
-		new WebDriverWait(driver, 40).until(ExpectedConditions.invisibilityOfElementLocated(By.className("slds-spinner_container")));
+
 		driver.findElement(By.xpath("//div[@id='ChooseAndAddProducts_nextBtn']/p")).click();
+
+		config.waitForInvisibleSpinner();
 		Thread.sleep(2000);
 	}
 	
-	public static void confirmarServicio(WebDriver driver) throws InterruptedException{
+	public void confirmarServicio() throws InterruptedException{
 		//Seccion: Confirmacion
-		WebDriverWait wait = new WebDriverWait(driver, 40);
-		wait.until(ExpectedConditions.invisibilityOfElementLocated(By.className("slds-spinner_container")));
+		config.waitForInvisibleSpinner();
 		wait.until(ExpectedConditions.elementToBeClickable(By.id("RadioConfirmation")));
 		List<WebElement> opcion = driver.findElements(By.id("RadioConfirmation"));
 	
 		//En caso de seleccionar la opcion de NO, descomentar la siguiente linea, por defecto se selecciona SI
 		//opcion.get(1).findElement(By.xpath("../.")).click();
 	
-		wait.until(ExpectedConditions.invisibilityOfElementLocated(By.className("slds-spinner_container")));
+		config.waitForInvisibleSpinner();
 		wait.until(ExpectedConditions.elementToBeClickable(By.id("Confirmation_nextBtn")));
 		Thread.sleep(2000);
 		driver.findElement(By.id("Confirmation_nextBtn")).click(); //boton siguiente
@@ -91,13 +92,13 @@ public class ProcesoAltaDeServicios {
 		
 		//Seccion: Resumen de compra
 	
-		wait.until(ExpectedConditions.invisibilityOfElementLocated(By.className("slds-spinner_container")));
+		config.waitForInvisibleSpinner();
 		wait.until(ExpectedConditions.elementToBeClickable(By.id("DeliveryHomeSummary_nextBtn")));
 		driver.findElement(By.xpath("//*[@id='DeliveryHomeSummary_nextBtn']/p")).click();
 	
 		Thread.sleep(3000);
 		
-		wait.until(ExpectedConditions.invisibilityOfElementLocated(By.className("slds-spinner_container")));
+		config.waitForInvisibleSpinner();
 		
 		Thread.sleep(3000);
 		
@@ -112,10 +113,10 @@ public class ProcesoAltaDeServicios {
 
 	}
 	
-	public static void llamadosDeMetodos (WebDriver driver)throws InterruptedException {
+	public void llamadosDeMetodos ()throws InterruptedException {
 	//	IrACuenta(driver);
-		AltaDeServicios(driver);
-		SeleccionDePlan(driver);
-		confirmarServicio(driver);
+		AltaDeServicios();
+		SeleccionDePlan();
+		confirmarServicio();
 	}
 }

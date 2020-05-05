@@ -1,5 +1,6 @@
 package com.automation.izzi;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
@@ -15,23 +16,20 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class ProcesoEntregarPedidos {
 	
+	private Config config = new Config();
 	private WebDriver driver;
+	private WebDriverWait wait;
 			//************************LEER*****************************************************************
 			// En eclipse para ir al desarrollo del metodo debo hacer CTRL + Click al llamamiento del mismo.
 			// En algunos casos hay metodos que estan comentados, en caso de querer cambiar las elecciones solo basta con descomentar uno y comentar el otro.
 	
 	@Before
-	public void setUp() throws InterruptedException {
+	public void setUp() throws InterruptedException, IOException {
 		
-		System.setProperty("webdriver.chrome.driver", "./src/test/resources/chromedriver/chromedriver.exe");
-		driver = new ChromeDriver();
-		driver.manage().window().maximize();
 
-		driver.get("https://test1dom--sittest.my.salesforce.com/secur/frontdoor.jsp?sid=00D3K0000008jQa!ARwAQNN7vw_H9HrLMalZm64NxW1cl5QbhwY3tRQpXSn8va2ch.a9buxtS9KanRsGQzo9BZB2FVcCL6JUw0CG7C7SIGfeBHs0");
-
-		Thread.sleep(10000);
-
-		driver.get("https://test1dom--sittest.lightning.force.com/lightning/r/Order/8013K000000EknUQAS/view");
+		config.initBrowser();
+		config.goToOrderLink();
+		driver = config.driver;
 
 		driver.manage().timeouts().pageLoadTimeout(40, TimeUnit.SECONDS);
 		
@@ -40,14 +38,13 @@ public class ProcesoEntregarPedidos {
 	
 	@Test
 	public void testScript() throws InterruptedException {
-		clickEntregaDePedido(driver);
-		accid(driver);
+		clickEntregaDePedido();
+		accid();
 	}
 	//------------------------------------------------METODOS--------------------------------------------------
-	public static void clickEntregaDePedido (WebDriver driver) throws InterruptedException{
+	public void clickEntregaDePedido () throws InterruptedException{
 		By iFrame1 = By.id("iFrameResizer0");
-		WebDriverWait ewait = new WebDriverWait(driver, 30);
-		ewait.until(ExpectedConditions.visibilityOfElementLocated(iFrame1));
+		wait.until(ExpectedConditions.visibilityOfElementLocated(iFrame1));
 		driver.switchTo().frame("iFrameResizer0");
 		driver.findElement(By.xpath("/html/body/div[1]/div[1]/ng-include/div/div/section/div/button")).click();
 		driver.switchTo().defaultContent();
@@ -55,7 +52,7 @@ public class ProcesoEntregarPedidos {
 	}
 		
 	//----------------------------------------------------------------------------------------------------------	
-		public static void accid (WebDriver driver) {
+		public void accid () {
 		//8952140061736667340F
 
 		//Creacion de lista de Iframes para saleccionar el ultimo de la lista.
@@ -63,8 +60,7 @@ public class ProcesoEntregarPedidos {
 		int size = cantIFrames.size();
 		driver.switchTo().frame(size - 1);
 		
-		WebDriverWait ewait = new WebDriverWait(driver, 30);
-		ewait.until(ExpectedConditions.invisibilityOfElementLocated(By.className("slds-spinner_container")));
+		config.waitForInvisibleSpinner();
 
 		
 		driver.findElement(By.xpath("//input[@id=\'ICCID\']")).sendKeys("8952140061741671430F");
@@ -82,10 +78,8 @@ public class ProcesoEntregarPedidos {
 		driver.findElement(By.xpath("//div[@id='DeliverySimCard_nextBtn']/p")).click();
 		Thread.sleep(3000);
 		//-----Finalizar-------
-		
-		
-		/*ewait.until(ExpectedConditions.invisibilityOfElementLocated(By.className("slds-spinner_container")));
-		driver.findElement(By.xpath("//button[@class='slds-button slds-button_brand ng-binding' and contains(text(),Finalizar)]")).click();*/
+
+		config.waitForInvisibleSpinner();
 		
 		} catch (InterruptedException e) {
 			
