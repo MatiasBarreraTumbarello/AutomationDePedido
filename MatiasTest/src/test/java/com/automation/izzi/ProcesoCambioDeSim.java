@@ -70,16 +70,31 @@ public class ProcesoCambioDeSim {
 		//Paso3
 		config.waitForInvisibleSpinner();
 		
-		driver.findElement(By.xpath("//input[@id='ICCID']")).sendKeys("12345678910111213143");
+		driver.findElement(By.xpath("//input[@id='ICCID']")).sendKeys("8952140061741671430F");
 		Thread.sleep(2000);
-		driver.findElement(By.xpath("//*[@id='ICCIDVal']")).sendKeys("12345678910111213143");
-		driver.findElement(By.xpath("//div[@id=\'DeliverySimCard_nextBtn\']")).click();
-		//Paso4
+		driver.findElement(By.xpath("//*[@id='ICCIDVal']")).sendKeys("8952140061741671430F");
+		driver.findElement(By.xpath("//div[@id='WrapperValidarICCID']")).click();
 		config.waitForInvisibleSpinner();
+		driver.findElement(By.xpath("//div[@id='DeliverySimCard_nextBtn']")).click();
 		
+		//Paso4
+		
+		
+		config.waitForInvisibleSpinner();
+
+		new WebDriverWait (driver, 20)
+				.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id=\'doneAction-219\']/div/div/div[3]/div/button")));
+
+		String orden = driver.findElement(By.xpath("//p[@class='done-action-subtitle ng-binding ng-scope']")).getText();
+		driver.switchTo().defaultContent();
+		String letra = "";
+		for (int i = 5; i < orden.length(); i++) {
+		letra = letra + orden.charAt(i);
+		}
+		driver.findElement(By.xpath("//input[@id='159:0;p']")).sendKeys(letra);
 		Thread.sleep(2000);
-		driver.findElement(By.xpath("//*[@id=\'doneAction-137\']/div/div/div[3]/div/button")).click();
-		
+		List<WebElement> desplegable = driver.findElements(By.xpath("//li[@data-aura-class='uiAutocompleteOption forceSearchInputDesktopOption']"));
+		desplegable.get(1).click();
 	}
 	
 
