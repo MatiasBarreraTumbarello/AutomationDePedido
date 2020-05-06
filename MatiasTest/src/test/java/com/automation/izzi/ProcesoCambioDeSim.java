@@ -10,24 +10,20 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class ProcesoCambioDeSim {
 	
-	private Config config = new Config();
+	private Config main = new Config();
 	private WebDriver driver;
 	private WebDriverWait wait;
-	
 
 	@Before
 	public void setUp() throws InterruptedException, IOException {
-		
-		config.initBrowser();
-		config.goToAccountLink();
-		driver = config.driver;
-
+		driver = main.setDriver();
+		main.initBrowser();
+		main.goToAccountLink();
 		driver.manage().timeouts().pageLoadTimeout(40, TimeUnit.SECONDS);
 		
 		Thread.sleep(20000);
@@ -35,10 +31,14 @@ public class ProcesoCambioDeSim {
 	}
 	
 	@Test
-	public void testScript() throws InterruptedException {
-	
-		cambioDeSim();
-		selecionSim();
+	public void testScript() throws InterruptedException, IOException{
+		
+		try {
+			cambioDeSim();
+			selecionSim();
+		} catch (Exception e) {
+			main.returnExecutionError(getClass().getName());
+		}
 		
 	}
 	public void cambioDeSim () throws InterruptedException{
@@ -55,7 +55,7 @@ public class ProcesoCambioDeSim {
 		
 	public void selecionSim () throws InterruptedException {
 		
-		config.waitForInvisibleSpinner();
+		main.waitForInvisibleSpinner();
 
 
 		WebElement iframe = wait.until(ExpectedConditions.elementToBeClickable(By.id("iFrameResizer3")));
@@ -68,14 +68,14 @@ public class ProcesoCambioDeSim {
 		opcion.click();
 		driver.findElement(By.xpath("//*[@id=\'Step1_nextBtn\']")).click();
 		//Paso3
-		config.waitForInvisibleSpinner();
+		main.waitForInvisibleSpinner();
 		
 		driver.findElement(By.xpath("//*[@id=\'newIMSI\']")).sendKeys("123456789101113");
 		Thread.sleep(2000);
 		driver.findElement(By.xpath("//input[@id=\'newICCID\']")).sendKeys("12345678910111213143");
 		driver.findElement(By.xpath("//*[@id=\'Step2_nextBtn\']")).click();
 		//Paso4
-		config.waitForInvisibleSpinner();
+		main.waitForInvisibleSpinner();
 		
 		Thread.sleep(2000);
 		driver.findElement(By.xpath("//*[@id=\'doneAction-137\']/div/div/div[3]/div/button")).click();

@@ -44,8 +44,8 @@ public class ProcesoFVentas {
 	@Before
 
 	public void SetUp() throws InterruptedException, IOException {
+		driver = config.setDriver();
 		config.initBrowser();
-		driver = config.driver;
 		wait = new WebDriverWait(driver, 40);
 		driver.get("https://test1dom--sittest.lightning.force.com/lightning/n/Nueva_Venta");
 		driver.manage().timeouts().pageLoadTimeout(40, TimeUnit.SECONDS);
