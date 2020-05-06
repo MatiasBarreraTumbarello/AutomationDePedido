@@ -70,7 +70,7 @@ public class ProcesoCambioDeSim {
 		//Paso3
 		config.waitForInvisibleSpinner();
 		
-		driver.findElement(By.xpath("//input[@id='ICCID']")).sendKeys("12345678912345678912");
+		driver.findElement(By.xpath("//input[@id='ICCID']")).sendKeys("12345678910111213143");
 		Thread.sleep(2000);
 		driver.findElement(By.xpath("//*[@id='ICCIDVal']")).sendKeys("12345678910111213143");
 		driver.findElement(By.xpath("//div[@id=\'DeliverySimCard_nextBtn\']")).click();
