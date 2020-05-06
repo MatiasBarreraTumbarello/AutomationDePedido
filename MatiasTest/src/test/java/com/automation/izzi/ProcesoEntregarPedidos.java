@@ -44,7 +44,7 @@ public class ProcesoEntregarPedidos {
 	//------------------------------------------------METODOS--------------------------------------------------
 	public void clickEntregaDePedido () throws InterruptedException{
 		By iFrame1 = By.id("iFrameResizer0");
-		wait.until(ExpectedConditions.visibilityOfElementLocated(iFrame1));
+		new WebDriverWait (driver,40).until(ExpectedConditions.visibilityOfElementLocated(iFrame1));
 		driver.switchTo().frame("iFrameResizer0");
 		driver.findElement(By.xpath("/html/body/div[1]/div[1]/ng-include/div/div/section/div/button")).click();
 		driver.switchTo().defaultContent();
@@ -66,8 +66,6 @@ public class ProcesoEntregarPedidos {
 		driver.findElement(By.xpath("//input[@id=\'ICCID\']")).sendKeys("8952140061741671430F");
 		driver.findElement(By.xpath("//input[@id='ICCIDVal']")).sendKeys("8952140061741671430F");
 
-		driver.findElement(By.xpath("//input[@id=\'ICCID\']")).sendKeys("8952140061733523614F");
-		driver.findElement(By.xpath("//input[@id='ICCIDVal']")).sendKeys("8952140061733523614F");
 
 		driver.findElement(By.xpath("//div[@id='WrapperValidarICCID']/p")).click();
 		try {

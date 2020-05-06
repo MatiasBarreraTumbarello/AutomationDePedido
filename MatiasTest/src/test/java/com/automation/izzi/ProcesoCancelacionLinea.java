@@ -52,13 +52,11 @@ public class ProcesoCancelacionLinea {
 	
 	public void linea(WebDriver driver)throws InterruptedException {
 		config.waitForInvisibleSpinner();
-		
-		WebElement frame = new WebDriverWait(driver, 40)
-				.until(ExpectedConditions.elementToBeClickable(By.id("iFrameResizer3")));
+		WebElement frame = new WebDriverWait(driver, 40).until(ExpectedConditions.elementToBeClickable(By.id("iFrameResizer3")));
 		frame.click();
 		driver.switchTo().frame(frame);
 		
-		wait.until(ExpectedConditions.elementToBeClickable(By.name("Line-options")));
+		new WebDriverWait (driver,40).until(ExpectedConditions.elementToBeClickable(By.name("Line-options")));
 		List<WebElement> radioButton = driver.findElements(By.name("Line-options"));
 		Thread.sleep(1000);
 		JavascriptExecutor executor = (JavascriptExecutor)driver;

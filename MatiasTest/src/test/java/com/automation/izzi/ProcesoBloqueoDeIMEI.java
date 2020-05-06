@@ -73,7 +73,7 @@ public class ProcesoBloqueoDeIMEI {
 		Thread.sleep(1000);
 		
 		driver.findElement(By.xpath("//*[@id='RAValidationImei']")).click();
-		Thread.sleep(2000);
+		Thread.sleep(3000);
 		
 		}
 		
@@ -89,7 +89,7 @@ public class ProcesoBloqueoDeIMEI {
 			
 	
 		config.waitForInvisibleSpinner();
-		WebElement siguiente = wait.until(ExpectedConditions.elementToBeClickable(By.id("StepLockImei_nextBtn")));
+		WebElement siguiente = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id=\"StepLockImei_nextBtn\"]/p")));
 		siguiente.click();
 		Thread.sleep(1000);
 	
