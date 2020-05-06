@@ -46,7 +46,7 @@ public class ProcesoGestionDeCasos {
 		driver.switchTo().defaultContent();
 		
 		
-		CrearModificarCaso(1);
+		CrearModificarCaso(0);
 
 		
 	}

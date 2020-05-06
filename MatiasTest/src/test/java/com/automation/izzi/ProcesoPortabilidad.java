@@ -133,13 +133,13 @@ public class ProcesoPortabilidad {
 		iframe.get(dimension-1).click();
 		driver.switchTo().frame(dimension-1);
 		
-		wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//div[@id='Documentation_nextBtn']")));//*[@id="Documentation_nextBtn"]
+		new WebDriverWait (driver,40).until(ExpectedConditions.elementToBeClickable(By.xpath("//div[@id='Documentation_nextBtn']")));//*[@id="Documentation_nextBtn"]
 		driver.findElement(By.xpath("//div[@id='Documentation_nextBtn']")).click();
 		Thread.sleep(1000);
 		
-		wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//button[@class='slds-button slds-button_brand ng-binding' and contains(text(),Finalizar)]")));
+		/*wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//button[@class='slds-button slds-button_brand ng-binding' and contains(text(),Finalizar)]")));
 		driver.findElement(By.xpath("//button[@class='slds-button slds-button_brand ng-binding' and contains(text(),Finalizar)]")).click();
-		Thread.sleep(1000);
+		Thread.sleep(1000);*/
 		
 		
 		driver.switchTo().defaultContent();
