@@ -16,7 +16,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class ProcesoEntregarPedidos {
 	
-	private Config config = new Config();
+	private Main main = new Main();
 	private WebDriver driver;
 	private WebDriverWait wait;
 			//************************LEER*****************************************************************
@@ -27,9 +27,9 @@ public class ProcesoEntregarPedidos {
 	public void setUp() throws InterruptedException, IOException {
 		
 
-		config.initBrowser();
-		config.goToOrderLink();
-		driver = config.driver;
+		driver = main.setDriver();
+		main.initBrowser();
+		main.goToOrderLink();
 
 		driver.manage().timeouts().pageLoadTimeout(40, TimeUnit.SECONDS);
 		
@@ -38,8 +38,12 @@ public class ProcesoEntregarPedidos {
 	
 	@Test
 	public void testScript() throws InterruptedException {
-		clickEntregaDePedido();
-		accid();
+		try {
+			clickEntregaDePedido();
+			accid();
+		} catch (Exception e) {
+			main.returnExecutionError(getClass().getName());
+		}
 	}
 	//------------------------------------------------METODOS--------------------------------------------------
 	public void clickEntregaDePedido () throws InterruptedException{
@@ -60,7 +64,7 @@ public class ProcesoEntregarPedidos {
 		int size = cantIFrames.size();
 		driver.switchTo().frame(size - 1);
 		
-		config.waitForInvisibleSpinner();
+		main.waitForInvisibleSpinner();
 
 		
 		driver.findElement(By.xpath("//input[@id=\'ICCID\']")).sendKeys("8952140061741671430F");
@@ -77,7 +81,7 @@ public class ProcesoEntregarPedidos {
 		Thread.sleep(3000);
 		//-----Finalizar-------
 
-		config.waitForInvisibleSpinner();
+		main.waitForInvisibleSpinner();
 		
 		} catch (InterruptedException e) {
 			

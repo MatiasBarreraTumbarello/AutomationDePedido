@@ -17,7 +17,7 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-public class Config {
+public class Main {
 	
 	public WebDriver driver;
 	public WebDriverWait wait;;

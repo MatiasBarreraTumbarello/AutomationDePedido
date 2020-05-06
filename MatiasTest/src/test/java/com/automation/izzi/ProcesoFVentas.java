@@ -19,12 +19,12 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class ProcesoFVentas {
 	
-	private Config config = new Config();
+	private Main main = new Main();
 
 	private WebDriver driver;
 
 	private WebDriverWait wait;
-	public int tiempo = config.tiempo;
+	public int tiempo = main.tiempo;
 	
 	private int pStepDispositivos = 0;
 	private int pStepValidacionDeDispositivos = 0;
@@ -44,8 +44,8 @@ public class ProcesoFVentas {
 	@Before
 
 	public void SetUp() throws InterruptedException, IOException {
-		driver = config.setDriver();
-		config.initBrowser();
+		driver = main.setDriver();
+		main.initBrowser();
 		wait = new WebDriverWait(driver, 40);
 		driver.get("https://test1dom--sittest.lightning.force.com/lightning/n/Nueva_Venta");
 		driver.manage().timeouts().pageLoadTimeout(40, TimeUnit.SECONDS);
@@ -61,14 +61,18 @@ public class ProcesoFVentas {
 	@Test
 
 	public void Main() throws InterruptedException {
-		StepBuscarCliente();
-		StepPlanes();
-		StepDispositivos(pStepDispositivos);
-		StepValidacionDeDispositivos(pStepValidacionDeDispositivos);
-		StepPortabilidad(pStepPortabilidad);
-		StepTipoDeEntrega(pStepTipoDeEntrega);
-		StepResumenDeCompra();
-		Thread.sleep(tiempo);
+		try {
+			StepBuscarCliente();
+			StepPlanes();
+			StepDispositivos(pStepDispositivos);
+			StepValidacionDeDispositivos(pStepValidacionDeDispositivos);
+			StepPortabilidad(pStepPortabilidad);
+			StepTipoDeEntrega(pStepTipoDeEntrega);
+			StepResumenDeCompra();
+			Thread.sleep(tiempo);
+		} catch (Exception e) {
+			main.returnExecutionError(getClass().getName());
+		}
 	}
 	
 	/**
@@ -120,7 +124,7 @@ public class ProcesoFVentas {
 	 * @throws InterruptedException
 	 */
 	public void StepDatosAdicionalesDelCliente() throws InterruptedException {	
-		config.waitForInvisibleSpinner();
+		main.waitForInvisibleSpinner();
 		wait.until(ExpectedConditions.elementToBeClickable(By.id("TextNumberPhone")));
 		WebElement txtPhone = driver.findElement(By.id("TextNumberPhone"));
 		txtPhone.clear();
@@ -148,14 +152,14 @@ public class ProcesoFVentas {
 	 * @throws InterruptedException
 	 */
 	public void StepPlanes() throws InterruptedException{
-		 config.waitForInvisibleSpinner();
+		 main.waitForInvisibleSpinner();
 		 
 		 // Para elegir otro plan es necesario cambiar el id por el del plan que se desea seleccionar.
 		 WebElement optPlan = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id=\'block_01tc0000007pvuiAAA\']")));
 		 Thread.sleep(1000);
 		 optPlan.click();
 		 
-		 config.waitForInvisibleSpinner();
+		 main.waitForInvisibleSpinner();
 		 WebElement btnSiguiente = wait.until(ExpectedConditions.elementToBeClickable(By.id("PlanSelection_nextBtn")));
 		 while(btnSiguiente.isEnabled() && btnSiguiente.isDisplayed()) {
 			 Thread.sleep(1000);
@@ -173,7 +177,7 @@ public class ProcesoFVentas {
 	 * @throws InterruptedException
 	 */
 	public void StepDispositivos(int index) throws InterruptedException {
-		config.waitForInvisibleSpinner();
+		main.waitForInvisibleSpinner();
 		wait.until(ExpectedConditions.elementToBeClickable(By.id("RadioDevices")));
 		List<WebElement> optTipoDeDispositivo = driver.findElements(By.id("RadioDevices"));
 		optTipoDeDispositivo.get(index).findElement(By.xpath("./..")).click();
@@ -194,12 +198,12 @@ public class ProcesoFVentas {
 	 * @throws InterruptedException
 	 */
 	public void StepSeleccionDeDispositivo() throws InterruptedException {
-		config.waitForInvisibleSpinner();
+		main.waitForInvisibleSpinner();
 		WebElement optDispositivo = wait.until(ExpectedConditions.elementToBeClickable(By.id("block_01t3K000000HEDoQAO")));
 		optDispositivo.findElement(By.xpath("./..")).click();
 		Thread.sleep(tiempo);
 		
-		config.waitForInvisibleSpinner();
+		main.waitForInvisibleSpinner();
 		driver.findElement(By.id("vlcCart_Top")).findElement(By.xpath(".//div[1]")).click();
 		WebElement btnSiguiente = driver.findElement(By.id("StepChooseDevices_nextBtn"));
 		while(btnSiguiente.isEnabled() && btnSiguiente.isDisplayed()) {
@@ -216,7 +220,7 @@ public class ProcesoFVentas {
 	 * @throws InterruptedException
 	 */
 	public void StepValidacionDeDispositivos(int index) throws InterruptedException {
-		config.waitForInvisibleSpinner();
+		main.waitForInvisibleSpinner();
 		wait.until(ExpectedConditions.elementToBeClickable(By.id("RadioSelectMethod")));
 		List<WebElement> optMetodoDeValidacion = driver.findElements(By.id("RadioSelectMethod"));
 		Thread.sleep(tiempo);
@@ -245,7 +249,7 @@ public class ProcesoFVentas {
 		btnValidar.click();
 		Thread.sleep(tiempo);
 
-		config.waitForInvisibleSpinner();
+		main.waitForInvisibleSpinner();
 		List<WebElement> optListVerEquiposCompatibles = driver.findElements(By.id("RadioBuyDevices"));
 		
 		boolean optVerEquiposCompatibles = false;
@@ -383,7 +387,7 @@ public class ProcesoFVentas {
 	 * @throws InterruptedException
 	 */
 	public void StepResumenDeCompra() throws InterruptedException {
-		config.waitForInvisibleSpinner();
+		main.waitForInvisibleSpinner();
 		WebElement btnSiguiente = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//div[@id=\'DeliveryHomeSummary_nextBtn\']/p")));
 		while(btnSiguiente.isDisplayed() && btnSiguiente.isEnabled()) {
 			Thread.sleep(1000);
@@ -391,7 +395,7 @@ public class ProcesoFVentas {
 		}
 		Thread.sleep(tiempo);
 		
-		config.waitForInvisibleSpinner();
+		main.waitForInvisibleSpinner();
 		WebElement btnFinish = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//button[@class=\'slds-button slds-button_brand ng-binding\']")));
 		btnFinish.click();
 		Thread.sleep(tiempo);

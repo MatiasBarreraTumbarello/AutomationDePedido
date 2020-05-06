@@ -16,16 +16,16 @@ import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class ProcesoPortabilidad {
-	private Config config = new Config();
+	private Main main = new Main();
 	private WebDriver driver;
 	private WebDriverWait wait;
 	
 	@Before
 	public void setUp() throws InterruptedException, IOException {
 
-		config.initBrowser();
-		config.goToAccountLink();
-		driver = config.driver;
+		driver = main.setDriver();
+		main.initBrowser();
+		main.goToAccountLink();
 		driver.manage().timeouts().pageLoadTimeout(40, TimeUnit.SECONDS);
 		Thread.sleep(20000);
 		
@@ -34,21 +34,24 @@ public class ProcesoPortabilidad {
 	
 	@Test
 	public void testScript() throws InterruptedException {
-		
-		portabilidad();
-		
-		codigoNIP();
-		
-		PortabilidadSeleccionDeLinea();
-		
-		NumeroAPortar();
-		
-		//La siguiente linea realiza la portabildiad del nro por lo que no se va a poder volver a realizar la portabilidad
-		pasoDocumentacion();
+		try {
+			portabilidad();
+			
+			codigoNIP();
+			
+			PortabilidadSeleccionDeLinea();
+			
+			NumeroAPortar();
+			
+			//La siguiente linea realiza la portabildiad del nro por lo que no se va a poder volver a realizar la portabilidad
+			pasoDocumentacion();
+		} catch (Exception e) {
+			main.returnExecutionError(getClass().getName());
+		}
 	}
 	
 	public void portabilidad () throws InterruptedException {
-		config.waitForInvisibleSpinner();
+		main.waitForInvisibleSpinner();
 		
 		WebElement frame = driver.findElement(By.id("iFrameResizer1"));
 		JavascriptExecutor executor = (JavascriptExecutor)driver;
@@ -65,7 +68,7 @@ public class ProcesoPortabilidad {
 	public void codigoNIP() throws InterruptedException{
 		//*[@id="RadioNIP|0"]/div/div[1]/label[1]
 		
-		config.waitForInvisibleSpinner();
+		main.waitForInvisibleSpinner();
 		
 		WebElement frame = new WebDriverWait(driver, 40)
 				.until(ExpectedConditions.elementToBeClickable(By.id("iFrameResizer3")));
@@ -99,7 +102,7 @@ public class ProcesoPortabilidad {
 	//Pertenece al proceso de portabilidad.
 	public  void PortabilidadSeleccionDeLinea() throws InterruptedException{
 		
-		config.waitForInvisibleSpinner();
+		main.waitForInvisibleSpinner();
 		
 		List<WebElement> radioButtons =driver.findElements(By.xpath("//span[@class=\'slds-radio--faux\']"));
 		radioButtons.get(1).click();
@@ -108,7 +111,7 @@ public class ProcesoPortabilidad {
 	}
 	
 	public void NumeroAPortar() throws InterruptedException {
-		config.waitForInvisibleSpinner();
+		main.waitForInvisibleSpinner();
 		Select picklist = new Select(driver.findElement(By.id("SelectCompany")));
 		picklist.selectByIndex(2);
 		Thread.sleep(1000);
@@ -117,7 +120,7 @@ public class ProcesoPortabilidad {
 		Thread.sleep(1000);
 		driver.findElement(By.id("IPValidateMSISDN")).click();
 		Thread.sleep(1000);
-		config.waitForInvisibleSpinner();
+		main.waitForInvisibleSpinner();
 		Thread.sleep(1000);
 		driver.findElement(By.id("StepPortabilityNumber_nextBtn")).click();
 		Thread.sleep(3000);
@@ -126,7 +129,7 @@ public class ProcesoPortabilidad {
 	public void pasoDocumentacion () throws InterruptedException {
 		driver.switchTo().defaultContent();
 		
-		config.waitForInvisibleSpinner();
+		main.waitForInvisibleSpinner();
 		
 		List<WebElement> iframe = driver.findElements(By.xpath("//iframe"));
 		int dimension = iframe.size();

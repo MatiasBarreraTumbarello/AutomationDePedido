@@ -15,7 +15,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class ProcesoCambioDeSim {
 	
-	private Config main = new Config();
+	private Main main = new Main();
 	private WebDriver driver;
 	private WebDriverWait wait;
 
