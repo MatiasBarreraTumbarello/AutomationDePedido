@@ -76,7 +76,7 @@ public class Config {
 	}
 	
 	public String getStaticAccessLink() {
-		staticAccessLink = "https://test1dom--sittest.my.salesforce.com/secur/frontdoor.jsp?sid=00D3K0000008jQa!ARwAQNN7vw_H9HrLMalZm64NxW1cl5QbhwY3tRQpXSn8va2ch.a9buxtS9KanRsGQzo9BZB2FVcCL6JUw0CG7C7SIGfeBHs0";
+		staticAccessLink = "https://test1dom--sittest.my.salesforce.com/secur/frontdoor.jsp?sid=00D3K0000008jQa!ARwAQCgBPWINVHE4U9b1PbFZ7rlnUUdukDwm9eLC8_B_MvYDdpNdPK9t0gvaY5.hIhL95Ahgs6pEJ7VxEroAvqu.LWUdnb0h";
 		return staticAccessLink;
 	}
 	
