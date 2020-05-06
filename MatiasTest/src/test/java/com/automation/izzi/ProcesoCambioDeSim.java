@@ -58,27 +58,27 @@ public class ProcesoCambioDeSim {
 		config.waitForInvisibleSpinner();
 
 
-		WebElement iframe = wait.until(ExpectedConditions.elementToBeClickable(By.id("iFrameResizer3")));
+		WebElement iframe = new WebDriverWait (driver,40) .until(ExpectedConditions.elementToBeClickable(By.id("iFrameResizer3")));
 		iframe.click();
 		driver.switchTo().frame(iframe);
 
 		Thread.sleep(2000);
 
-		WebElement opcion = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//*[@id=\"ChooseSim\"]/div/ng-include/div/div[2]/ul/li")));
+		WebElement opcion = new WebDriverWait (driver,40 ).until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//*[@id=\"ChooseSim\"]/div/ng-include/div/div[2]/ul/li")));
 		opcion.click();
-		driver.findElement(By.xpath("//*[@id=\'Step1_nextBtn\']")).click();
+		driver.findElement(By.xpath("//div[@id='SIMSelection_nextBtn']")).click();
 		//Paso3
 		config.waitForInvisibleSpinner();
 		
-		driver.findElement(By.xpath("//*[@id=\'newIMSI\']")).sendKeys("123456789101113");
-		Thread.sleep(2000);
-		driver.findElement(By.xpath("//input[@id=\'newICCID\']")).sendKeys("12345678910111213143");
-		driver.findElement(By.xpath("//*[@id=\'Step2_nextBtn\']")).click();
+		driver.findElement(By.xpath("//input[@id=\'ICCID\']")).sendKeys("12345678910111213143");
+		Thread.sleep(3000);
+		driver.findElement(By.xpath("//input[@id=\'ICCIDVal\']")).sendKeys("12345678910111213143");
+		driver.findElement(By.xpath("//div[@id=\'WrapperValidarICCID\']")).click();
 		//Paso4
 		config.waitForInvisibleSpinner();
 		
-		Thread.sleep(2000);
-		driver.findElement(By.xpath("//*[@id=\'doneAction-137\']/div/div/div[3]/div/button")).click();
+		Thread.sleep(3000);
+		driver.findElement(By.xpath("//div[@id=\\'DeliverySimCard_nextBtn\\']")).click();
 		
 	}
 	
