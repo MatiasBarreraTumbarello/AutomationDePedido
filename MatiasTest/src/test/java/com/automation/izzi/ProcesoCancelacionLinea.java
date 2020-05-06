@@ -58,12 +58,12 @@ public class ProcesoCancelacionLinea {
 		frame.click();
 		driver.switchTo().frame(frame);
 		
-		wait.until(ExpectedConditions.elementToBeClickable(By.name("Line-options")));
+		new WebDriverWait (driver,40).until(ExpectedConditions.elementToBeClickable(By.name("Line-options")));
 		List<WebElement> radioButton = driver.findElements(By.name("Line-options"));
-		Thread.sleep(1000);
+		Thread.sleep(2000);
 		JavascriptExecutor executor = (JavascriptExecutor)driver;
 		executor.executeScript("arguments[0].click();", radioButton.get(1));
-		//radioButton.get(0).findElement(By.xpath("./..")).click();
+	//	radioButton.get(0).findElement(By.xpath("./..")).click();
 		
 		Thread.sleep(5000);
 		
