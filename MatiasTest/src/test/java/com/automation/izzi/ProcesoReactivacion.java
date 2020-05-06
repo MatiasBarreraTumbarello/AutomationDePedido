@@ -46,8 +46,7 @@ public class ProcesoReactivacion {
 		driver.switchTo().defaultContent();
 		Thread.sleep(2000);
 		
-		Confirmar(1);
-		Finalizar();
+		Confirmar(0);
 		
 	}
 	
@@ -72,13 +71,5 @@ public class ProcesoReactivacion {
 		driver.findElement(By.id("StepReactivationConfirmation_nextBtn")).click();
 		Thread.sleep(2000);
 		
-	}
-
-	
-	public void Finalizar() throws InterruptedException {
-		config.waitForInvisibleSpinner();
-		WebElement button = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//button[@class='slds-button slds-button_brand ng-binding']")));
-		button.click();
-		Thread.sleep(1000);
 	}
 }
