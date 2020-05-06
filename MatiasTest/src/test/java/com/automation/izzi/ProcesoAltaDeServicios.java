@@ -15,12 +15,7 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class ProcesoAltaDeServicios {
-	/*	public static void IrACuenta(WebDriver driver) throws InterruptedException {
-		WebElement link = new WebDriverWait(driver, 40)
-	    	.until(ExpectedConditions.elementToBeClickable(By.partialLinkText("REGRESION NUEVAS PRUE")));
-		link.click();
-		Thread.sleep(2000);
-	}*/
+
 	private Config config = new Config();
 	private WebDriver driver;
 	private WebDriverWait wait;
@@ -65,11 +60,16 @@ public class ProcesoAltaDeServicios {
 		driver.switchTo().defaultContent();
 		WebElement frame = driver.findElement(By.id("iFrameResizer3"));
 		driver.switchTo().frame(frame);
+		
+		config.waitForInvisibleSpinner();
 		WebElement plan = new WebDriverWait(driver, 40)
 		    	.until(ExpectedConditions.elementToBeClickable(By.xpath("//div[@id='block_0']")));
 		plan.findElement(By.xpath("./..")).click();
-
-		driver.findElement(By.xpath("//div[@id='ChooseAndAddProducts_nextBtn']/p")).click();
+		
+		config.waitForInvisibleSpinner();
+		new WebDriverWait (driver, 40)
+				.until(ExpectedConditions.elementToBeClickable(By.xpath("//div[@id='ChooseAndAddProducts_nextBtn']")));
+		driver.findElement(By.xpath("//div[@id='ChooseAndAddProducts_nextBtn']")).click();
 
 		config.waitForInvisibleSpinner();
 		Thread.sleep(2000);
@@ -78,9 +78,9 @@ public class ProcesoAltaDeServicios {
 	public void confirmarServicio() throws InterruptedException{
 		//Seccion: Confirmacion
 		config.waitForInvisibleSpinner();
-		wait.until(ExpectedConditions.elementToBeClickable(By.id("RadioConfirmation")));
+		new WebDriverWait(driver, 40).until(ExpectedConditions.elementToBeClickable(By.id("RadioConfirmation")));
 		List<WebElement> opcion = driver.findElements(By.id("RadioConfirmation"));
-	
+		
 		//En caso de seleccionar la opcion de NO, descomentar la siguiente linea, por defecto se selecciona SI
 		//opcion.get(1).findElement(By.xpath("../.")).click();
 	
