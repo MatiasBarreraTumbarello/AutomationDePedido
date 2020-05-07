@@ -26,7 +26,7 @@ public class ProcesoFVentas {
 	private WebDriverWait wait;
 	public int tiempo = main.tiempo;
 	
-	private int pStepDispositivos = 0;
+	private int pStepDispositivos = 1;
 	private int pStepValidacionDeDispositivos = 0;
 	private int pStepPortabilidad= 0;
 	private int pStepTipoDeEntrega= 0;
@@ -70,8 +70,8 @@ public class ProcesoFVentas {
 			StepTipoDeEntrega(pStepTipoDeEntrega);
 			StepResumenDeCompra();
 			Thread.sleep(tiempo);
-		} catch (Exception e) {
-			main.returnExecutionError(getClass().getName());
+		} catch (InterruptedException e) {
+			//main.returnExecutionError(getClass().getName());
 		}
 	}
 	
@@ -320,7 +320,7 @@ public class ProcesoFVentas {
 	 */
 	public void StepPortabilidad(int index) throws InterruptedException {
 		
-		wait.until(ExpectedConditions.elementToBeClickable(By.id("OptionPortability")));
+		new WebDriverWait(driver,40).until(ExpectedConditions.elementToBeClickable(By.id("OptionPortability")));
 		Thread.sleep(1000);
 		
 		List<WebElement> optPortarNumeroActual = driver.findElements(By.id("OptionPortability"));
