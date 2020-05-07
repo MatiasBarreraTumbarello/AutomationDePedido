@@ -62,7 +62,7 @@ public class ProcesoCancelacionLinea {
 		List<WebElement> radioButton = driver.findElements(By.name("Line-options"));
 		Thread.sleep(1000);
 		JavascriptExecutor executor = (JavascriptExecutor)driver;
-		executor.executeScript("arguments[0].click();", radioButton.get(1));
+		executor.executeScript("arguments[0].click();", radioButton.get(2));
 		//radioButton.get(0).findElement(By.xpath("./..")).click();
 		
 		Thread.sleep(5000);
@@ -73,7 +73,20 @@ public class ProcesoCancelacionLinea {
 		driver.findElement(By.id("stepConfirmationCancelLinea_nextBtn")).click();
 		Thread.sleep(2000);
 		
-		/*driver.findElement(By.xpath("//button[@class='slds-button slds-button_brand ng-binding' and contains(text(),Finalizar)]")).click();
-		Thread.sleep(2000);*/
+		main.waitForInvisibleSpinner();
+
+		new WebDriverWait (driver, 20)
+				.until(ExpectedConditions.elementToBeClickable(By.xpath("//button[@class='slds-button slds-button_brand ng-binding']")));
+
+		String orden = driver.findElement(By.xpath("//p[@class='done-action-subtitle ng-binding ng-scope']")).getText();
+		driver.switchTo().defaultContent();
+		String letra = "";
+		for (int i = 5; i < orden.length(); i++) {
+		letra = letra + orden.charAt(i);
+		}
+		driver.findElement(By.xpath("//input[@id='159:0;p']")).sendKeys(letra);
+		Thread.sleep(2000);
+		List<WebElement> desplegable = driver.findElements(By.xpath("//li[@data-aura-class='uiAutocompleteOption forceSearchInputDesktopOption']"));
+		desplegable.get(1).click();
 }
 }

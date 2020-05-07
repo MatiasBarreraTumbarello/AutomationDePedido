@@ -91,7 +91,7 @@ public class Main {
 	}
 	
 	public String getStaticAccessLink() {
-		staticAccessLink = "https://test1dom--sittest.my.salesforce.com/secur/frontdoor.jsp?sid=00D3K0000008jQa!ARwAQCgBPWINVHE4U9b1PbFZ7rlnUUdukDwm9eLC8_B_MvYDdpNdPK9t0gvaY5.hIhL95Ahgs6pEJ7VxEroAvqu.LWUdnb0h";
+		staticAccessLink = "https://test1dom--sittest.my.salesforce.com/secur/frontdoor.jsp?sid=00D3K0000008jQa!ARwAQJ3M3dy.HBbXF7vS_6Vfp9R50Kh5XFW6xKe26eH6buVnfwG0h914mBuzZ.vgK8Aab3ELCFOvRyRw0gstZjWkj62rAiPG";
 		return staticAccessLink;
 	}
 	
