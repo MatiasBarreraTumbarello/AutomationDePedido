@@ -72,9 +72,8 @@ public class ProcesoSuspenciones {
 		Select picklist = new Select(driver.findElement(By.id("suspendMotive")));
 		picklist.selectByIndex(1);
 		Thread.sleep(1000);
-		//driver.quit();
 
-		//wait.until(ExpectedConditions.elementToBeClickable(By.id("confirmSuspensionStep_nextBtn")));
+
 		driver.findElement(By.xpath("//*[@id=\'confirmSuspensionStep_nextBtn\']/p")).click();
 		Thread.sleep(2000);
 	}
