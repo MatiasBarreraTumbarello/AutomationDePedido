@@ -35,12 +35,12 @@ public class ProcesoAltaDeServicios {
 
 	@Test
 	public void testScript() throws InterruptedException {
-
 		try {
 			AltaDeServicios();
-		} catch (InterruptedException e) {
-			// main.returnExecutionError(getClass().getName());
 
+			main.returnExecutionSuccess(getClass().getName());
+		} catch (Exception e) {
+			main.returnExecutionError(getClass().getName(), e);
 		}
 
 	}

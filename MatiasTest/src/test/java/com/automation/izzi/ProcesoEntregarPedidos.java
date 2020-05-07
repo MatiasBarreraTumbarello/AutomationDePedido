@@ -41,8 +41,9 @@ public class ProcesoEntregarPedidos {
 		try {
 			clickEntregaDePedido();
 			accid();
+			main.returnExecutionSuccess(getClass().getName());
 		} catch (Exception e) {
-			main.returnExecutionError(getClass().getName());
+			main.returnExecutionError(getClass().getName(), e);
 		}
 	}
 	//------------------------------------------------METODOS--------------------------------------------------

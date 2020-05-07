@@ -138,7 +138,7 @@ public class MainClass {
         String date = LocalDate.now().toString();
         String folderName = date;
         
-        String absoluteFolderPath = "C:\\sfdx\\executions\\" + folderName;
+        String absoluteFolderPath = "executions/" + folderName;
         boolean dir = new File(absoluteFolderPath).mkdir();
         if(dir){
             System.out.println(absoluteFolderPath+" Dir Created");
@@ -147,7 +147,7 @@ public class MainClass {
         }
 
         String fileName = "execution_" + (new File(absoluteFolderPath).list().length + 1);
-        String absoluteFilePath = absoluteFolderPath + "\\" + fileName + ".txt";
+        String absoluteFilePath = absoluteFolderPath + "/" + fileName + ".txt";
         File file = new File(absoluteFilePath);
         if (file.createNewFile()) {
     		System.out.println("File " + absoluteFilePath + " Created");
@@ -160,11 +160,11 @@ public class MainClass {
 	
 	public String executionFile() throws IOException {
 		String file = "";
-		File dir = new File("C:\\sfdx\\executions\\" + LocalDate.now().toString());
+		File dir = new File("executions/" + LocalDate.now().toString());
 		if (!dir.exists() || dir.list().length == 0) {
 			file = createFile();
 		} else if(dir.list().length > 0) {
-			File lastFile = new File("C:\\sfdx\\executions\\" + LocalDate.now().toString() + "\\execution_" + dir.list().length + ".txt");
+			File lastFile = new File("executions/" + LocalDate.now().toString() + "/execution_" + dir.list().length + ".txt");
 			if (lastFile.length() > 0) {
 				Scanner scanner = new Scanner(lastFile);
 
@@ -194,10 +194,10 @@ public class MainClass {
 		System.out.println("Successfully wrote to the file.");
 	}
 	
-	public void returnExecutionError(String rc) {
+	public void returnExecutionError(String rc, Exception error) {
 		try {
 			fileToWrite = executionFile();
-			saveResponse(fileToWrite, rc + " => Error");
+			saveResponse(fileToWrite, rc + ":\n" + error + "\n" + "-".repeat(30));
 			driver.quit();
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -207,7 +207,7 @@ public class MainClass {
 	public void returnExecutionSuccess(String rc) {
 		try {
 			fileToWrite = executionFile();
-			saveResponse(fileToWrite, rc + " => Success");
+			saveResponse(fileToWrite, rc + ":\nSUCCESS\n" + "-".repeat(30));
 			driver.quit();
 		} catch (IOException e) {
 			e.printStackTrace();
