@@ -16,7 +16,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class ProcesoBloqueoDeIMEI {
 	
-	private Config config = new Config();
+	private Main main = new Main();
 	private WebDriver driver;
 	private WebDriverWait wait;
 
@@ -24,9 +24,9 @@ public class ProcesoBloqueoDeIMEI {
 	@Before
 	public void setUp() throws InterruptedException, IOException {
 		
-		config.initBrowser();
-		config.goToAccountLink();
-		driver = config.driver;
+		driver = main.setDriver();
+		main.initBrowser();
+		main.goToAccountLink();
 
 		driver.manage().timeouts().pageLoadTimeout(40, TimeUnit.SECONDS);
 		
@@ -38,18 +38,22 @@ public class ProcesoBloqueoDeIMEI {
 	@Test
 	public void Bloqueo() throws InterruptedException {
 		
-		config.waitForInvisibleSpinner();
-		
-		WebElement frame = driver.findElement(By.id("iFrameResizer1"));
-		JavascriptExecutor executor = (JavascriptExecutor)driver;
-		executor.executeScript("arguments[0].style.display = 'block'; arguments[0].style.zIndex = '999999';", frame);
-		driver.switchTo().frame(frame);
-		Thread.sleep(2000);
-		WebElement boton = driver.findElement(By.xpath("/html/body/div[1]/div[1]/ng-include/div/div/section/div[4]/button"));
-		executor.executeScript("arguments[0].click();", boton);
-		
-		driver.switchTo().defaultContent();
-		IMEI(0);
+		try {	
+			main.waitForInvisibleSpinner();
+			
+			WebElement frame = driver.findElement(By.id("iFrameResizer1"));
+			JavascriptExecutor executor = (JavascriptExecutor)driver;
+			executor.executeScript("arguments[0].style.display = 'block'; arguments[0].style.zIndex = '999999';", frame);
+			driver.switchTo().frame(frame);
+			Thread.sleep(2000);
+			WebElement boton = driver.findElement(By.xpath("/html/body/div[1]/div[1]/ng-include/div/div/section/div[4]/button"));
+			executor.executeScript("arguments[0].click();", boton);
+			
+			driver.switchTo().defaultContent();
+			IMEI(0);
+		} catch (Exception e) {
+			main.returnExecutionError(getClass().getName());
+		}
 }
 	
 	public void IMEI(int index) throws InterruptedException {
@@ -88,7 +92,7 @@ public class ProcesoBloqueoDeIMEI {
 			}
 			
 	
-		config.waitForInvisibleSpinner();
+		main.waitForInvisibleSpinner();
 		WebElement siguiente = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id=\"StepLockImei_nextBtn\"]/p")));
 		siguiente.click();
 		Thread.sleep(1000);
@@ -98,7 +102,7 @@ public class ProcesoBloqueoDeIMEI {
 	
 	public void Confirmacion() throws InterruptedException {
 		
-		config.waitForInvisibleSpinner();
+		main.waitForInvisibleSpinner();
 		
 		wait.until(ExpectedConditions.elementToBeClickable(By.id("radioConfirmation")));
 		Thread.sleep(3000);
@@ -108,12 +112,12 @@ public class ProcesoBloqueoDeIMEI {
 		opt.get(0).findElement(By.xpath("./..")).click();
 		Thread.sleep(2000);
 		
-		config.waitForInvisibleSpinner();
+		main.waitForInvisibleSpinner();
 		WebElement siguiente = wait.until(ExpectedConditions.elementToBeClickable(By.id("Confirmation_nextBtn")));
 		siguiente.click();
 		Thread.sleep(2000);
 		
-		config.waitForInvisibleSpinner();
+		main.waitForInvisibleSpinner();
 		WebElement finalizar = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id=\"doneAction-241\"]/div/div/div[3]/div/button")));
 		finalizar.click();
 		

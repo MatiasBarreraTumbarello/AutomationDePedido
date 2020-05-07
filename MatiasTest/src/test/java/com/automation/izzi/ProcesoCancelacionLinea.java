@@ -17,16 +17,15 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class ProcesoCancelacionLinea {
 	
-	private Config config = new Config();
+	private Main main = new Main();
 	private WebDriver driver;
 	private WebDriverWait wait;
 	
 	@Before
 	public void setUp() throws InterruptedException, IOException {
-		
-		config.initBrowser();
-		config.goToAccountLink();
-		driver = config.driver;
+		driver = main.setDriver();
+		main.initBrowser();
+		main.goToAccountLink();
 		driver.manage().timeouts().pageLoadTimeout(40, TimeUnit.SECONDS);
 		
 		Thread.sleep(20000);
@@ -34,24 +33,27 @@ public class ProcesoCancelacionLinea {
 	}
 	@Test
 	public void cancelacion() throws InterruptedException {
-		
-		config.waitForInvisibleSpinner();
-		
-		WebElement frame = driver.findElement(By.id("iFrameResizer1"));
-		JavascriptExecutor executor = (JavascriptExecutor)driver;
-		executor.executeScript("arguments[0].style.display = 'block'; arguments[0].style.zIndex = '999999';", frame);
-		driver.switchTo().frame(frame);
-		Thread.sleep(2000);
-		WebElement boton = driver.findElement(By.xpath("/html/body/div[1]/div[1]/ng-include/div/div/section/div[5]/button"));
-		executor.executeScript("arguments[0].click();", boton);
-		
-		driver.switchTo().defaultContent();
-		linea(driver);
+		try {
+			main.waitForInvisibleSpinner();
+			
+			WebElement frame = driver.findElement(By.id("iFrameResizer1"));
+			JavascriptExecutor executor = (JavascriptExecutor)driver;
+			executor.executeScript("arguments[0].style.display = 'block'; arguments[0].style.zIndex = '999999';", frame);
+			driver.switchTo().frame(frame);
+			Thread.sleep(2000);
+			WebElement boton = driver.findElement(By.xpath("/html/body/div[1]/div[1]/ng-include/div/div/section/div[5]/button"));
+			executor.executeScript("arguments[0].click();", boton);
+			
+			driver.switchTo().defaultContent();
+			linea(driver);
+		} catch (Exception e) {
+			main.returnExecutionError(getClass().getName());
+		}
 		
 	}
 	
 	public void linea(WebDriver driver)throws InterruptedException {
-		config.waitForInvisibleSpinner();
+		main.waitForInvisibleSpinner();
 		WebElement frame = new WebDriverWait(driver, 40).until(ExpectedConditions.elementToBeClickable(By.id("iFrameResizer3")));
 		frame.click();
 		driver.switchTo().frame(frame);
