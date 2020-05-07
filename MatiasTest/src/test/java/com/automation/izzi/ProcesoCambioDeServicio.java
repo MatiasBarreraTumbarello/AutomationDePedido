@@ -17,7 +17,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class ProcesoCambioDeServicio {
 	
-	private Main main = new Main();
+	private MainClass main = new MainClass();
 	private WebDriver driver;
 	private WebDriverWait wait;
 

@@ -17,7 +17,7 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-public class Main {
+public class MainClass {
 	
 	public WebDriver driver;
 	public WebDriverWait wait;;
@@ -75,15 +75,15 @@ public class Main {
 	
 	public String[] executionOrder() {
 		String[] classesList = {
+				"ProcesoFVentas",
+				"ProcesoEntregarPedidos",
 				"ProcesoCambioDeSim",
 				"ProcesoBloqueoDeIMEI",
-				"ProcesoFVentas",
 				"ProcesoCancelacionDeLinea",
 				"ProcesoSuspenciones",
 				"ProcesoPortabilidad",
 				"ProcesoReactivacion",
 				"ProcesoCambioDeServicio",
-				"ProcesoEntregarPedidos",
 				"ProcesoGestionDeCasos",
 				"ProcesoAltaDeServicios"
 				};
