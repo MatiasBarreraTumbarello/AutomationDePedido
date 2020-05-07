@@ -35,12 +35,12 @@ public class ProcesoAltaDeServicios {
 
 	@Test
 	public void testScript() throws InterruptedException {
-		
+
 		try {
 			AltaDeServicios();
-		} catch (InterruptedException e	) {
-			//main.returnExecutionError(getClass().getName());
-			
+		} catch (InterruptedException e) {
+			// main.returnExecutionError(getClass().getName());
+
 		}
 
 	}
@@ -56,7 +56,7 @@ public class ProcesoAltaDeServicios {
 		executor.executeScript("arguments[0].click();", links.get(2));
 		// links.get(0).click();
 		Thread.sleep(2000);
-		
+
 		SeleccionDePlan();
 	}
 
@@ -78,7 +78,7 @@ public class ProcesoAltaDeServicios {
 
 		main.waitForInvisibleSpinner();
 		Thread.sleep(2000);
-		
+
 		confirmarServicio();
 	}
 
@@ -113,30 +113,24 @@ public class ProcesoAltaDeServicios {
 
 		Thread.sleep(3000);
 
-		new WebDriverWait(driver, 20).until(ExpectedConditions
-				.elementToBeClickable(By.xpath("//div[@ng-if='control.propSetMap.structMessage.btnName']")));
+		new WebDriverWait(driver, 20).until(ExpectedConditions.elementToBeClickable(By.xpath("//div[@ng-if='control.propSetMap.structMessage.btnName']")));
 
-		String orden = driver.findElement(By.xpath("//p[@ng-repeat='(key, value) in control.propSetMap.message']"))
-				.getText();
+		String orden = driver.findElement(By.xpath("//p[@ng-repeat='(key, value) in control.propSetMap.message']")).getText();
 		driver.switchTo().defaultContent();
 		String letra = "";
 		for (int i = 5; i < orden.length(); i++) {
 			letra = letra + orden.charAt(i);
 		}
 		driver.findElement(By.xpath("//input[@id='159:0;p']")).sendKeys(letra);
-	/*	List<WebElement> desplegable = driver
-				.findElements(By.xpath("//li[@data-aura-class='uiAutocompleteOption forceSearchInputDesktopOption']"));
-	//	new WebDriverWait(driver, 40).until(ExpectedConditions.textToBePresentInElement(desplegable.get(1), letra));
 		Thread.sleep(2000);
-		desplegable.get(1).click();*/
+		List<WebElement> desplegable = driver.findElements(By.xpath("//li[@data-aura-class='uiAutocompleteOption forceSearchInputDesktopOption']"));
+		desplegable.get(1).click();
 		Thread.sleep(3000);
-		driver.findElement(By.xpath("//*[@id=\'oneHeader\']/div[2]/div[2]/div/div[2]/div/div[2]/div[2]/div/div/div[2]/ul/li[2]")).click();
 	}
 
-/*	public void llamadosDeMetodos() throws InterruptedException {
-		// IrACuenta(driver);
-		AltaDeServicios();
-		SeleccionDePlan();
-		confirmarServicio();
-	}*/
+	/*
+	 * public void llamadosDeMetodos() throws InterruptedException { //
+	 * IrACuenta(driver); AltaDeServicios(); SeleccionDePlan(); confirmarServicio();
+	 * }
+	 */
 }

@@ -30,7 +30,6 @@ public class ProcesoFVentas {
 	private int pStepValidacionDeDispositivos = 0;
 	private int pStepPortabilidad = 0;
 	private int pStepTipoDeEntrega = 1;
-	
 
 	private boolean pOptValidacionPorDispositivo = true;
 
