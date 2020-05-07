@@ -68,8 +68,9 @@ public class ProcesoFVentas {
 		try {
 			StepBuscarCliente();
 			Thread.sleep(tiempo);
-		} catch (InterruptedException e) {
-			// main.returnExecutionError(getClass().getName());
+			main.returnExecutionSuccess(getClass().getName());
+		} catch (Exception e) {
+			main.returnExecutionError(getClass().getName(), e);
 		}
 	}
 

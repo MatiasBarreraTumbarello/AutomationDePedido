@@ -46,8 +46,9 @@ public class ProcesoCancelacionLinea {
 			
 			driver.switchTo().defaultContent();
 			linea(driver);
+			main.returnExecutionSuccess(getClass().getName());
 		} catch (Exception e) {
-			main.returnExecutionError(getClass().getName());
+			main.returnExecutionError(getClass().getName(), e);
 		}
 		
 	}
@@ -89,5 +90,5 @@ public class ProcesoCancelacionLinea {
 		Thread.sleep(2000);
 		List<WebElement> desplegable = driver.findElements(By.xpath("//li[@data-aura-class='uiAutocompleteOption forceSearchInputDesktopOption']"));
 		desplegable.get(1).click();
-}
+	}
 }

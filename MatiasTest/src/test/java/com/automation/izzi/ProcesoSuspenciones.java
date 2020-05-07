@@ -40,8 +40,9 @@ public class ProcesoSuspenciones {
 			clickSuspension();
 			confirmarSuspension();
 			motivoDeSuspension();
+			main.returnExecutionSuccess(getClass().getName());
 		} catch (Exception e) {
-			main.returnExecutionError(getClass().getName());
+			main.returnExecutionError(getClass().getName(), e);
 		}
 	}
 	

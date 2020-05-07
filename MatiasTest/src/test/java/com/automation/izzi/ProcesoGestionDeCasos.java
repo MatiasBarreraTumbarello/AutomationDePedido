@@ -48,8 +48,9 @@ public class ProcesoGestionDeCasos {
 			
 			
 			CrearModificarCaso(0);
+			main.returnExecutionSuccess(getClass().getName());
 		} catch (Exception e) {
-			main.returnExecutionError(getClass().getName());
+			main.returnExecutionError(getClass().getName(), e);
 		}
 
 		
