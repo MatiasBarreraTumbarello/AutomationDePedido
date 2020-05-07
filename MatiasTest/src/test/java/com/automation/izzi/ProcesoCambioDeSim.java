@@ -65,10 +65,12 @@ public class ProcesoCambioDeSim {
 
 		Thread.sleep(2000);
 
+
 		WebElement opcion = new WebDriverWait(driver,40).until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//*[@id=\"ChooseSim\"]/div/ng-include/div/div[2]/ul/li")));
 		opcion.click();
 		driver.findElement(By.xpath("//div[@id='SIMSelection_nextBtn']")).click();
 		//Paso3
+
 		main.waitForInvisibleSpinner();
 		
 		driver.findElement(By.xpath("//input[@id='ICCID']")).sendKeys("8952140061741671430F");
@@ -78,6 +80,7 @@ public class ProcesoCambioDeSim {
 		main.waitForInvisibleSpinner();
 		driver.findElement(By.xpath("//div[@id='DeliverySimCard_nextBtn']")).click();
 		
+
 		//Paso4
 		
 		
