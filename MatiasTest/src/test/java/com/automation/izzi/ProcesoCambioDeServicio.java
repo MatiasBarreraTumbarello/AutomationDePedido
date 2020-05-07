@@ -2,6 +2,7 @@ package com.automation.izzi;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.concurrent.TimeUnit;
 
 import org.junit.Before;
@@ -51,7 +52,7 @@ public class ProcesoCambioDeServicio {
 		driver.switchTo().frame(frame);
 		Thread.sleep(2000);
 		List<WebElement> links = driver.findElements(By.linkText("Cambio de Servicio"));
-		executor.executeScript("arguments[0].click();", links.get(2));
+		executor.executeScript("arguments[0].click();", links.get(1));
 		driver.switchTo().defaultContent();
 	}
 
@@ -63,19 +64,17 @@ public class ProcesoCambioDeServicio {
 		driver.switchTo().frame(frame);
 		// frames.get(size-1).click();
 		Thread.sleep(2000);
-		try {
-			WebElement opt = wait
-					.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id=\'block_01tc0000007pvuiAAA\']")));
-			if (opt != null) {
-				opt.click();
-			} else {
-				WebElement opt2 = wait.until(
-						ExpectedConditions.elementToBeClickable(By.xpath("//*[@id=\'block_01tc0000007pvuhAAA\']")));
-				opt2.click();
-			}
-		} catch (Exception e) {
-			// TODO: handle exception
+		
+		if(seleccion(driver)) {
+			WebElement plan = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//div[@id='block_01tc0000007pvuiAAA']")));
+			plan.click();
+		}else {
+			WebElement plan = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//div[@id='block_01tc0000007pvuhAAA']")));
+			plan.click();
 		}
+		
+		
+		
 		// siguiente
 		wait.until(ExpectedConditions.invisibilityOfElementLocated(By.className("slds-spinner_container")));
 		WebElement siguiente = wait.until(ExpectedConditions.elementToBeClickable(By.id("Planes_nextBtn")));
@@ -90,6 +89,14 @@ public class ProcesoCambioDeServicio {
 				.elementToBeClickable(By.xpath("//*[@id='doneAction-217']/div/div/div[3]/div/button")));
 		finalizar.click();
 
+	}
+	public boolean seleccion (WebDriver driver) throws InterruptedException{
+		try {
+			WebElement opt = new WebDriverWait(driver,40).until(ExpectedConditions.elementToBeClickable(By.xpath("//div[@id='block_01tc0000007pvuiAAA']")));
+			return true;
+		} catch (NoSuchElementException e) {
+			return false;
+		}
 	}
 
 }
