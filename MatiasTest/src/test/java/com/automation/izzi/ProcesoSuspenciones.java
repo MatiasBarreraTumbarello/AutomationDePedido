@@ -16,7 +16,7 @@ import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class ProcesoSuspenciones {
-	private Main main = new Main();
+	private MainClass main = new MainClass();
 	private WebDriver driver;
 	private WebDriverWait wait;
 	
