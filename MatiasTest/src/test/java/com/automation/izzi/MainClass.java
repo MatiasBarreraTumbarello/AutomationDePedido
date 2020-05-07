@@ -138,6 +138,8 @@ public class MainClass {
         String date = LocalDate.now().toString();
         String folderName = date;
         
+        new File("executions").mkdir();
+        
         String absoluteFolderPath = "executions/" + folderName;
         boolean dir = new File(absoluteFolderPath).mkdir();
         if(dir){
