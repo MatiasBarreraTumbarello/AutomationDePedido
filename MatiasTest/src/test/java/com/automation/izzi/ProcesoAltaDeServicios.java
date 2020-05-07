@@ -16,7 +16,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class ProcesoAltaDeServicios {
 
-	private Config config = new Config();
+	private Main main = new Main();
 	private WebDriver driver;
 	private WebDriverWait wait;
 	
@@ -24,10 +24,10 @@ public class ProcesoAltaDeServicios {
 	@Before
 	public void setUp() throws InterruptedException, IOException {
 		
-
-		config.initBrowser();
-		config.goToAccountLink();
-		driver = config.driver;
+		
+		driver = main.setDriver();
+		main.initBrowser();
+		main.goToAccountLink();
 
 		driver.manage().timeouts().pageLoadTimeout(40, TimeUnit.SECONDS);
 		
@@ -37,8 +37,11 @@ public class ProcesoAltaDeServicios {
 	
 	@Test
 	public void testScript() throws InterruptedException {
-
-		llamadosDeMetodos();
+		try {
+			llamadosDeMetodos();
+		} catch (Exception e) {
+			main.returnExecutionError(getClass().getName());
+		}
 		
 	}
 
@@ -61,30 +64,30 @@ public class ProcesoAltaDeServicios {
 		WebElement frame = driver.findElement(By.id("iFrameResizer3"));
 		driver.switchTo().frame(frame);
 		
-		config.waitForInvisibleSpinner();
+		main.waitForInvisibleSpinner();
 		WebElement plan = new WebDriverWait(driver, 40)
 		    	.until(ExpectedConditions.elementToBeClickable(By.xpath("//div[@id='block_0']")));
 		plan.findElement(By.xpath("./..")).click();
 		
-		config.waitForInvisibleSpinner();
+		main.waitForInvisibleSpinner();
 		new WebDriverWait (driver, 40)
 				.until(ExpectedConditions.elementToBeClickable(By.xpath("//div[@id='ChooseAndAddProducts_nextBtn']")));
 		driver.findElement(By.xpath("//div[@id='ChooseAndAddProducts_nextBtn']")).click();
 
-		config.waitForInvisibleSpinner();
+		main.waitForInvisibleSpinner();
 		Thread.sleep(2000);
 	}
 	
 	public void confirmarServicio() throws InterruptedException{
 		//Seccion: Confirmacion
-		config.waitForInvisibleSpinner();
+		main.waitForInvisibleSpinner();
 		new WebDriverWait(driver, 40).until(ExpectedConditions.elementToBeClickable(By.id("RadioConfirmation")));
 		List<WebElement> opcion = driver.findElements(By.id("RadioConfirmation"));
 		
 		//En caso de seleccionar la opcion de NO, descomentar la siguiente linea, por defecto se selecciona SI
 		//opcion.get(1).findElement(By.xpath("../.")).click();
 	
-		config.waitForInvisibleSpinner();
+		main.waitForInvisibleSpinner();
 		wait.until(ExpectedConditions.elementToBeClickable(By.id("Confirmation_nextBtn")));
 		Thread.sleep(2000);
 		driver.findElement(By.id("Confirmation_nextBtn")).click(); //boton siguiente
@@ -92,13 +95,13 @@ public class ProcesoAltaDeServicios {
 		
 		//Seccion: Resumen de compra
 	
-		config.waitForInvisibleSpinner();
+		main.waitForInvisibleSpinner();
 		wait.until(ExpectedConditions.elementToBeClickable(By.id("DeliveryHomeSummary_nextBtn")));
 		driver.findElement(By.xpath("//*[@id='DeliveryHomeSummary_nextBtn']/p")).click();
 	
 		Thread.sleep(3000);
 		
-		config.waitForInvisibleSpinner();
+		main.waitForInvisibleSpinner();
 		
 		Thread.sleep(3000);
 		

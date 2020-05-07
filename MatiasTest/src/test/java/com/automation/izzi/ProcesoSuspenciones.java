@@ -16,16 +16,16 @@ import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class ProcesoSuspenciones {
-	private Config config = new Config();
+	private Main main = new Main();
 	private WebDriver driver;
 	private WebDriverWait wait;
 	
 	@Before
 	public void setUp() throws InterruptedException, IOException {
 		
-		config.initBrowser();
-		config.goToAccountLink();
-		driver = config.driver;
+		driver = main.setDriver();
+		main.initBrowser();
+		main.goToAccountLink();
 
 		driver.manage().timeouts().pageLoadTimeout(40, TimeUnit.SECONDS);
 		
@@ -36,9 +36,13 @@ public class ProcesoSuspenciones {
 	
 	@Test
 	public void testScript() throws InterruptedException {
-		clickSuspension();
-		confirmarSuspension();
-		motivoDeSuspension();
+		try {
+			clickSuspension();
+			confirmarSuspension();
+			motivoDeSuspension();
+		} catch (Exception e) {
+			main.returnExecutionError(getClass().getName());
+		}
 	}
 	
 	public void clickSuspension() throws InterruptedException {

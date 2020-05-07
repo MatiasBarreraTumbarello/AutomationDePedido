@@ -16,17 +16,16 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class ProcesoReactivacion {
 	
-	private Config config = new Config();
+	private Main main = new Main();
 	private WebDriver driver;
 	private WebDriverWait wait;
 	
 	@Before
 	public void setUp() throws InterruptedException, IOException {
-		
-		config.initBrowser();
-		config.goToAccountLink();
-		driver = config.driver;
-		wait = config.wait;
+		driver = main.setDriver();
+		main.initBrowser();
+		main.goToAccountLink();
+		wait = main.wait;
 
 		driver.manage().timeouts().pageLoadTimeout(40, TimeUnit.SECONDS);
 		
@@ -35,23 +34,27 @@ public class ProcesoReactivacion {
 	
 	@Test
 	public void Reactivar () throws InterruptedException {
-		Thread.sleep(2000);
-		WebElement frame = driver.findElement(By.id("iFrameResizer2"));
-		JavascriptExecutor executor = (JavascriptExecutor)driver;
-		executor.executeScript("arguments[0].style.display = 'block'; arguments[0].style.zIndex = '999999';", frame);
-		driver.switchTo().frame(frame);
-		Thread.sleep(2000);
-		List<WebElement> links = driver.findElements(By.linkText("Reactivar"));
-		executor.executeScript("arguments[0].click();", links.get(0));
-		driver.switchTo().defaultContent();
-		Thread.sleep(2000);
-		
-		Confirmar(0);
+		try {
+			Thread.sleep(2000);
+			WebElement frame = driver.findElement(By.id("iFrameResizer2"));
+			JavascriptExecutor executor = (JavascriptExecutor)driver;
+			executor.executeScript("arguments[0].style.display = 'block'; arguments[0].style.zIndex = '999999';", frame);
+			driver.switchTo().frame(frame);
+			Thread.sleep(2000);
+			List<WebElement> links = driver.findElements(By.linkText("Reactivar"));
+			executor.executeScript("arguments[0].click();", links.get(0));
+			driver.switchTo().defaultContent();
+			Thread.sleep(2000);
+			
+			Confirmar(0);
+		} catch (Exception e) {
+			main.returnExecutionError(getClass().getName());
+		}
 		
 	}
 	
 	public void Confirmar(int index) throws InterruptedException {
-		config.waitForInvisibleSpinner();
+		main.waitForInvisibleSpinner();
 		
 		WebElement frame = new WebDriverWait(driver, 40)
 			.until(ExpectedConditions.elementToBeClickable(By.id("iFrameResizer3")));

@@ -16,16 +16,16 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class ProcesoGestionDeCasos {
 	
-	private Config config = new Config();
+	private Main main = new Main();
 	private WebDriver driver;
 	
 	@Before
 
 	public void setUp() throws InterruptedException, IOException {
 		
-		config.initBrowser();
-		config.goToAccountLink();
-		driver = config.driver;
+		driver = main.setDriver();
+		main.initBrowser();
+		main.goToAccountLink();
 
 		driver.manage().timeouts().pageLoadTimeout(40, TimeUnit.SECONDS);
 		
@@ -34,25 +34,29 @@ public class ProcesoGestionDeCasos {
 	
 	@Test
 	public void Gestion () throws InterruptedException {
-		config.waitForInvisibleSpinner();
-		WebElement frame = driver.findElement(By.id("iFrameResizer1"));
-		JavascriptExecutor executor = (JavascriptExecutor)driver;
-		executor.executeScript("arguments[0].style.display = 'block'; arguments[0].style.zIndex = '999999';", frame);
-		driver.switchTo().frame(frame);
-		Thread.sleep(2000);
-		WebElement boton = driver.findElement(By.xpath("/html/body/div[1]/div[1]/ng-include/div/div/section/div[6]/button"));
-		executor.executeScript("arguments[0].click();", boton);
-		
-		driver.switchTo().defaultContent();
-		
-		
-		CrearModificarCaso(0);
+		try {
+			main.waitForInvisibleSpinner();
+			WebElement frame = driver.findElement(By.id("iFrameResizer1"));
+			JavascriptExecutor executor = (JavascriptExecutor)driver;
+			executor.executeScript("arguments[0].style.display = 'block'; arguments[0].style.zIndex = '999999';", frame);
+			driver.switchTo().frame(frame);
+			Thread.sleep(2000);
+			WebElement boton = driver.findElement(By.xpath("/html/body/div[1]/div[1]/ng-include/div/div/section/div[6]/button"));
+			executor.executeScript("arguments[0].click();", boton);
+			
+			driver.switchTo().defaultContent();
+			
+			
+			CrearModificarCaso(0);
+		} catch (Exception e) {
+			main.returnExecutionError(getClass().getName());
+		}
 
 		
 	}
 	
 	public void CrearModificarCaso(int index) throws InterruptedException {
-		config.waitForInvisibleSpinner();
+		main.waitForInvisibleSpinner();
 		WebElement frame = new WebDriverWait(driver, 40)
 				.until(ExpectedConditions.elementToBeClickable(By.id("iFrameResizer3")));
 		frame.click();
@@ -76,7 +80,7 @@ public class ProcesoGestionDeCasos {
 
 	
 	public void Crear() throws InterruptedException {
-		config.waitForInvisibleSpinner();
+		main.waitForInvisibleSpinner();
 		SelectPicklist("Origen");
 		SelectPicklist("Prioridad");
 		SelectPicklist("Tipo");
@@ -89,7 +93,7 @@ public class ProcesoGestionDeCasos {
 	
 	void Modificar() throws InterruptedException {
 		Thread.sleep(3000);
-		config.waitForInvisibleSpinner();
+		main.waitForInvisibleSpinner();
 		new WebDriverWait(driver, 40).until(ExpectedConditions.elementToBeClickable(By.id("CaseSelect")));
 		
 		List<WebElement> casos = driver.findElements(By.xpath("//span[@class = 'slds-radio_faux']"));
@@ -115,7 +119,7 @@ public class ProcesoGestionDeCasos {
 	//Una vez que entramos a Crear caso. esto llenaria la descripcion del mismo y finaliza el proceso.
 	
 	void descripcion () throws InterruptedException {
-		config.waitForInvisibleSpinner();
+		main.waitForInvisibleSpinner();
 		driver.findElement(By.xpath("//*[@id=\'TextAreaAsunto\']")).sendKeys("Test");
 		Thread.sleep(1000);
 		driver.findElement(By.xpath("//*[@id=\'TextAreaDescripcion\']")).sendKeys("Testing");
@@ -143,7 +147,7 @@ public class ProcesoGestionDeCasos {
 	
 	//Esto es en "Modificar caso", para su edición y finalización.
 	void Edicion() throws InterruptedException{
-		config.waitForInvisibleSpinner();
+		main.waitForInvisibleSpinner();
 		
 		Select picklist = new Select(driver.findElement(By.id("SelectEstado")));
 		picklist.selectByIndex(1);
@@ -155,7 +159,7 @@ public class ProcesoGestionDeCasos {
 		driver.findElement(By.xpath("//div[@id='Edicion_nextBtn']")). click();
 		Thread.sleep(5000);
 		
-		config.waitForInvisibleSpinner();
+		main.waitForInvisibleSpinner();
 
 		new WebDriverWait (driver, 20)
 				.until(ExpectedConditions.elementToBeClickable(By.xpath("//div[@ng-if='control.propSetMap.structMessage.btnName']")));
