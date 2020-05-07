@@ -39,8 +39,9 @@ public class ProcesoAltaDeServicios {
 	public void testScript() throws InterruptedException {
 		try {
 			llamadosDeMetodos();
+			main.returnExecutionSuccess(getClass().getName());
 		} catch (Exception e) {
-			main.returnExecutionError(getClass().getName());
+			main.returnExecutionError(getClass().getName(), e);
 		}
 		
 	}

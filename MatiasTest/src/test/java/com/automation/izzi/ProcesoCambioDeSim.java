@@ -36,8 +36,9 @@ public class ProcesoCambioDeSim {
 		try {
 			cambioDeSim();
 			selecionSim();
+			main.returnExecutionSuccess(getClass().getName());
 		} catch (Exception e) {
-			main.returnExecutionError(getClass().getName());
+			main.returnExecutionError(getClass().getName(), e);
 		}
 		
 	}

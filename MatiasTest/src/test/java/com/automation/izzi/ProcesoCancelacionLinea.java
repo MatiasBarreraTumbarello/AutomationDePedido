@@ -46,8 +46,9 @@ public class ProcesoCancelacionLinea {
 			
 			driver.switchTo().defaultContent();
 			linea(driver);
+			main.returnExecutionSuccess(getClass().getName());
 		} catch (Exception e) {
-			main.returnExecutionError(getClass().getName());
+			main.returnExecutionError(getClass().getName(), e);
 		}
 		
 	}

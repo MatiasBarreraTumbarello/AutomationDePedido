@@ -45,8 +45,9 @@ public class ProcesoPortabilidad {
 			
 			//La siguiente linea realiza la portabildiad del nro por lo que no se va a poder volver a realizar la portabilidad
 			pasoDocumentacion();
+			main.returnExecutionSuccess(getClass().getName());
 		} catch (Exception e) {
-			main.returnExecutionError(getClass().getName());
+			main.returnExecutionError(getClass().getName(), e);
 		}
 	}
 	

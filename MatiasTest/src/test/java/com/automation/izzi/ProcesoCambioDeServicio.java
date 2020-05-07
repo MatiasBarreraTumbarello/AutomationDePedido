@@ -39,8 +39,9 @@ public class ProcesoCambioDeServicio {
 		try {
 			cambioDeServicio(driver);
 			seleccionDePlan(driver);
+			main.returnExecutionSuccess(getClass().getName());
 		} catch (Exception e) {
-			main.returnExecutionError(getClass().getName());
+			main.returnExecutionError(getClass().getName(), e);
 		}
 	}
 

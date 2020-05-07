@@ -47,8 +47,9 @@ public class ProcesoReactivacion {
 			Thread.sleep(2000);
 			
 			Confirmar(0);
+			main.returnExecutionSuccess(getClass().getName());
 		} catch (Exception e) {
-			main.returnExecutionError(getClass().getName());
+			main.returnExecutionError(getClass().getName(), e);
 		}
 		
 	}

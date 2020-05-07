@@ -70,8 +70,9 @@ public class ProcesoFVentas {
 			StepTipoDeEntrega(pStepTipoDeEntrega);
 			StepResumenDeCompra();
 			Thread.sleep(tiempo);
+			main.returnExecutionSuccess(getClass().getName());
 		} catch (Exception e) {
-			main.returnExecutionError(getClass().getName());
+			main.returnExecutionError(getClass().getName(), e);
 		}
 	}
 	
