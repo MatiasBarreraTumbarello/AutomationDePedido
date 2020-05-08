@@ -1,6 +1,8 @@
 package com.automation.izzi;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -23,7 +25,7 @@ public class MainClass {
 	public WebDriverWait wait;;
 	public String staticAccessLink;
 	public String accountId = "001c000002JvBrCAAV";
-	public String orderId = "8013K000000ElPJQA0";
+	public String staticOrderId = "8013K000000ElPJQA0";
 	public String fileToWrite;
 	public String runningClass;
 	
@@ -100,7 +102,7 @@ public class MainClass {
 	}
 	
 	public void goToOrderLink() {
-		driver.get("https://test1dom--sittest.lightning.force.com/lightning/r/Order/" + orderId + "/view");
+		driver.get("https://test1dom--sittest.lightning.force.com/lightning/r/Order/" + getOrderId() + "/view");
 	}
 	
 	public String getAutoTestUrl() throws IOException {
@@ -214,5 +216,41 @@ public class MainClass {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+	}
+	
+	public void storeCreatedOrder(String order) {
+		try {
+			new File("executions").mkdir();
+			new File("executions/order_number.txt");
+			FileWriter writer = new FileWriter("executions/order_number.txt");
+			writer.write(order);
+			writer.close();
+			//driver.quit();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public String getOrderId() {
+		String orderId = "";
+		File file = new File("executions/order_number.txt");
+		if (file.exists() && file.length() > 0) {
+			try {
+				BufferedReader reader = new BufferedReader(new FileReader(
+						"executions/order_number.txt"));
+				String line = reader.readLine();
+				while (line != null) {
+					orderId = line;
+					break;
+				}
+				reader.close();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}else {
+			orderId = staticOrderId;
+		}
+
+		return orderId;
 	}
 }
