@@ -80,15 +80,27 @@ public class ProcesoCambioDeServicio {
 		wait.until(ExpectedConditions.invisibilityOfElementLocated(By.className("slds-spinner_container")));
 		WebElement siguiente = wait.until(ExpectedConditions.elementToBeClickable(By.id("Planes_nextBtn")));
 		siguiente.click();
-
+		// Confirmacion Siguiente
 		wait.until(ExpectedConditions.invisibilityOfElementLocated(By.className("slds-spinner_container")));
 		WebElement siguiente2 = wait.until(ExpectedConditions.elementToBeClickable(By.id("Confirmacion_nextBtn")));
 		siguiente2.click();
+		//Finalizar
+		main.waitForInvisibleSpinner();
 
-		wait.until(ExpectedConditions.invisibilityOfElementLocated(By.className("slds-spinner_container")));
-		WebElement finalizar = wait.until(ExpectedConditions
-				.elementToBeClickable(By.xpath("//*[@id='doneAction-217']/div/div/div[3]/div/button")));
-		finalizar.click();
+		new WebDriverWait (driver, 20)
+				.until(ExpectedConditions.elementToBeClickable(By.xpath("//button[@class='slds-button slds-button_brand ng-binding']")));
+
+		String orden = driver.findElement(By.xpath("//p[@class='done-action-subtitle ng-binding ng-scope']")).getText();
+		driver.switchTo().defaultContent();
+		String letra = "";
+		for (int i = 5; i < orden.length(); i++) {
+		letra = letra + orden.charAt(i);
+		}
+		driver.findElement(By.xpath("//input[@id='159:0;p']")).sendKeys(letra);
+		Thread.sleep(2000);
+		List<WebElement> desplegable = driver.findElements(By.xpath("//li[@data-aura-class='uiAutocompleteOption forceSearchInputDesktopOption']"));
+		desplegable.get(1).click();
+		Thread.sleep(2000);
 
 	}
 	public boolean seleccion (WebDriver driver) throws InterruptedException{
