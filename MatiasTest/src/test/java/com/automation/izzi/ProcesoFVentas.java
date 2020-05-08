@@ -26,10 +26,10 @@ public class ProcesoFVentas {
 	private WebDriverWait wait;
 	public int tiempo = main.tiempo;
 
-	private int pStepDispositivos = 0;
+	private int pStepDispositivos = 1;
 	private int pStepValidacionDeDispositivos = 0;
 	private int pStepPortabilidad = 0;
-	private int pStepTipoDeEntrega = 1;
+	private int pStepTipoDeEntrega = 0;
 	
 
 	private boolean pOptValidacionPorDispositivo = true;
@@ -136,7 +136,7 @@ public class ProcesoFVentas {
 
 		WebElement txtEmail = driver.findElement(By.id("TextEmail"));
 		txtEmail.clear();
-		txtEmail.sendKeys("scardozo@labsxd.com");
+		txtEmail.sendKeys("faguilera@labsxd.com");
 		Thread.sleep(1000);
 
 		WebElement chkInformacionPrincipal = driver.findElement(By.id("CheckboxPrincipal"));
