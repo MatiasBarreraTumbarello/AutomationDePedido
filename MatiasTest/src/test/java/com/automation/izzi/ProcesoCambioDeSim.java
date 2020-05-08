@@ -99,6 +99,7 @@ public class ProcesoCambioDeSim {
 		Thread.sleep(2000);
 		List<WebElement> desplegable = driver.findElements(By.xpath("//li[@data-aura-class='uiAutocompleteOption forceSearchInputDesktopOption']"));
 		desplegable.get(1).click();
+		Thread.sleep(2000);
 	}
 	
 
