@@ -208,7 +208,7 @@ public class MainClass {
 		try {
 			fileToWrite = executionFile();
 			saveResponse(fileToWrite, rc + ":\nSUCCESS\n" + "-".repeat(30));
-			driver.quit();
+			//driver.quit();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

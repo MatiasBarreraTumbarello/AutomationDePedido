@@ -128,9 +128,5 @@ public class ProcesoAltaDeServicios {
 		Thread.sleep(3000);
 	}
 
-	/*
-	 * public void llamadosDeMetodos() throws InterruptedException { //
-	 * IrACuenta(driver); AltaDeServicios(); SeleccionDePlan(); confirmarServicio();
-	 * }
-	 */
+
 }
