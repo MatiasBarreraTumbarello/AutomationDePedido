@@ -232,7 +232,7 @@ public class MainClass {
 	}
 	
 	public String getOrderId() {
-		String orderId = "";
+		String orderId = staticOrderId;
 		File file = new File("executions/order_number.txt");
 		if (file.exists() && file.length() > 0) {
 			try {
@@ -247,8 +247,6 @@ public class MainClass {
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
-		}else {
-			orderId = staticOrderId;
 		}
 
 		return orderId;
