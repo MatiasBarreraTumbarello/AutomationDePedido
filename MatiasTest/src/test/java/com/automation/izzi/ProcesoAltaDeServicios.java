@@ -18,7 +18,6 @@ public class ProcesoAltaDeServicios {
 
 	private MainClass main = new MainClass();
 	private WebDriver driver;
-	private WebDriverWait wait;
 
 	@Before
 	public void setUp() throws InterruptedException, IOException {
@@ -35,6 +34,7 @@ public class ProcesoAltaDeServicios {
 
 	@Test
 	public void testScript() throws InterruptedException {
+		
 		try {
 			AltaDeServicios();
 
@@ -114,17 +114,12 @@ public class ProcesoAltaDeServicios {
 		Thread.sleep(3000);
 
 		new WebDriverWait(driver, 20).until(ExpectedConditions.elementToBeClickable(By.xpath("//div[@ng-if='control.propSetMap.structMessage.btnName']")));
-
-		String orden = driver.findElement(By.xpath("//p[@ng-repeat='(key, value) in control.propSetMap.message']")).getText();
-		driver.switchTo().defaultContent();
-		String letra = "";
-		for (int i = 5; i < orden.length(); i++) {
-			letra = letra + orden.charAt(i);
+		try {
+		driver.findElement(By.xpath("//div[@ng-if='control.propSetMap.structMessage.btnName']")).click();
+		}catch (Exception e) {
 		}
-		driver.findElement(By.xpath("//input[@id='159:0;p']")).sendKeys(letra);
-		Thread.sleep(2000);
-		List<WebElement> desplegable = driver.findElements(By.xpath("//li[@data-aura-class='uiAutocompleteOption forceSearchInputDesktopOption']"));
-		desplegable.get(1).click();
+		driver.switchTo().defaultContent();
+
 		Thread.sleep(3000);
 	}
 

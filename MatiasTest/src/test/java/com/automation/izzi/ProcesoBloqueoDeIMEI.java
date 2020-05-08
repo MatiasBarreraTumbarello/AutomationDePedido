@@ -18,7 +18,6 @@ public class ProcesoBloqueoDeIMEI {
 	
 	private MainClass main = new MainClass();
 	private WebDriver driver;
-	private WebDriverWait wait;
 
 	
 	@Before
@@ -94,7 +93,8 @@ public class ProcesoBloqueoDeIMEI {
 			
 	
 		main.waitForInvisibleSpinner();
-		WebElement siguiente = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id=\"StepLockImei_nextBtn\"]/p")));
+		WebElement siguiente = new WebDriverWait(driver,40).until(ExpectedConditions.elementToBeClickable(By.xpath("//div[@id='StepLockImei_nextBtn']")));
+		//driver.findElement(By.xpath("//div[@id='StepLockImei_nextBtn']"));
 		siguiente.click();
 		Thread.sleep(1000);
 	
@@ -105,23 +105,22 @@ public class ProcesoBloqueoDeIMEI {
 		
 		main.waitForInvisibleSpinner();
 		
-		wait.until(ExpectedConditions.elementToBeClickable(By.id("radioConfirmation")));
+		new WebDriverWait(driver,40).until(ExpectedConditions.elementToBeClickable(By.id("radioConfirmation")));
 		Thread.sleep(3000);
-		
+	
 		List<WebElement> opt = driver.findElements(By.xpath("//*[@id=\'radioConfirmation\']"));
 		Thread.sleep(2000);
 		opt.get(0).findElement(By.xpath("./..")).click();
 		Thread.sleep(2000);
 		
 		main.waitForInvisibleSpinner();
-		WebElement siguiente = wait.until(ExpectedConditions.elementToBeClickable(By.id("Confirmation_nextBtn")));
+		WebElement siguiente = new WebDriverWait(driver,40).until(ExpectedConditions.elementToBeClickable(By.id("Confirmation_nextBtn")));
 		siguiente.click();
 		Thread.sleep(2000);
 		
 		main.waitForInvisibleSpinner();
-		WebElement finalizar = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id=\"doneAction-241\"]/div/div/div[3]/div/button")));
+		WebElement finalizar = new WebDriverWait(driver,40).until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id=\"doneAction-241\"]/div/div/div[3]/div/button")));
 		finalizar.click();
-		
 
 		} 
 		
