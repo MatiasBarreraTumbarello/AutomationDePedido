@@ -81,7 +81,7 @@ public class MainClass {
 				"ProcesoEntregarPedidos",
 				"ProcesoCambioDeSim",
 				"ProcesoBloqueoDeIMEI",
-				"ProcesoCancelacionDeLinea",
+				"ProcesoCancelacionLinea",
 				"ProcesoSuspenciones",
 				"ProcesoPortabilidad",
 				"ProcesoReactivacion",
