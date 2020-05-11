@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
+import org.apache.commons.exec.util.StringUtils;
 import org.junit.Before;
 import org.junit.Test;
 import org.openqa.selenium.By;
@@ -26,10 +27,10 @@ public class ProcesoFVentas {
 	private WebDriverWait wait;
 	public int tiempo = main.tiempo;
 
-	private int pStepDispositivos = 1;
+	private int pStepDispositivos = 0;
 	private int pStepValidacionDeDispositivos = 0;
 	private int pStepPortabilidad = 0;
-	private int pStepTipoDeEntrega = 0;
+	private int pStepTipoDeEntrega = 1;
 	
 
 	private boolean pOptValidacionPorDispositivo = true;
@@ -417,11 +418,18 @@ public class ProcesoFVentas {
 			btnSiguiente.click();
 		}
 		Thread.sleep(tiempo);
-
+		
 		main.waitForInvisibleSpinner();
+		
+		//main.waitForInvisibleSpinner();
 		WebElement btnFinish = wait.until(ExpectedConditions
 				.elementToBeClickable(By.xpath("//button[@class=\'slds-button slds-button_brand ng-binding\']")));
 		btnFinish.click();
+		Thread.sleep(tiempo);
+
+		String url = driver.getCurrentUrl();
+		String orderId = url.substring(url.indexOf("Order/"), url.indexOf("/view")).replace("Order/", "");
+		main.storeCreatedOrder(orderId);
 		Thread.sleep(tiempo);
 		// Nos muestra el numero de pedido
 	}
