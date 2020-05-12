@@ -420,8 +420,7 @@ public class ProcesoFVentas {
 		
 		main.waitForInvisibleSpinner();
 		
-		//main.waitForInvisibleSpinner();
-		WebElement btnFinish = wait.until(ExpectedConditions
+		WebElement btnFinish = new WebDriverWait (driver,40).until(ExpectedConditions
 				.elementToBeClickable(By.xpath("//button[@class=\'slds-button slds-button_brand ng-binding\']")));
 		btnFinish.click();
 		Thread.sleep(tiempo);
