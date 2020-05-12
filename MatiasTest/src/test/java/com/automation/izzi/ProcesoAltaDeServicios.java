@@ -114,12 +114,26 @@ public class ProcesoAltaDeServicios {
 		Thread.sleep(3000);
 
 		new WebDriverWait(driver, 20).until(ExpectedConditions.elementToBeClickable(By.xpath("//div[@ng-if='control.propSetMap.structMessage.btnName']")));
-		try {
-		driver.findElement(By.xpath("//div[@ng-if='control.propSetMap.structMessage.btnName']")).click();
-		}catch (Exception e) {
-		}
-		driver.switchTo().defaultContent();
 
+
+			String orden = driver.findElement(By.xpath("//p[@ng-repeat='(key, value) in control.propSetMap.message']")).getText();
+			driver.switchTo().defaultContent();
+			String letra = "";
+			for (int i = 5; i < orden.length(); i++) {
+			letra = letra + orden.charAt(i);
+			}
+			
+			driver.findElement(By.xpath("//input[@id='159:0;p']")).sendKeys(letra);
+			new WebDriverWait(driver,20).until(ExpectedConditions.invisibilityOfElementLocated(By.xpath("//div[@class=\'inputSpinner slds-is-absolute slds-hide\']")));
+			Thread.sleep(2000);
+			List<WebElement> desplegable = driver.findElements(By.xpath("//li[@data-aura-class='uiAutocompleteOption forceSearchInputDesktopOption']"));
+			desplegable.get(0).click();
+			
+			main.waitForInvisibleSpinner();
+			new WebDriverWait (driver,30).until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@data-refid='recordId']")));
+			List<WebElement> opciones = driver.findElements(By.xpath("//a[@data-refid='recordId']"));
+			opciones.get(0).click();
+			
 		Thread.sleep(3000);
 	}
 
