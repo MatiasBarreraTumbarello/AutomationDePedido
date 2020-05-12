@@ -123,7 +123,11 @@ public class ProcesoPortabilidad {
 		Thread.sleep(1000);
 		main.waitForInvisibleSpinner();
 		Thread.sleep(1000);
-		driver.findElement(By.id("StepPortabilityNumber_nextBtn")).click();
+		WebElement btnSiguiente = driver.findElement(By.id("StepPortabilityNumber_nextBtn"));
+		while (btnSiguiente.isEnabled() && btnSiguiente.isDisplayed()) {
+			Thread.sleep(1000);
+			btnSiguiente.click();
+		}
 		Thread.sleep(3000);
 	}
 	
