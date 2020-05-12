@@ -79,15 +79,17 @@ public class MainClass {
 		String[] classesList = {
 				"ProcesoFVentas",
 				"ProcesoEntregarPedidos",
+				"ProcesoAltaDeServicios",
+				"ProcesoCambioDeServicio",
+				"ProcesoPortabilidad",
+				"ProcesoGestionDeCasos",
 				"ProcesoCambioDeSim",
 				"ProcesoBloqueoDeIMEI",
 				"ProcesoCancelacionLinea",
 				"ProcesoSuspenciones",
-				"ProcesoPortabilidad",
 				"ProcesoReactivacion",
-				"ProcesoCambioDeServicio",
-				"ProcesoGestionDeCasos",
-				"ProcesoAltaDeServicios"
+						
+				
 				};
 		return classesList;
 	}
@@ -203,7 +205,10 @@ public class MainClass {
 			fileToWrite = executionFile();
 			saveResponse(fileToWrite, rc + ":\n" + error + "\n" + "-".repeat(30));
 
-			//driver.quit();
+
+
+		//driver.quit();
+
 
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -214,7 +219,9 @@ public class MainClass {
 		try {
 			fileToWrite = executionFile();
 			saveResponse(fileToWrite, rc + ":\nSUCCESS\n" + "-".repeat(30));
-		//	driver.quit();
+
+		driver.quit();
+
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
