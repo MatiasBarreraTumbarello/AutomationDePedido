@@ -18,14 +18,17 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class ProcesoDeAutogestion {
 
+	private MainClass main = new MainClass();
+
 	private WebDriver driver;
+
 	private WebDriverWait wait;
-	public int tiempo = 2000;
+	public int tiempo = main.tiempo;
 
 	private int pStepDispositivos = 0;
-	private int pStepValidacionDeDispositivos = 1;
+	private int pStepValidacionDeDispositivos = 0;
 	private int pStepPortabilidad = 0;
-	private int pStepTipoDeEntrega = 0;
+	private int pStepTipoDeEntrega = 1;
 
 	private boolean pOptValidacionPorDispositivo = true;
 	// ************************LEER*****************************************************************
@@ -37,8 +40,7 @@ public class ProcesoDeAutogestion {
 	@Before
 	public void setUp() throws InterruptedException {
 
-		System.setProperty("webdriver.chrome.driver", "./src/test/resources/chromedriver/chromedriver.exe");
-		driver = new ChromeDriver();
+		driver = main.setDriver();
 		driver.manage().window().maximize();
 
 		driver.get("https://sittest-izzimx.cs125.force.com/portal");
@@ -53,14 +55,7 @@ public class ProcesoDeAutogestion {
 
 	@Test
 	public void Main() throws InterruptedException {
-		StepiniciarContratacion(driver);
-		SeleccionDelPlan(driver);
-		
-		 StepDispositivos(pStepDispositivos);
-		 StepValidacionDeDispositivos(pStepValidacionDeDispositivos);
-		 StepPortabilidad(pStepPortabilidad); 
-		 StepTipoDeEntrega(pStepTipoDeEntrega);
-		 StepResumenDeCompra(); Thread.sleep(tiempo);
+		StepiniciarContratacion();
 		 
 	}
 
@@ -69,13 +64,14 @@ public class ProcesoDeAutogestion {
 	 * 
 	 * @throws InterruptedException
 	 */
-	public static void StepiniciarContratacion(WebDriver driver) throws InterruptedException {
+	public void StepiniciarContratacion() throws InterruptedException {
 
 		driver.switchTo().frame(0);
 		new WebDriverWait(driver, 20)
 				.until(ExpectedConditions.invisibilityOfElementLocated(By.className("slds-spinner_container")));
 		driver.findElement(By.xpath("// button [@ class ='slds-button slds-button_brand btnCommunity']")).click();
 		driver.switchTo().defaultContent();
+		StepPlanes();
 	}
 
 	/**
@@ -83,23 +79,30 @@ public class ProcesoDeAutogestion {
 	 * 
 	 * @throws InterruptedException
 	 */
-	public static void SeleccionDelPlan(WebDriver driver) throws InterruptedException {
-		WebDriverWait wait = new WebDriverWait(driver, 40);
+	public void StepPlanes() throws InterruptedException {
 		wait.until(ExpectedConditions.elementToBeClickable(By.id("iFrameResizer1")));
 		WebElement frame = driver.findElement(By.id("iFrameResizer1"));
 		driver.switchTo().frame(frame);
 		Thread.sleep(2000);
-		wait.until(ExpectedConditions.invisibilityOfElementLocated(By.className("slds-spinner_container")));
-		WebElement seleccionar = wait.until(ExpectedConditions.elementToBeClickable(By.id("block_01tc0000007pvuiAAA")));
+		main.waitForInvisibleSpinner();
+
+		// Para elegir otro plan es necesario cambiar el id por el del plan que se desea
+		// seleccionar.
+		WebElement optPlan = wait
+				.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id=\'block_01tc0000007pvuiAAA\']")));
 		Thread.sleep(1000);
-		seleccionar.click();
-		wait.until(ExpectedConditions.invisibilityOfElementLocated(By.className("slds-spinner_container")));
-		WebElement siguiente = wait.until(ExpectedConditions.elementToBeClickable(By.id("PlanSelection_nextBtn")));
-		while (siguiente.isEnabled() && siguiente.isDisplayed()) {
+		optPlan.click();
+
+		main.waitForInvisibleSpinner();
+		WebElement btnSiguiente = wait.until(ExpectedConditions.elementToBeClickable(By.id("PlanSelection_nextBtn")));
+		while (btnSiguiente.isEnabled() && btnSiguiente.isDisplayed()) {
 			Thread.sleep(1000);
-			siguiente.click();
+			btnSiguiente.click();
 		}
+
 		Thread.sleep(10000);
+
+		StepDispositivos(pStepDispositivos);
 	}
 
 	/**
@@ -109,18 +112,21 @@ public class ProcesoDeAutogestion {
 	 * @throws InterruptedException
 	 */
 	public void StepDispositivos(int index) throws InterruptedException {
-		WaitForInvisibleSpinner();
+		main.waitForInvisibleSpinner();
 		wait.until(ExpectedConditions.elementToBeClickable(By.id("RadioDevices")));
 		List<WebElement> optTipoDeDispositivo = driver.findElements(By.id("RadioDevices"));
-		optTipoDeDispositivo.get(index).findElement(By.xpath("./..")).click();// Trae Tu equipo a Izzi
+		optTipoDeDispositivo.get(index).findElement(By.xpath("./..")).click();
 		Thread.sleep(2000);
 		driver.findElement(By.id("StepDevicesSelect_nextBtn")).click();
 		Thread.sleep(5000);
 		if (index == 1) {
+
 			StepSeleccionDeDispositivo();
 			// Selecciona el check que indica que el cliente no esta interesado en estos
 			// equipos.
 			// OptDesinteresEquipo();
+		} else {
+			StepValidacionDeDispositivos(pStepValidacionDeDispositivos);
 		}
 	}
 
@@ -130,20 +136,22 @@ public class ProcesoDeAutogestion {
 	 * @throws InterruptedException
 	 */
 	public void StepSeleccionDeDispositivo() throws InterruptedException {
-		WaitForInvisibleSpinner();
+		main.waitForInvisibleSpinner();
 		WebElement optDispositivo = wait
 				.until(ExpectedConditions.elementToBeClickable(By.id("block_01t3K000000HEDoQAO")));
 		optDispositivo.findElement(By.xpath("./..")).click();
-		Thread.sleep(2000);
+		Thread.sleep(tiempo);
 
-		WaitForInvisibleSpinner();
+		main.waitForInvisibleSpinner();
 		driver.findElement(By.id("vlcCart_Top")).findElement(By.xpath(".//div[1]")).click();
 		WebElement btnSiguiente = driver.findElement(By.id("StepChooseDevices_nextBtn"));
 		while (btnSiguiente.isEnabled() && btnSiguiente.isDisplayed()) {
 			Thread.sleep(1000);
 			btnSiguiente.click();
 		}
-		Thread.sleep(2000);
+		Thread.sleep(tiempo);
+		
+		StepPortabilidad(pStepPortabilidad);
 	}
 
 	/**
@@ -153,7 +161,7 @@ public class ProcesoDeAutogestion {
 	 * @throws InterruptedException
 	 */
 	public void StepValidacionDeDispositivos(int index) throws InterruptedException {
-		WaitForInvisibleSpinner();
+		main.waitForInvisibleSpinner();
 		wait.until(ExpectedConditions.elementToBeClickable(By.id("RadioSelectMethod")));
 		List<WebElement> optMetodoDeValidacion = driver.findElements(By.id("RadioSelectMethod"));
 		Thread.sleep(tiempo);
@@ -182,16 +190,21 @@ public class ProcesoDeAutogestion {
 		btnValidar.click();
 		Thread.sleep(tiempo);
 
-		WaitForInvisibleSpinner();
-		List<WebElement> optListVerEquiposCompatibles = driver.findElements(By.xpath("//input[@id='RadioBuyDevices']"));
+		main.waitForInvisibleSpinner();
+		List<WebElement> optListVerEquiposCompatibles = driver.findElements(By.id("RadioBuyDevices"));
 
 		boolean optVerEquiposCompatibles = false;
 		if (optListVerEquiposCompatibles.size() != 0) {
 			optVerEquiposCompatibles = true;
 		}
 
-		driver.findElement(By.xpath("//div[@id='StepApprovedDevice_nextBtn']")).click();
+		WebElement btnSiguiente = driver.findElement(By.xpath("//div[@id='StepApprovedDevice_nextBtn']"));
 		Thread.sleep(tiempo);
+		while (btnSiguiente.isEnabled() && btnSiguiente.isDisplayed()) {
+			Thread.sleep(1000);
+			btnSiguiente.click();
+			StepPortabilidad(pStepPortabilidad);
+		}
 
 		if (optVerEquiposCompatibles)
 			StepSeleccionDeDispositivo();
@@ -230,8 +243,13 @@ public class ProcesoDeAutogestion {
 			driver.findElement(By.xpath("//option[@label='Tough Mobile']")).click();
 		}
 
-		driver.findElement(By.xpath("//div[@id='StepApprovedDevice_nextBtn']")).click();
+		WebElement btnSiguiente = driver.findElement(By.xpath("//div[@id='StepApprovedDevice_nextBtn']"));
 		Thread.sleep(tiempo);
+		while (btnSiguiente.isEnabled() && btnSiguiente.isDisplayed()) {
+			Thread.sleep(1000);
+			btnSiguiente.click();
+			StepPortabilidad(pStepPortabilidad);
+		}
 
 		if (optVerEquiposCompatibles)
 			StepSeleccionDeDispositivo();
@@ -256,8 +274,10 @@ public class ProcesoDeAutogestion {
 		while (btnSiguiente.isEnabled() && btnSiguiente.isDisplayed()) {
 			Thread.sleep(1000);
 			btnSiguiente.click();
+			
 		}
 		Thread.sleep(tiempo);
+		StepTipoDeEntrega(pStepTipoDeEntrega);
 	}
 
 	/**
@@ -270,20 +290,20 @@ public class ProcesoDeAutogestion {
 		Thread.sleep(2000);
 		wait.until(ExpectedConditions.elementToBeClickable(By.id("RadioProfileNoVentas")));
 		List<WebElement> optTipoDeEntrega = driver.findElements(By.xpath("//input[@id='RadioProfileNoVentas']"));
-		Thread.sleep(2000);
+		Thread.sleep(tiempo);
 
 		// Si la entrega es en Sucursal:
 		if (index == 0) {
 			optTipoDeEntrega.get(index).findElement(By.xpath("./..")).click();
-			Thread.sleep(2000);
+			Thread.sleep(tiempo);
 			List<WebElement> stock = driver.findElements(By.xpath("//span[@class='slds-radio--faux ng-scope']"));
 			// driver.findElement(By.id("RadioRetiroOtraSucursal|0")).click();//ng-form[@id='RadioRetiroOtraSucursal|0']
 
 			// Verifica si se puede seleccionar una sucursal
 			if (stock.get(0).isEnabled() && stock.get(0).isDisplayed()) {
-				
+
 				stock.get(1).click();
-				
+
 				// selecciona la sucursal "ATIZAPAN"
 				driver.findElement(By.xpath("//*[@id=\'SelectSucursal\']/option[3]")).click();
 				Thread.sleep(1000);
@@ -291,17 +311,24 @@ public class ProcesoDeAutogestion {
 				// selecciona el boton validar
 				driver.findElement(By.xpath("//div[@id=\'WrapperCheckDeviceStockSucursal\']")).click();
 			}
-			Thread.sleep(2000);
+
+			Thread.sleep(tiempo);
+			wait.until(ExpectedConditions.elementToBeClickable(By.id("StepSaleProcessDevice_nextBtn")));
+			driver.findElement(By.id("StepSaleProcessDevice_nextBtn")).click();
+			Thread.sleep(5000);
+			StepResumenDeCompra();
 
 			// En caso contrario, la entrega es en Domicilio
 		} else {
 			optTipoDeEntrega.get(index).findElement(By.xpath("./..")).click();
-			Thread.sleep(2000);
+			Thread.sleep(tiempo);
+			wait.until(ExpectedConditions.elementToBeClickable(By.id("StepSaleProcessDevice_nextBtn")));
+			driver.findElement(By.id("StepSaleProcessDevice_nextBtn")).click();
+			Thread.sleep(5000);
+			StepResumenDeCompra();
 		}
 
-		wait.until(ExpectedConditions.elementToBeClickable(By.id("StepSaleProcessDevice_nextBtn")));
-		driver.findElement(By.xpath("//*[@id=\"StepSaleProcessDevice_nextBtn\"]/p")).click();
-		Thread.sleep(5000);
+
 	}
 
 	/**
@@ -311,7 +338,7 @@ public class ProcesoDeAutogestion {
 	 * @throws InterruptedException
 	 */
 	public void StepResumenDeCompra() throws InterruptedException {
-		WaitForInvisibleSpinner();
+		main.waitForInvisibleSpinner();
 		WebElement btnSiguiente = wait.until(
 				ExpectedConditions.elementToBeClickable(By.xpath("//div[@id=\'DeliveryHomeSummary_nextBtn\']/p")));
 		while (btnSiguiente.isDisplayed() && btnSiguiente.isEnabled()) {
@@ -319,11 +346,17 @@ public class ProcesoDeAutogestion {
 			btnSiguiente.click();
 		}
 		Thread.sleep(tiempo);
-
-		WaitForInvisibleSpinner();
-		WebElement btnFinish = wait.until(ExpectedConditions
+		
+		main.waitForInvisibleSpinner();
+		
+		WebElement btnFinish = new WebDriverWait (driver,40).until(ExpectedConditions
 				.elementToBeClickable(By.xpath("//button[@class=\'slds-button slds-button_brand ng-binding\']")));
 		btnFinish.click();
+		Thread.sleep(tiempo);
+
+		String url = driver.getCurrentUrl();
+		String orderId = url.substring(url.indexOf("Order/"), url.indexOf("/view")).replace("Order/", "");
+		main.storeCreatedOrder(orderId);
 		Thread.sleep(tiempo);
 		// Nos muestra el numero de pedido
 	}
@@ -342,13 +375,6 @@ public class ProcesoDeAutogestion {
 		driver.findElement(By.xpath("slds-button slds-button_brand ng-binding")).click();
 		Thread.sleep(tiempo);
 
-	}
-
-	/**
-	 * Retrasa la ejecucion hasta que spinner sea invisible
-	 */
-	public void WaitForInvisibleSpinner() {
-		wait.until(ExpectedConditions.invisibilityOfElementLocated(By.className("slds-spinner_container")));
 	}
 
 }
