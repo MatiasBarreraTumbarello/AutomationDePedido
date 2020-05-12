@@ -56,7 +56,7 @@ public class MainClass {
 
 		fileToWrite = executionFile();
 		saveResponse(fileToWrite, "Test Completed!");
-		//driver.quit();
+		driver.quit();
 	}
 	
 	public void initBrowser() throws IOException {
@@ -205,7 +205,7 @@ public class MainClass {
 			fileToWrite = executionFile();
 			saveResponse(fileToWrite, rc + ":\n" + error + "\n" + "-".repeat(30));
 
-	//	driver.quit();
+		driver.quit();
 
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -217,7 +217,7 @@ public class MainClass {
 			fileToWrite = executionFile();
 			saveResponse(fileToWrite, rc + ":\nSUCCESS\n" + "-".repeat(30));
 
-	//	driver.quit();
+		driver.quit();
 
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -231,7 +231,7 @@ public class MainClass {
 			FileWriter writer = new FileWriter("executions/order_number.txt");
 			writer.write(order);
 			writer.close();
-			//driver.quit();
+			driver.quit();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
