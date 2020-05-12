@@ -204,7 +204,9 @@ public class MainClass {
 		try {
 			fileToWrite = executionFile();
 			saveResponse(fileToWrite, rc + ":\n" + error + "\n" + "-".repeat(30));
+
 		driver.quit();
+
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -214,7 +216,9 @@ public class MainClass {
 		try {
 			fileToWrite = executionFile();
 			saveResponse(fileToWrite, rc + ":\nSUCCESS\n" + "-".repeat(30));
+
 		driver.quit();
+
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
