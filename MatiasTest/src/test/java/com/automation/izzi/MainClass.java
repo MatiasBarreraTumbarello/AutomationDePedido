@@ -2,18 +2,28 @@ package com.automation.izzi;
 
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.time.LocalDate;
 import java.util.Scanner;
 
+import javax.naming.directory.DirContext;
+
+import org.hamcrest.core.IsInstanceOf;
 import org.junit.Test;
 import org.junit.runner.JUnitCore;
 import org.junit.runner.Result;
 import org.openqa.selenium.By;
+import org.openqa.selenium.OutputType;
+import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -200,29 +210,35 @@ public class MainClass {
 		System.out.println("Successfully wrote to the file.");
 	}
 	
-	public void returnExecutionError(String rc, Exception error)throws InterruptedException {
+	public void returnExecutionError(String rc, Exception error) {
 		try {
 			fileToWrite = executionFile();
 			saveResponse(fileToWrite, rc + ":\n" + error + "\n" + "-".repeat(30));
-
+			String dir = fileToWrite.replace(fileToWrite.substring(fileToWrite.lastIndexOf("\\")+1), "");
+			String picName = rc.replace("com.automation.izzi.", "");
+			this.takeSnapShot(driver, dir + picName + ".jpg"); 
 			Thread.sleep(5000);
-		driver.quit();
-
-
-
+			driver.quit();
 		} catch (IOException e) {
+			e.printStackTrace();
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
 	
-	public void returnExecutionSuccess(String rc)throws InterruptedException  {
+	public void returnExecutionSuccess(String rc) {
 		try {
 			fileToWrite = executionFile();
 			saveResponse(fileToWrite, rc + ":\nSUCCESS\n" + "-".repeat(30));
+			String dir = fileToWrite.replace(fileToWrite.substring(fileToWrite.lastIndexOf("\\")+1), "");
+			String picName = rc.replace("com.automation.izzi.", "");
+			this.takeSnapShot(driver, dir + picName + ".jpg"); 
 			Thread.sleep(5000);
-		driver.quit();
+			driver.quit();
 
 		} catch (IOException e) {
+			e.printStackTrace();
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
@@ -259,5 +275,28 @@ public class MainClass {
 		}
 
 		return orderId;
+	}
+	
+	public void takeSnapShot(WebDriver driver, String fileWithPath) {
+		TakesScreenshot scrShot =((TakesScreenshot)driver);
+		File SrcFile=scrShot.getScreenshotAs(OutputType.FILE);
+		File DestFile=new File(fileWithPath);
+
+		InputStream is = null;
+		OutputStream os = null;
+		try {
+			is = new FileInputStream(SrcFile);
+	        os = new FileOutputStream(DestFile);
+			byte[] buffer = new byte[1024];
+			int length;
+	        while ((length = is.read(buffer)) > 0) {
+	            os.write(buffer, 0, length);
+	        }
+			is.close();
+			os.close();
+	    }
+		catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 }
