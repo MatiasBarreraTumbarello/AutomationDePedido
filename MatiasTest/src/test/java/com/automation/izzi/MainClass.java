@@ -234,7 +234,6 @@ public class MainClass {
 			fileToWrite = executionFile();
 			saveResponse(fileToWrite, rc + ":\n" + error + "\n" + "-".repeat(30));
 			String dirPath = fileToWrite.replace(fileToWrite.substring(fileToWrite.lastIndexOf("\\")+1), "");
-			File dir = new File(dirPath);
 			String picName = rc.replace("com.automation.izzi.", "");
 			
 			String[] pathList = new File(dirPath).list();
@@ -260,7 +259,6 @@ public class MainClass {
 			fileToWrite = executionFile();
 			saveResponse(fileToWrite, rc + ":\nSUCCESS\n" + "-".repeat(30));
 			String dirPath = fileToWrite.replace(fileToWrite.substring(fileToWrite.lastIndexOf("\\")+1), "");
-			File dir = new File(dirPath);
 			String picName = rc.replace("com.automation.izzi.", "");
 			
 			String[] pathList = new File(dirPath).list();
@@ -272,8 +270,7 @@ public class MainClass {
 			}
 	        
 			Thread.sleep(5000);
-			this.takeSnapShot(driver, dirPath + picName + "_" + jpgs + ".jpg"); 
-			this.takeSnapShot(driver, dir + picName + ".jpg"); 
+			this.takeSnapShot(driver, dirPath + picName + "_" + jpgs + ".jpg");
 			driver.quit();
 
 		} catch (IOException e) {
