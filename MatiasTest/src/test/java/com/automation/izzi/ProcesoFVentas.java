@@ -272,11 +272,9 @@ public class ProcesoFVentas {
 
 		WebElement btnSiguiente = driver.findElement(By.xpath("//div[@id='StepApprovedDevice_nextBtn']"));
 		Thread.sleep(tiempo);
-		while (btnSiguiente.isEnabled() && btnSiguiente.isDisplayed()) {
-			Thread.sleep(1000);
-			btnSiguiente.click();
-			StepPortabilidad(pStepPortabilidad);
-		}
+
+		btnSiguiente.click();
+		StepPortabilidad(pStepPortabilidad);
 
 		if (optVerEquiposCompatibles)
 			StepSeleccionDeDispositivo();
@@ -317,11 +315,9 @@ public class ProcesoFVentas {
 
 		WebElement btnSiguiente = driver.findElement(By.xpath("//div[@id='StepApprovedDevice_nextBtn']"));
 		Thread.sleep(tiempo);
-		while (btnSiguiente.isEnabled() && btnSiguiente.isDisplayed()) {
-			Thread.sleep(1000);
-			btnSiguiente.click();
-			StepPortabilidad(pStepPortabilidad);
-		}
+		
+		btnSiguiente.click();
+		StepPortabilidad(pStepPortabilidad);
 
 		if (optVerEquiposCompatibles)
 			StepSeleccionDeDispositivo();
@@ -343,11 +339,10 @@ public class ProcesoFVentas {
 		Thread.sleep(tiempo);
 
 		WebElement btnSiguiente = driver.findElement(By.xpath("//*[@id=\'StepDeviceValidation_nextBtn\']/p"));
-		while (btnSiguiente.isEnabled() && btnSiguiente.isDisplayed()) {
-			Thread.sleep(1000);
-			btnSiguiente.click();
+		
+		Thread.sleep(1000);
+		btnSiguiente.click();
 			
-		}
 		Thread.sleep(tiempo);
 		StepTipoDeEntrega(pStepTipoDeEntrega);
 	}
@@ -425,7 +420,10 @@ public class ProcesoFVentas {
 				.elementToBeClickable(By.xpath("//button[@class=\'slds-button slds-button_brand ng-binding\']")));
 		btnFinish.click();
 		Thread.sleep(tiempo);
+		
+		main.waitForInvisibleSpinner();
 
+		Thread.sleep(tiempo);
 		String url = driver.getCurrentUrl();
 		String orderId = url.substring(url.indexOf("Order/"), url.indexOf("/view")).replace("Order/", "");
 		main.storeCreatedOrder(orderId);

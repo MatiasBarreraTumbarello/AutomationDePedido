@@ -56,7 +56,7 @@ public class MainClass {
 
 		fileToWrite = executionFile();
 		saveResponse(fileToWrite, "Test Completed!");
-		//driver.quit();
+		driver.quit();
 	}
 	
 	public void initBrowser() throws IOException {
@@ -95,7 +95,7 @@ public class MainClass {
 	}
 	
 	public String getStaticAccessLink() {
-		staticAccessLink = "https://test1dom--sittest.my.salesforce.com/secur/frontdoor.jsp?sid=00D3K0000008jQa!ARwAQMlwQ1K1jQmq53bWFcFDoHMs3dJ1uJ5LeagfMTw_hYn8YaZueVUvDuMOMQgwk0s5FptqpY9TDOF5vNfukCpWKNcWB1M4";
+		staticAccessLink = "https://test1dom--sittest.my.salesforce.com/secur/frontdoor.jsp?sid=00D3K0000008jQa!ARwAQNcJfK3y7HoyRMabh8X2Csftg3TCFZ4CKW2W4CG17.3Hs.hDhFMPmukbafwYVUxe_vZBAwy5Z0426s5oI8MzmRZy8Sj3";
 		return staticAccessLink;
 	}
 	
@@ -200,13 +200,14 @@ public class MainClass {
 		System.out.println("Successfully wrote to the file.");
 	}
 	
-	public void returnExecutionError(String rc, Exception error) {
+	public void returnExecutionError(String rc, Exception error)throws InterruptedException {
 		try {
 			fileToWrite = executionFile();
 			saveResponse(fileToWrite, rc + ":\n" + error + "\n" + "-".repeat(30));
 
+			Thread.sleep(5000);
+		driver.quit();
 
-	//	driver.quit();
 
 
 		} catch (IOException e) {
@@ -214,12 +215,12 @@ public class MainClass {
 		}
 	}
 	
-	public void returnExecutionSuccess(String rc) {
+	public void returnExecutionSuccess(String rc)throws InterruptedException  {
 		try {
 			fileToWrite = executionFile();
 			saveResponse(fileToWrite, rc + ":\nSUCCESS\n" + "-".repeat(30));
-
-	//	driver.quit();
+			Thread.sleep(5000);
+		driver.quit();
 
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -233,7 +234,7 @@ public class MainClass {
 			FileWriter writer = new FileWriter("executions/order_number.txt");
 			writer.write(order);
 			writer.close();
-			//driver.quit();
+			driver.quit();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

@@ -55,7 +55,13 @@ public class ProcesoDeAutogestion {
 
 	@Test
 	public void Main() throws InterruptedException {
-		StepiniciarContratacion();
+		try {
+			StepiniciarContratacion();
+			Thread.sleep(tiempo);
+			main.returnExecutionSuccess(getClass().getName());
+		} catch (Exception e) {
+			main.returnExecutionError(getClass().getName(), e);
+		}
 		 
 	}
 
@@ -200,11 +206,8 @@ public class ProcesoDeAutogestion {
 
 		WebElement btnSiguiente = driver.findElement(By.xpath("//div[@id='StepApprovedDevice_nextBtn']"));
 		Thread.sleep(tiempo);
-		while (btnSiguiente.isEnabled() && btnSiguiente.isDisplayed()) {
-			Thread.sleep(1000);
-			btnSiguiente.click();
-			StepPortabilidad(pStepPortabilidad);
-		}
+		btnSiguiente.click();
+		StepPortabilidad(pStepPortabilidad);
 
 		if (optVerEquiposCompatibles)
 			StepSeleccionDeDispositivo();
@@ -245,11 +248,9 @@ public class ProcesoDeAutogestion {
 
 		WebElement btnSiguiente = driver.findElement(By.xpath("//div[@id='StepApprovedDevice_nextBtn']"));
 		Thread.sleep(tiempo);
-		while (btnSiguiente.isEnabled() && btnSiguiente.isDisplayed()) {
-			Thread.sleep(1000);
-			btnSiguiente.click();
-			StepPortabilidad(pStepPortabilidad);
-		}
+
+		btnSiguiente.click();
+		StepPortabilidad(pStepPortabilidad);
 
 		if (optVerEquiposCompatibles)
 			StepSeleccionDeDispositivo();
@@ -271,11 +272,8 @@ public class ProcesoDeAutogestion {
 		Thread.sleep(tiempo);
 
 		WebElement btnSiguiente = driver.findElement(By.xpath("//*[@id=\'StepDeviceValidation_nextBtn\']/p"));
-		while (btnSiguiente.isEnabled() && btnSiguiente.isDisplayed()) {
-			Thread.sleep(1000);
-			btnSiguiente.click();
-			
-		}
+		Thread.sleep(1000);
+		btnSiguiente.click();
 		Thread.sleep(tiempo);
 		StepTipoDeEntrega(pStepTipoDeEntrega);
 	}
@@ -341,10 +339,8 @@ public class ProcesoDeAutogestion {
 		main.waitForInvisibleSpinner();
 		WebElement btnSiguiente = wait.until(
 				ExpectedConditions.elementToBeClickable(By.xpath("//div[@id=\'DeliveryHomeSummary_nextBtn\']/p")));
-		while (btnSiguiente.isDisplayed() && btnSiguiente.isEnabled()) {
-			Thread.sleep(1000);
-			btnSiguiente.click();
-		}
+		Thread.sleep(1000);
+		btnSiguiente.click();
 		Thread.sleep(tiempo);
 		
 		main.waitForInvisibleSpinner();
@@ -352,13 +348,6 @@ public class ProcesoDeAutogestion {
 		WebElement btnFinish = new WebDriverWait (driver,40).until(ExpectedConditions
 				.elementToBeClickable(By.xpath("//button[@class=\'slds-button slds-button_brand ng-binding\']")));
 		btnFinish.click();
-		Thread.sleep(tiempo);
-
-		String url = driver.getCurrentUrl();
-		String orderId = url.substring(url.indexOf("Order/"), url.indexOf("/view")).replace("Order/", "");
-		main.storeCreatedOrder(orderId);
-		Thread.sleep(tiempo);
-		// Nos muestra el numero de pedido
 	}
 
 	/**
