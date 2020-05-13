@@ -30,7 +30,7 @@ public class ProcesoEntregarPedidos {
 		driver = main.setDriver();
 		main.initBrowser();
 		main.goToOrderLink();
-
+		wait = new WebDriverWait (driver, 40);
 		driver.manage().timeouts().pageLoadTimeout(40, TimeUnit.SECONDS);
 		
 		Thread.sleep(20000);
@@ -67,7 +67,7 @@ public class ProcesoEntregarPedidos {
 		
 		main.waitForInvisibleSpinner();
 
-		
+		wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//input[@id='ICCID']")));
 		driver.findElement(By.xpath("//input[@id=\'ICCID\']")).sendKeys("8952140061741671430F");
 		driver.findElement(By.xpath("//input[@id='ICCIDVal']")).sendKeys("8952140061741671430F");
 
