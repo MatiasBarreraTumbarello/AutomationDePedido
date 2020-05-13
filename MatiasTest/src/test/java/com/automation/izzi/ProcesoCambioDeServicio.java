@@ -19,7 +19,6 @@ public class ProcesoCambioDeServicio {
 	
 	private MainClass main = new MainClass();
 	private WebDriver driver;
-	private WebDriverWait wait;
 
 	@Before
 	public void setUp() throws InterruptedException, IOException {
