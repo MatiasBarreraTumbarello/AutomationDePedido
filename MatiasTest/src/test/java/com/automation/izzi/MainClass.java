@@ -6,6 +6,7 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.FileWriter;
+import java.io.FilenameFilter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -13,6 +14,7 @@ import java.io.OutputStream;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Scanner;
 
 import javax.naming.directory.DirContext;
@@ -161,8 +163,16 @@ public class MainClass {
         }else {
         	System.out.println("Directory "+absoluteFolderPath+" already exists");
         }
+        
+        String[] pathList = new File(absoluteFolderPath).list();
+        int txts = 0;
+        for (int i=0; i < pathList.length; i++) {
+			if (pathList[i].startsWith("execution") && pathList[i].endsWith(".txt")) {
+				txts++;
+			}
+		}
 
-        String fileName = "execution_" + (new File(absoluteFolderPath).list().length + 1);
+        String fileName = "execution_" + (txts + 1);
         String absoluteFilePath = absoluteFolderPath + "/" + fileName + ".txt";
         File file = new File(absoluteFilePath);
         if (file.createNewFile()) {
@@ -180,7 +190,16 @@ public class MainClass {
 		if (!dir.exists() || dir.list().length == 0) {
 			file = createFile();
 		} else if(dir.list().length > 0) {
-			File lastFile = new File("executions/" + LocalDate.now().toString() + "/execution_" + dir.list().length + ".txt");
+			
+			String[] pathList = dir.list();
+	        int txts = 0;
+	        for (int i=0; i < pathList.length; i++) {
+				if (pathList[i].startsWith("execution") && pathList[i].endsWith(".txt")) {
+					txts++;
+				}
+			}
+	        
+			File lastFile = new File("executions/" + LocalDate.now().toString() + "/execution_" + txts + ".txt");
 			if (lastFile.length() > 0) {
 				Scanner scanner = new Scanner(lastFile);
 
@@ -214,10 +233,20 @@ public class MainClass {
 		try {
 			fileToWrite = executionFile();
 			saveResponse(fileToWrite, rc + ":\n" + error + "\n" + "-".repeat(30));
-			String dir = fileToWrite.replace(fileToWrite.substring(fileToWrite.lastIndexOf("\\")+1), "");
+			String dirPath = fileToWrite.replace(fileToWrite.substring(fileToWrite.lastIndexOf("\\")+1), "");
+			File dir = new File(dirPath);
 			String picName = rc.replace("com.automation.izzi.", "");
-			this.takeSnapShot(driver, dir + picName + ".jpg"); 
+			
+			String[] pathList = new File(dirPath).list();
+	        int jpgs = 0;
+	        for (int i=0; i < pathList.length; i++) {
+				if (pathList[i].startsWith(picName) && pathList[i].endsWith(".jpg")) {
+					jpgs++;
+				}
+			}
+	        
 			Thread.sleep(5000);
+			this.takeSnapShot(driver, dirPath + picName + "_" + jpgs + ".jpg"); 
 			driver.quit();
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -230,10 +259,21 @@ public class MainClass {
 		try {
 			fileToWrite = executionFile();
 			saveResponse(fileToWrite, rc + ":\nSUCCESS\n" + "-".repeat(30));
-			String dir = fileToWrite.replace(fileToWrite.substring(fileToWrite.lastIndexOf("\\")+1), "");
+			String dirPath = fileToWrite.replace(fileToWrite.substring(fileToWrite.lastIndexOf("\\")+1), "");
+			File dir = new File(dirPath);
 			String picName = rc.replace("com.automation.izzi.", "");
-			this.takeSnapShot(driver, dir + picName + ".jpg"); 
+			
+			String[] pathList = new File(dirPath).list();
+	        int jpgs = 0;
+	        for (int i=0; i < pathList.length; i++) {
+				if (pathList[i].startsWith(picName) && pathList[i].endsWith(".jpg")) {
+					jpgs++;
+				}
+			}
+	        
 			Thread.sleep(5000);
+			this.takeSnapShot(driver, dirPath + picName + "_" + jpgs + ".jpg"); 
+			this.takeSnapShot(driver, dir + picName + ".jpg"); 
 			driver.quit();
 
 		} catch (IOException e) {
