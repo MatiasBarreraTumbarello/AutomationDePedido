@@ -167,9 +167,16 @@ public class ProcesoFVentas {
 
 		main.waitForInvisibleSpinner();
 		WebElement btnSiguiente = wait.until(ExpectedConditions.elementToBeClickable(By.id("PlanSelection_nextBtn")));
+		int tries = 0;
 		while (btnSiguiente.isEnabled() && btnSiguiente.isDisplayed()) {
+			tries++;
 			Thread.sleep(1000);
 			btnSiguiente.click();
+			if (tries >= 3) {
+				JavascriptExecutor executor = (JavascriptExecutor) driver;
+				executor.executeScript("arguments[0].style.display = 'block'; " + "arguments[0].style.zIndex = '999999'; "
+						+ "arguments[0].click()", btnSiguiente);
+			}
 		}
 
 		Thread.sleep(10000);
@@ -188,8 +195,9 @@ public class ProcesoFVentas {
 		wait.until(ExpectedConditions.elementToBeClickable(By.id("RadioDevices")));
 		List<WebElement> optTipoDeDispositivo = driver.findElements(By.id("RadioDevices"));
 		optTipoDeDispositivo.get(index).findElement(By.xpath("./..")).click();
+		WebElement btnSiguiente = wait.until(ExpectedConditions.elementToBeClickable(By.id("StepDevicesSelect_nextBtn")));
 		Thread.sleep(2000);
-		driver.findElement(By.id("StepDevicesSelect_nextBtn")).click();
+		btnSiguiente.click();
 		Thread.sleep(5000);
 		if (index == 1) {
 
@@ -258,7 +266,8 @@ public class ProcesoFVentas {
 
 		// Imei invalido
 		// driver.findElement(By.xpath("//input[@id=\'NumberIMEI\']")).sendKeys("000000000000000");
-		WebElement btnValidar = driver.findElement(By.xpath("//div[@id=\'IPAValidateIMEI\']/p"));
+		WebElement btnValidar = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//div[@id=\'WrapperValidateIMEI\']/p")));
+		Thread.sleep(tiempo);
 		btnValidar.click();
 		Thread.sleep(tiempo);
 
@@ -269,11 +278,17 @@ public class ProcesoFVentas {
 		if (optListVerEquiposCompatibles.size() != 0) {
 			optVerEquiposCompatibles = true;
 		}
-
-		WebElement btnSiguiente = driver.findElement(By.xpath("//div[@id='StepApprovedDevice_nextBtn']"));
+		
+		WebElement btnSiguiente = wait.until(ExpectedConditions.elementToBeClickable(By.id("StepApprovedDevice_nextBtn")));
 		Thread.sleep(tiempo);
 
-		btnSiguiente.click();
+		while (btnSiguiente.isEnabled() && btnSiguiente.isDisplayed()) {
+			Thread.sleep(1000);
+			btnSiguiente.click();
+			if (!btnValidar.isDisplayed()) {
+				break;
+			}
+		}
 		StepPortabilidad(pStepPortabilidad);
 
 		if (optVerEquiposCompatibles)
@@ -313,7 +328,7 @@ public class ProcesoFVentas {
 			driver.findElement(By.xpath("//option[@label='Tough Mobile']")).click();
 		}
 
-		WebElement btnSiguiente = driver.findElement(By.xpath("//div[@id='StepApprovedDevice_nextBtn']"));
+		WebElement btnSiguiente = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//div[@id='StepApprovedDevice_nextBtn']")));
 		Thread.sleep(tiempo);
 		
 		btnSiguiente.click();
@@ -338,7 +353,7 @@ public class ProcesoFVentas {
 		optPortarNumeroActual.get(index).findElement(By.xpath("./..")).click();
 		Thread.sleep(tiempo);
 
-		WebElement btnSiguiente = driver.findElement(By.xpath("//*[@id=\'StepDeviceValidation_nextBtn\']/p"));
+		WebElement btnSiguiente = wait.until(ExpectedConditions.elementToBeClickable(By.id("StepDeviceValidation_nextBtn")));
 		
 		Thread.sleep(1000);
 		btnSiguiente.click();
@@ -379,8 +394,8 @@ public class ProcesoFVentas {
 				driver.findElement(By.xpath("//div[@id=\'WrapperCheckDeviceStockSucursal\']")).click();
 			}
 
-			Thread.sleep(tiempo);
 			wait.until(ExpectedConditions.elementToBeClickable(By.id("StepSaleProcessDevice_nextBtn")));
+			Thread.sleep(tiempo);
 			driver.findElement(By.id("StepSaleProcessDevice_nextBtn")).click();
 			Thread.sleep(5000);
 			StepResumenDeCompra();
@@ -388,8 +403,8 @@ public class ProcesoFVentas {
 			// En caso contrario, la entrega es en Domicilio
 		} else {
 			optTipoDeEntrega.get(index).findElement(By.xpath("./..")).click();
-			Thread.sleep(tiempo);
 			wait.until(ExpectedConditions.elementToBeClickable(By.id("StepSaleProcessDevice_nextBtn")));
+			Thread.sleep(tiempo);
 			driver.findElement(By.id("StepSaleProcessDevice_nextBtn")).click();
 			Thread.sleep(5000);
 			StepResumenDeCompra();
