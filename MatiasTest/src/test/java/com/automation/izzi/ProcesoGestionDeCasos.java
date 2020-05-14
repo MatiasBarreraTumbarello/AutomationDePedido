@@ -66,10 +66,12 @@ public class ProcesoGestionDeCasos {
 		new WebDriverWait(driver, 40)
 			.until(ExpectedConditions.elementToBeClickable(By.id("RadioOptions")));
 		List<WebElement> opt = driver.findElements(By.id("RadioOptions"));
-		Thread.sleep(1000);
-		opt.get(index).findElement(By.xpath("./..")).click();
-		Thread.sleep(1000);
-		
+		Thread.sleep(2000);
+		WebElement imagen = new WebDriverWait(driver, 40).until(ExpectedConditions.presenceOfElementLocated(By.xpath("//img[@title='Crear Caso']")));
+		if(imagen.isEnabled()& imagen.isDisplayed()) {
+			opt.get(index).findElement(By.xpath("./..")).click();
+		}
+		Thread.sleep(2000);		
 		driver.findElement(By.id("GestionCasos_nextBtn")).click();
 		Thread.sleep(2000);
 		if (index == 0)

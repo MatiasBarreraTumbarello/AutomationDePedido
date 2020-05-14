@@ -107,7 +107,7 @@ public class MainClass {
 	}
 	
 	public String getStaticAccessLink() {
-		staticAccessLink = "https://test1dom--sittest.my.salesforce.com/secur/frontdoor.jsp?sid=00D3K0000008jQa!ARwAQNcJfK3y7HoyRMabh8X2Csftg3TCFZ4CKW2W4CG17.3Hs.hDhFMPmukbafwYVUxe_vZBAwy5Z0426s5oI8MzmRZy8Sj3";
+		staticAccessLink = "https://test1dom--sittest.my.salesforce.com/secur/frontdoor.jsp?sid=00D3K0000008jQa!ARwAQNxio.wdN3doGjjUa2EKxXnP520JXkL5ovoeMc66Rkr6sxBH.ASEQ0nzLqolccDN5V9mjsomIn0qhz3H0MAxSy70avMr";
 		return staticAccessLink;
 	}
 	
